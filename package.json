@@ -13,7 +13,7 @@
     "@tailwindcss/vite": "^4.3.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "react-router-dom": "^7.15.0",
+    "react-router-dom": "^7.15.1",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
@@ -26,8 +26,9 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.5.0",
-    "typescript": "~6.0.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.58.2",
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "vite-plugin-svgr": "^5.2.0"
   }
 }
