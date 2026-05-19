@@ -10,18 +10,22 @@ export default function App() {
 
   return (
     <>
-    <div className='w-200'>
-          <h1>Sophie's Styler</h1>
-          <NavBar />
+      <div className='flex min-h-screen'>
+        <NavBar />
 
+        <div className="flex-1">
+          <h1 className='sticky font-heading text-4xl mt-5 ml-10'>Sophie's Styler</h1>
+
+          <main>
+            <Routes>
+              <Route path="/" element={< Home />} />
+              <Route path="/color-palette" element={< ColorPalette />} />
+              <Route path="/silhouette" element={< Silhouette />} />
+              <Route path="/hair" element={< Hair />} />
+            </Routes>
+          </main>
         </div>
-    <Routes>
-      <Route path="/" element={< Home />} />
-      <Route path="/color-palette" element={< ColorPalette />} />
-      <Route path="/silhouette" element={< Silhouette />} />
-      <Route path="/hair" element={< Hair />} />
-    </Routes>
-
+      </div>
     </>
   )
 }
