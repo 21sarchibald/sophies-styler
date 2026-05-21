@@ -6,19 +6,17 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     return (
         <>
-        <div><h1 className="font-heading">Home</h1></div>
-
-        <div className="flex gap-15 ml-30">
+        <div className="flex gap-15 ml-30 mt-20">
             <Link to="/color-palette" className="w-80 h-150 font-bold bg-violet-200 rounded-xl block">
-                    <h3 className="font-heading text-3xl mb-20 text-center">Discover your color palette</h3>
+                    <h3 className="font-heading text-3xl mb-20 mt-15 text-center">Discover your color palette</h3>
                     <img src={paintSwatchImage} className="my-0 mx-auto"/>
             </Link>
             <Link to="/silhouette" className="w-80 h-150 font-bold bg-blue-200 rounded-xl block">
-                <h3 className="font-heading text-3xl mb-20 text-center">Discover your silhouette</h3>
+                <h3 className="font-heading text-3xl mb-20 mt-15 text-center">Discover your silhouette</h3>
                 <img src={silhouetteImage} className="my-0 mx-auto"/>
             </Link>
             <Link to="/hair" className="w-80 h-150 font-bold bg-pink-200 rounded-xl block">
-                <h3 className="font-heading text-3xl mb-20 text-center">Discover your hairstyle</h3>
+                <h3 className="font-heading text-3xl mb-20 mt-15 text-center">Discover your hairstyle</h3>
                 <img src={hairFlipImage} className="my-0 mx-auto"/>
             </Link>
 
