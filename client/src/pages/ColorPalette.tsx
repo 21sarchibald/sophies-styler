@@ -31,6 +31,7 @@ export default function ColorPalette() {
             <div className="flex justify-evenly">
                 {answers.map((answer) => (
                         <button
+                            className={"rounded-2xl p-10 hover:bg-blue-50 hover:cursor-pointer"}
                             key={answer.id}
                             onClick={() => {
                                 const answerWeights: { key: keyof typeof questionAnswers; value:  number }[] = [];
@@ -41,7 +42,7 @@ export default function ColorPalette() {
                                 console.log(selectedWeights);
                             }}
                         >
-                            {answer.image && <img src={answer.image[0]} alt="Answer visual aid"/>}
+                            {answer.image && <img className="pb-5 mx-auto"src={answer.image[0]} alt="Answer visual aid"/>}
                             {answer.text}
                         </button>
                 ))
@@ -57,18 +58,18 @@ export default function ColorPalette() {
 
 
         {quizModalOpen && (
-            <div className="fixed inset-0 flex">
+            <div className="fixed inset-0 flex font-heading">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
-                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl">X</button>
+                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative mx-auto my-auto bg-white w-180 h-120 opacity-100 z-10">
+                <div className="relative mx-auto my-auto bg-white w-180 h-120 opacity-100 z-10 p-5">
 
-                    <h3 className="font-heading text-2xl text-center">{questions[questionIndex].heading}</h3>
+                    <h3 className="font-heading text-2xl text-center p-5">{questions[questionIndex].heading}</h3>
                     <div>
                         {populateQuestion(questionIndex)}
                     </div>
-                    <button className="bg-black text-white px-4 py-2 rounded-xl mx-auto"
+                    <button className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-5 hover:cursor-pointer"
                     
                         onClick={() => {
                         
