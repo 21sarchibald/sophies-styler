@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { questions } from "../data/questions";
+import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import analyzeQuiz from "../services/quizApi";
 
@@ -30,8 +31,8 @@ export default function ColorPalette() {
         return (
             <div className="flex justify-evenly">
                 {answers.map((answer) => (
-                        <button
-                            className={"rounded-2xl p-10 hover:bg-blue-50 hover:cursor-pointer"}
+                        <QuizAnswerButton
+                            
                             key={answer.id}
                             onClick={() => {
                                 const answerWeights: { key: keyof typeof questionAnswers; value:  number }[] = [];
@@ -44,7 +45,7 @@ export default function ColorPalette() {
                         >
                             {answer.image && <img className="pb-5 mx-auto"src={answer.image[0]} alt="Answer visual aid"/>}
                             {answer.text}
-                        </button>
+                        </QuizAnswerButton>
                 ))
                 }
             </div>
