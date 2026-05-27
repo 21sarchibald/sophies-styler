@@ -6,6 +6,23 @@ import whiteFabric from '../assets/images/white-fabric.png';
 import creamFabric from '../assets/images/cream-fabric.png';
 import whiteCreamFabric from '../assets/images/white-cream-fabric.png';
 
+import tanColor from '../assets/images/tan-color.png';
+import burntColor from '../assets/images/burnt-color.png';
+import tanBurntColor from '../assets/images/tan-burnt-color.png';
+
+import brightVivid from '../assets/images/bright-vivid.png';
+import softDusty from '../assets/images/soft-dusty.png';
+import deepRich from '../assets/images/deep-rich.png';
+import lightAiry from '../assets/images/light-airy.png';
+
+import lowContrast from '../assets/images/low-contrast.png';
+import mediumContrast from '../assets/images/medium-contrast.png';
+import highContrast from '../assets/images/high-contrast.png';
+
+import pinkBerry from '../assets/images/pink-berry.png';
+import peachCoral from '../assets/images/peach-coral.png';
+import nudeSoft from '../assets/images/nude-soft.png';
+import boldDramatic from '../assets/images/bold-dramatic.png';
 
 export const questions = [
     {
@@ -15,7 +32,7 @@ export const questions = [
         {
           id: "gold",
           text: "Gold",
-          images: [goldColor],
+          image: [goldColor],
           weights: {
             warm: 3
           }
@@ -23,7 +40,7 @@ export const questions = [
         {
           id: "both",
           text: "Both",
-          images: [goldSilverColors],
+          image: [goldSilverColors],
           weights: {
             warm: 1,
             cool: 1
@@ -32,7 +49,7 @@ export const questions = [
         {
           id: "silver",
           text: "Silver",
-          images: [silverColor],
+          image: [silverColor],
           weights: {
             cool: 3
           }
@@ -48,7 +65,7 @@ export const questions = [
         {
           id: "bright-white",
           text: "Bright White",
-          images: [whiteFabric],
+          image: [whiteFabric],
           weights: {
             cool: 2,
             bright: 2
@@ -57,7 +74,7 @@ export const questions = [
         {
           id: "both",
           text: "Both",
-          images: [whiteCreamFabric],
+          image: [whiteCreamFabric],
           weights: {
             warm: 1,
             cool: 1
@@ -66,7 +83,7 @@ export const questions = [
         {
           id: "cream-ivory",
           text: "Cream / Ivory",
-          images: [creamFabric],
+          image: [creamFabric],
           weights: {
             warm: 2,
             muted: 1
@@ -83,7 +100,7 @@ export const questions = [
         {
           id: "tan",
           text: "Tan Easily",
-          colors: ['#C67F4C'],
+          image: [tanColor],
           weights: {
             warm: 2,
             dark: 1
@@ -93,7 +110,7 @@ export const questions = [
         {
           id: "burn-then-tan",
           text: "Burn Then Tan",
-          colors: ['#C67F4C', '#FF9375'],
+          image: [tanBurntColor],
           weights: {
             warm: 1,
             cool: 1
@@ -103,7 +120,7 @@ export const questions = [
         {
           id: "burn",
           text: "Burn Easily",
-          colors: ['#FF9375'],
+          image: [burntColor],
           weights: {
             cool: 2,
             light: 1
@@ -119,7 +136,7 @@ export const questions = [
         {
           id: "bright-vivid",
           text: "Bright & Vivid",
-          colors: ['#34C8FE', '#FA54AC', '#F5E648', '#48F5AA'],
+          image: [brightVivid],
           weights: {
             bright: 3,
             highContrast: 1
@@ -129,7 +146,7 @@ export const questions = [
         {
           id: "soft-dusty",
           text: "Soft & Dusty",
-          colors: ['#ABD7F4', '#E5A9C9', '#F7E7AD', '#8CD7B7'],
+          image: [softDusty],
           weights: {
             muted: 3,
             lowContrast: 1
@@ -139,7 +156,7 @@ export const questions = [
         {
           id: "deep-rich",
           text: "Deep & Rich",
-          colors: ['#084BA2', '#B82504', '#EACC0D', '#087025'],
+          image: [deepRich],
           weights: {
             dark: 3
           }
@@ -148,7 +165,7 @@ export const questions = [
         {
           id: "light-airy",
           text: "Light & Airy",
-          colors: ['#96D5FF', '#FFD4E3', '#FFFFA4', '#C7FFBC'],
+          image: [lightAiry],
           weights: {
             light: 3
           }
@@ -163,7 +180,7 @@ export const questions = [
         {
           id: "low",
           text: "Low Contrast",
-          colors: ['#744726', '#4E2D15'],
+          image: [lowContrast],
           weights: {
             lowContrast: 3,
             muted: 1
@@ -173,7 +190,7 @@ export const questions = [
         {
           id: "medium",
           text: "Medium Contrast",
-          colors: ['#F3AD7B', '#BE621F'],
+          image: [mediumContrast],
           weights: {
             highContrast: 1,
             lowContrast: 1
@@ -183,7 +200,7 @@ export const questions = [
         {
           id: "high",
           text: "High Contrast",
-          colors: ['#FFDCC3', '#48250C'],
+          image: [highContrast],
           weights: {
             highContrast: 3,
             dark: 1,
@@ -200,7 +217,7 @@ export const questions = [
         {
           id: "pink-berry",
           text: "Pink / Berry",
-          colors: ['#EE70E5', '#FA54AC', '#E40270', '#CD78B5'],
+          image: [pinkBerry],
           weights: {
             cool: 2
           }
@@ -209,7 +226,7 @@ export const questions = [
         {
           id: "peach-coral",
           text: "Peach / Coral",
-          colors: ['#FAB3B3', '#FF6668', '#FF7A6B', '#E34446'],
+          image: [peachCoral],
           weights: {
             warm: 2
           }
@@ -218,7 +235,7 @@ export const questions = [
         {
           id: "nude-soft",
           text: "Nude / Soft",
-          colors: ['#DA8C7F', '#974E47', '#803C35', '#C5645A'],
+          image: [nudeSoft],
           weights: {
             muted: 2,
             lowContrast: 1
@@ -228,7 +245,7 @@ export const questions = [
         {
           id: "bold-dramatic",
           text: "Bold / Dramatic",
-          colors: ['#DB0000', '#F82FA1', '#6A0303', '#A914A7'],
+          image: [boldDramatic],
           weights: {
             bright: 2,
             dark: 1,
