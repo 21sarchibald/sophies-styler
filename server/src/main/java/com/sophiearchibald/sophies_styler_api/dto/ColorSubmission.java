@@ -1,6 +1,10 @@
+
 package com.sophiearchibald.sophies_styler_api.dto;
 
-public class TraitSubmission {
+import lombok.Data;
+
+@Data
+public class ColorSubmission {
 
     public double warm;
     public double cool;
@@ -13,4 +17,5 @@ public class TraitSubmission {
 
     public double highContrast;
     public double lowContrast;
+
 }
