@@ -21,7 +21,7 @@ public class ColorController {
     }
 
     @PostMapping("/analyze")
-    public ColorResult analyzeQuiz(@RequestBody ColorSubmission traits) {
+    public ColorResult analyzeColors(@RequestBody ColorSubmission traits) {
         System.out.print(traits);
         System.out.println("it worked");
 
