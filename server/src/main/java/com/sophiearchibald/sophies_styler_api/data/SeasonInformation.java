@@ -1,4 +1,4 @@
 package com.sophiearchibald.sophies_styler_api.data;
 
-public class SeasonSuggestions {
+public class SeasonInformation {
 }
