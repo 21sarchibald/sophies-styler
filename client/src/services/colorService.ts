@@ -9,17 +9,19 @@ export interface Traits {
     lowContrast: number;
 }
 
-export default async function analyzeQuiz(traits: Traits) {
+export default async function analyzeColors(traits: Traits) {
 
     try {
-        const results = await fetch('http://localhost:8080/api/analyze', {
+        const results = await fetch('http://localhost:8080/api/colors/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(traits)
         });
-        console.log("Fetch worked");
+        
+        const text = await results.text();
+        console.log(text);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)

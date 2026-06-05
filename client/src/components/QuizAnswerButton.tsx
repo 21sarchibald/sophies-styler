@@ -1,19 +1,16 @@
-import { useState } from "react";
 
 export default function QuizAnswerButton({ 
     children,
+    isSelected,
     onClick,
 }: {
     children: React.ReactNode;
+    isSelected: boolean;
     onClick: () => void;
 }) {
-
-    const [isSelected, setIsSelected] = useState(false);
-
     return (
         <button 
             onClick={() => {
-                setIsSelected(true);
                 onClick();
             }}
 

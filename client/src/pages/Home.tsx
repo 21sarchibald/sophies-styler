@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export default function Home() {
     return (
         <>
-        <div className="flex gap-15 ml-30 mt-20">
+        <div className="flex flex-col gap-15 ml-30 mt-20 lg:flex-row">
             <Link to="/color-palette" className="w-80 h-150 font-bold bg-violet-200 rounded-xl block hover:cursor-pointer transition-all duration-200 hover:scale-105">
                     <h3 className="font-heading text-3xl mb-20 mt-15 text-center">Discover your color palette</h3>
                     <img src={paintSwatchImage} className="my-0 mx-auto"/>

@@ -24,7 +24,7 @@ import peachCoral from '../assets/images/peach-coral.png';
 import nudeSoft from '../assets/images/nude-soft.png';
 import boldDramatic from '../assets/images/bold-dramatic.png';
 
-export const questions = [
+export const colorQuestions = [
     {
       id: "jewelry",
       heading: "Which jewelry looks better on you?",
@@ -179,7 +179,7 @@ export const questions = [
       answers: [
         {
           id: "low",
-          text: "Low Contrast",
+          text: "Low",
           image: [lowContrast],
           weights: {
             lowContrast: 3,
@@ -189,7 +189,7 @@ export const questions = [
   
         {
           id: "medium",
-          text: "Medium Contrast",
+          text: "Medium",
           image: [mediumContrast],
           weights: {
             highContrast: 1,
@@ -199,7 +199,7 @@ export const questions = [
   
         {
           id: "high",
-          text: "High Contrast",
+          text: "High",
           image: [highContrast],
           weights: {
             highContrast: 3,
