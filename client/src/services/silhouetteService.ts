@@ -2,14 +2,14 @@ type SilhouetteSubmission = {
     silhouette: string;
 }
 
-export default async function analyzeSilhouette(silhouette: SilhouetteSubmission) {
+export default async function analyzeSilhouette(silhouetteSubmission: SilhouetteSubmission) {
     try {
         const results = await fetch('http://localhost:8080/api/silhouette/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(silhouette)
+            body: JSON.stringify(silhouetteSubmission)
         });
         
         const text = await results.text();

@@ -2,10 +2,14 @@
 export default function QuizAnswerButton({ 
     children,
     isSelected,
+    // padding,
+    // width,
     onClick,
 }: {
     children: React.ReactNode;
     isSelected: boolean;
+    padding?: number;
+    width?: number;
     onClick: () => void;
 }) {
     return (

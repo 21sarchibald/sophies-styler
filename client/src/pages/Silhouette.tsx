@@ -29,17 +29,18 @@ export default function Silhouette() {
         const answers = silhouetteQuestions[questionIndex].answers;
 
         return (
-            <div className="flex justify-evenly">
+            <div className="flex flex-wrap justify-evenly">
                 {answers.map((answer) => (
                         <QuizAnswerButton
                             key={answer.id}
                             isSelected={selectedAnswer?.id === answer.id}
+                            padding={5}
                             onClick={() => {
                                 setSelectedAnswer(answer);
                             }}
                         >
-                            {answer.image && <img className="pb-5 mx-auto w-85 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
-                            {answer.text}
+                            {answer.image && <img className="pb-5 mx-auto w-28"src={answer.image[0]} alt="Answer visual aid"/>}
+                            {answer.text && <div className="w-32">{answer.text}</div>}
                         </QuizAnswerButton>
                 ))
                 }
@@ -65,7 +66,7 @@ export default function Silhouette() {
                         {populateQuestion(questionIndex)}
                     </div>
                     <button 
-                        className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-5 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                        className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-20 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
                         disabled={!selectedAnswer}
 
 

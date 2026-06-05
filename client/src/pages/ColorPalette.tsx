@@ -66,6 +66,7 @@ export default function ColorPalette() {
                             
                             key={answer.id}
                             isSelected={selectedAnswer?.id === answer.id}
+                            padding={10}
                             onClick={() => {
 
                                 setSelectedAnswer(answer);
@@ -78,7 +79,7 @@ export default function ColorPalette() {
                                 // console.log(selectedWeights);
                             }}
                         >
-                            {answer.image && <img className="pb-5 mx-auto w-85 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
+                            {answer.image && <img className="pb-5 mx-auto w-80 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
                             {answer.text}
                         </QuizAnswerButton>
                 ))
