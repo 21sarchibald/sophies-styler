@@ -1,3 +1,5 @@
+import type { SeasonDetails } from "../types/SeasonDetails";
+
 export interface Traits {
     warm: number;
     cool: number;
@@ -9,7 +11,7 @@ export interface Traits {
     lowContrast: number;
 }
 
-export default async function analyzeColors(traits: Traits) {
+export default async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
 
     try {
         const results = await fetch('http://localhost:8080/api/colors/analyze', {
@@ -20,17 +22,18 @@ export default async function analyzeColors(traits: Traits) {
             body: JSON.stringify(traits)
         });
         
-        const text = await results.text();
-        console.log(text);
+        const response = await results.json();
+        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
         }
-
-
+        
+        return response as SeasonDetails;
     }
-
+    
     catch (error) {
         console.log(error)
+        return null;
     }
 }

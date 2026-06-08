@@ -52,6 +52,10 @@ export default function Silhouette() {
         <>
         <div>Silhouette</div>
         <button onClick={() => setQuizModalOpen(true)}>Open Quiz</button>
+        <main className="grid grid-cols-3">
+            <div className="col-span-2">Pics of Suggestions</div>
+            <div className="col-span-1">Suggestion Info</div>
+        </main>
 
         {quizModalOpen && (
             <div className="fixed inset-0 flex font-heading">
