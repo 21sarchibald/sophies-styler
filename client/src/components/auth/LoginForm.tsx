@@ -1,14 +1,23 @@
 import { useState } from 'react';
 import { signInWithEmail } from '../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-    function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        return signInWithEmail(email, password);
+        const { data, error} = await signInWithEmail(email, password);
+
+        if (error) {
+            console.log(error);
+            return;
+        }
+        console.log("logged in:", data);
+        navigate("/users/dashboard");
     }
 
     return (

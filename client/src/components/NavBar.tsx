@@ -4,8 +4,13 @@ import SilhouetteIcon from '../assets/icons/silhouette.svg?react';
 import HairIcon from '../assets/icons/hair.svg?react';
 import ProfileIcon from '../assets/icons/profile-icon.svg?react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/useAuth';
 
 export default function NavBar() {
+
+  const { user } = useAuth();
+
+  console.log("navbaruser: ", user);
 
     return (
         // Add media queries for mobile-first design. Let's make everything mobile-friendly from the start
@@ -25,7 +30,7 @@ export default function NavBar() {
           </button>
           </div>
           <button className="hover:bg-gray-300 rounded-lg">
-          <Link to="/users/dashboard"><ProfileIcon className="mx-auto my-2"/></Link>
+          <Link to={user ? "/users/dashboard" : "/users/login"}><ProfileIcon className="mx-auto my-2"/></Link>
           </button>
         </nav>
       );
