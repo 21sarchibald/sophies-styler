@@ -8,9 +8,10 @@ export default function RegistrationForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        return registerNewUser(firstName, lastName, email, password);
+        const result = await registerNewUser(firstName, lastName, email, password);
+        console.log("worked?", result);
     }
 
     return (

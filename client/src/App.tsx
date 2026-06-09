@@ -9,6 +9,7 @@ import Hair from './pages/Hair'
 import './index.css'
 import Register from './pages/users/Register'
 import Login from './pages/users/Login'
+import Dashboard from './pages/users/Dashboard'
 
 export default function App() {
 
@@ -28,7 +29,11 @@ export default function App() {
               <Route path="/hair" element={< Hair />} />
               <Route path="/users/register" element={<Register />} />
               <Route path="/users/login" element={<Login />} />
-              <Route path="/users/dashboard" element={<Register />} />
+              <Route path="/users/dashboard" element={
+                // <ProtectedRoute>
+                <Dashboard />
+                // </ProtectedRoute>
+                } />
             </Routes>
           </main>
         </div>
