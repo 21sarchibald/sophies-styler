@@ -10,6 +10,7 @@ import './index.css'
 import Register from './pages/users/Register'
 import Login from './pages/users/Login'
 import Dashboard from './pages/users/Dashboard'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 export default function App() {
 
@@ -30,9 +31,9 @@ export default function App() {
               <Route path="/users/register" element={<Register />} />
               <Route path="/users/login" element={<Login />} />
               <Route path="/users/dashboard" element={
-                // <ProtectedRoute>
-                <Dashboard />
-                // </ProtectedRoute>
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
                 } />
             </Routes>
           </main>

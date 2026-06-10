@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
@@ -58,6 +58,11 @@ export default function ColorPalette() {
         )
     }
 
+    useEffect(() => {
+        console.log("inside use effect", recommendedSeasonDetails)
+        console.log("inside use effect", recommendedSeasonDetails?.season)
+    }, [recommendedSeasonDetails])
+
     const populateQuestion = (questionIndex: number) => {
         const answers = colorQuestions[questionIndex].answers;
 
@@ -98,7 +103,7 @@ export default function ColorPalette() {
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
-                    <h2 className="font-heading font-extrabold text-2xl">{recommendedSeasonDetails.season}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl p-10">{recommendedSeasonDetails.season}</h2>
                 )}
                 <div className="grid grid-cols-7 h-120 w-68 mx-auto">
                     {/* result.bestColors.map(color => {
@@ -107,17 +112,19 @@ export default function ColorPalette() {
                             style={{ backgroundColor: color}}
                         ></div>
                     }) */}
-                    <div className="bg-red-500"></div>
-                    <div className="bg-orange-500"></div>
-                    <div className="bg-yellow-500"></div>
-                    <div className="bg-green-500"></div>
-                    <div className="bg-blue-500"></div>
-                    <div className="bg-indigo-500"></div>
-                    <div className="bg-purple-500"></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[0]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[1]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[2]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[3]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[4]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[5]}` || 'white'}}></div>
+                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[6]}` || 'white'}}></div>
                 </div>
-                {/* } */}
+                <div>
+                    <p className="font-heading text-left p-10">{recommendedSeasonDetails?.description}</p>
+                </div>
             <button
-                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer"
+                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setQuizModalOpen(true)}
             >Select Color Palette <DownArrow className="inline"/>
             </button>
@@ -155,7 +162,8 @@ export default function ColorPalette() {
                         if (questionIndex >= colorQuestions.length - 1) {
                             
                             const apiResponse = await analyzeColors(answersArray) || null;
-                            setRecommendedSeasonDetails(apiResponse);
+                            setRecommendedSeasonDetails(apiResponse?.seasonDetails);
+                            
                             console.log("recommended season stuff", recommendedSeasonDetails);
                             resetQuiz();
                         }

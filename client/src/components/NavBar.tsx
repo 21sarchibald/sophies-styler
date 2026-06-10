@@ -16,11 +16,11 @@ export default function NavBar() {
         // Add media queries for mobile-first design. Let's make everything mobile-friendly from the start
         <nav className="text-center flex flex-col justify-between gap-6 bg-white w-23 h-screen p-4 sticky top-0 mt-5">
           <div>
-          <button className="hover:bg-gray-300 rounded-lg">
+          <button className="hover:bg-gray-300 rounded-lg pl-2 pr-2 w-full">
             <Link to="/"><HomeIcon className="mx-auto my-2"/></Link>
           </button>
           <button className="hover:bg-gray-300 rounded-lg">
-          <Link to="/color-palette"><PaletteIcon className="mx-auto my-2"/></Link>
+          <Link to="/color-palette"><PaletteIcon className="mx-auto my-2 w-full"/></Link>
           </button>
           <button className="hover:bg-gray-300 rounded-lg">
           <Link to="/silhouette"><SilhouetteIcon className="mx-auto my-2"/></Link>
