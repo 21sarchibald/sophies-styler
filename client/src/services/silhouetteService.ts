@@ -1,5 +1,8 @@
+import type { SilhouetteDetails } from "../types/SilhouetteDetails";
+
 type SilhouetteSubmission = {
     silhouette: string;
+    proportions: string;
 }
 
 export default async function analyzeSilhouette(silhouetteSubmission: SilhouetteSubmission) {
@@ -12,17 +15,18 @@ export default async function analyzeSilhouette(silhouetteSubmission: Silhouette
             body: JSON.stringify(silhouetteSubmission)
         });
         
-        const text = await results.text();
-        console.log(text);
+        const response = await results.json();
+        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
         }
 
-
+        return response as SilhouetteDetails;
     }
 
     catch (error) {
-        console.log(error)
+        console.log(error);
+        return null;
     }
 }

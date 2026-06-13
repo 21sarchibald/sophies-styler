@@ -1,8 +1,16 @@
 import { useState } from "react";
+import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { silhouetteQuestions } from "../data/silhouetteQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import analyzeSilhouette from "../services/silhouetteService";
+import type { SilhouetteDetails } from "../types/SilhouetteDetails";
+
+import appleSilhouette from "../assets/images/apple-silhouette.png";
+import hourglassSilhouette from "../assets/images/hourglass-silhouette.png";
+import invertedTriangleSilhouette from '../assets/images/inverted-triangle-silhouette.png';
+import pearSilhouette from "../assets/images/pear-silhouette.png";
+import rectangleSilhouette from "../assets/images/rectangle-silhouette.png";
 
 export default function Silhouette() {
 
@@ -14,15 +22,38 @@ export default function Silhouette() {
 
     type SilhouetteSubmission = {
         silhouette: string;
+        proportions: string;
+    }
+
+    const silhouetteImages = {
+        Apple: appleSilhouette,
+        Hourglass: hourglassSilhouette,
+        "Inverted Triangle": invertedTriangleSilhouette,
+        Pear: pearSilhouette,
+        Rectangle: rectangleSilhouette,
     }
 
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<SilhouetteAnswer | null>(null);
-    const questionIndex = 0;
+    const [questionIndex, setQuestionIndex] = useState(0);
+
+    const [questionAnswers, setQuestionAnswers] = useState<SilhouetteSubmission>({
+        silhouette: "",
+        proportions: "",
+    });
+
+    const [silhouetteDetails, setSilhouetteDetails] = useState<SilhouetteDetails | null>(null);
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
+        setQuestionIndex(0);
         setSelectedAnswer(null);
+        setQuestionAnswers(
+            {
+                silhouette: "",
+                proportions: "",
+            }
+        )
     }
 
     const populateQuestion = (questionIndex: number) => {
@@ -50,11 +81,29 @@ export default function Silhouette() {
 
     return (
         <>
-        <div>Silhouette</div>
-        <button onClick={() => setQuizModalOpen(true)}>Open Quiz</button>
-        <main className="grid grid-cols-3">
+        <main className="grid grid-cols-3 h-full">
             <div className="col-span-2">Pics of Suggestions</div>
-            <div className="col-span-1">Suggestion Info</div>
+            <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
+                <h2 className="font-heading text-2xl">Your Silhouette</h2>
+                {silhouetteDetails && (
+                    <h2 className="font-heading font-extrabold text-2xl pt-5">{silhouetteDetails.silhouette}</h2>
+                )}
+                <div className=" h-120 w-68 mx-auto">
+                    {silhouetteDetails && (
+                        <>
+                        <img src={silhouetteImages[silhouetteDetails.silhouette]} className="w-36 mx-auto"/>
+                        <p className="font-heading text-left p-5">{silhouetteDetails.proportions}</p>
+                        </>
+                    )}
+                </div>
+                <div>
+                </div>
+            <button
+                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
+                onClick={() => setQuizModalOpen(true)}
+            >Select Silhouette <DownArrow className="inline"/>
+            </button>
+            </div>
         </main>
 
         {quizModalOpen && (
@@ -63,7 +112,7 @@ export default function Silhouette() {
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative mx-auto my-auto bg-white w-180 h-120 opacity-100 z-10 p-5">
+                <div className="relative mx-auto my-auto bg-white w-280 h-150 opacity-100 z-10 p-5">
 
                     <h3 className="font-heading text-2xl text-center p-5">Which silhouette matches yours best?</h3>
                     <div>
@@ -74,17 +123,32 @@ export default function Silhouette() {
                         disabled={!selectedAnswer}
 
 
-                        onClick={() => {
+                        onClick={ async () => {
+                            const answersArray = { ... questionAnswers };
+                            const questionId = silhouetteQuestions[questionIndex].id as keyof SilhouetteSubmission;
 
-                            if (selectedAnswer) {
-                                console.log(selectedAnswer.text);
-                                const text = selectedAnswer.text;
-                                const submission: SilhouetteSubmission = { silhouette: text }
-                                analyzeSilhouette(submission);
+                            answersArray[questionId] = selectedAnswer?.text ?? "";
+
+                            setQuestionAnswers(answersArray);
+
+                            if (questionIndex >= silhouetteQuestions.length - 1) {
+                                const apiResponse = await analyzeSilhouette(answersArray) || null;
+
+                                if (apiResponse) {
+                                    setSilhouetteDetails(apiResponse);
+                                }
+
+                                localStorage.setItem("silhouette", JSON.stringify(apiResponse));
                                 resetQuiz();
                             }
+
+                            else {
+                                setQuestionIndex(questionIndex + 1);
+                                setSelectedAnswer(null);
+                            }
+
                         }
-                        }>Submit</button>
+                        }>Next</button>
                     {/* <div>Progress bar</div> */}
 
                 </div>

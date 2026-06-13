@@ -1,8 +1,10 @@
 import { useState } from "react";
+import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import analyzeHair from "../services/hairService";
+import type { HairDetails } from "../types/HairDetails";
 
 export default function Hair() {
 
@@ -14,15 +16,33 @@ export default function Hair() {
 
     type HairSubmission = {
         faceShape: string;
+        hairColor: string;
+        hairTexture: string;
     }
 
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<HairAnswer | null>(null);
-    const questionIndex = 0;
+    const [questionIndex, setQuestionIndex] = useState(0);
+
+    const [questionAnswers, setQuestionAnswers] = useState<HairSubmission>({
+        faceShape: "",
+        hairColor: "",
+        hairTexture: "",
+    })
+
+    const [hairDetails, setHairDetails] = useState<HairDetails | null>(null);
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
+        setQuestionIndex(0);
         setSelectedAnswer(null);
+        setQuestionAnswers(
+            {
+                faceShape: "",
+                hairColor: "",
+                hairTexture: "",
+            }
+        )
     }
 
     const populateQuestion = (questionIndex: number) => {
@@ -50,11 +70,25 @@ export default function Hair() {
 
     return (
         <>
-        <div>Hair</div>
-        <button onClick={() => setQuizModalOpen(true)}>Open Quiz</button>
-        <main className="grid grid-cols-3">
+        <main className="grid grid-cols-3 h-full">
             <div className="col-span-2">Pics of Suggestions</div>
-            <div className="col-span-1">Suggestion Info</div>
+            <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
+                <h2 className="font-heading text-2xl">Your Hairstyle</h2>
+                {/* {recommendedSeasonDetails && (
+                    <h2 className="font-heading font-extrabold text-2xl pt-5">{recommendedSeasonDetails.season}</h2>
+                )} */}
+                <div className="grid grid-cols-7 h-120 w-68 mx-auto">
+                    {/* <img>head image</img> */}
+                </div>
+                <div>
+                    {/* <p className="font-heading text-left p-5">{recommendedSeasonDetails?.description}</p> */}
+                </div>
+            <button
+                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
+                onClick={() => setQuizModalOpen(true)}
+            >Select Hairstyle <DownArrow className="inline"/>
+            </button>
+            </div>
         </main>
 
         {quizModalOpen && (
@@ -63,9 +97,9 @@ export default function Hair() {
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative mx-auto my-auto bg-white w-180 h-120 opacity-100 z-10 p-5">
+                <div className="relative mx-auto my-auto bg-white w-350 h-160 opacity-100 z-10 p-5">
 
-                    <h3 className="font-heading text-2xl text-center p-5">Which silhouette matches yours best?</h3>
+                    <h3 className="font-heading text-2xl text-center p-5">Which face shape matches yours best?</h3>
                     <div>
                         {populateQuestion(questionIndex)}
                     </div>
@@ -74,17 +108,31 @@ export default function Hair() {
                         disabled={!selectedAnswer}
 
 
-                        onClick={() => {
+                        onClick={ async () => {
+                            const answersArray = { ... questionAnswers };
+                            const questionId = hairQuestions[questionIndex].id as keyof HairSubmission;
 
-                            if (selectedAnswer) {
-                                console.log(selectedAnswer.text);
-                                const text = selectedAnswer.text;
-                                const submission: HairSubmission = { faceShape: text }
-                                analyzeHair(submission);
+                            answersArray[questionId] = selectedAnswer?.text ?? "";
+
+                            setQuestionAnswers(answersArray);
+
+                            if (questionIndex >= hairQuestions.length - 1) {
+                                const apiResponse = await analyzeHair(answersArray) || null;
+
+                                if (apiResponse) {
+                                    setHairDetails(apiResponse);
+                                }
+
+                                localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 resetQuiz();
                             }
+
+                            else {
+                                setQuestionIndex(questionIndex + 1);
+                                setSelectedAnswer(null);
+                            }
                         }
-                        }>Submit</button>
+                        }>Next</button>
                     {/* <div>Progress bar</div> */}
 
                 </div>

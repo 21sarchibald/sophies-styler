@@ -7,3 +7,7 @@
     font-family: "Stint Ultra Expanded", serif;
   }
 }
+
+* {
+  outline: 1px solid red;
+}

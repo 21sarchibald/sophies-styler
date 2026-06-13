@@ -4,6 +4,8 @@ import invertedTriangleSilhouette from '../assets/images/inverted-triangle-silho
 import pearSilhouette from "../assets/images/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/rectangle-silhouette.png";
 
+import proportionPlaceholder from "../assets/images/placeholder-proportions.png";
+
 
 export const silhouetteQuestions = [
     {
@@ -53,6 +55,38 @@ export const silhouetteQuestions = [
             cool: 3
           }
         }
-  
       ]
-    },]
+    },
+    {
+      id: "proportions",
+      heading: "Which torso/leg proportions best match yours?",
+      answers: [
+        {
+          id: "short-torso-long-legs",
+          text: "Short Torso / Long Legs",
+          image: [proportionPlaceholder],
+          weights: {
+            warm: 3
+          }
+        },
+        {
+          id: "balanced-torso-balanced-legs",
+          text: "Balanced Torso / Legs",
+          image: [proportionPlaceholder],
+          weights: {
+            warm: 1,
+            cool: 1
+          }
+        },
+        {
+          id: "long-torso-short-legs",
+          text: "Long Torso / Long Legs",
+          image: [proportionPlaceholder],
+          weights: {
+            warm: 1,
+            cool: 1
+          }
+        },
+  ]},
+  
+  ]

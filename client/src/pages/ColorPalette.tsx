@@ -63,6 +63,13 @@ export default function ColorPalette() {
         console.log("inside use effect", recommendedSeasonDetails?.season)
     }, [recommendedSeasonDetails])
 
+    useEffect(() => {
+        const palette = localStorage.getItem("colorPalette")
+        if (palette) {
+            setRecommendedSeasonDetails(JSON.parse(palette));
+        }
+    }, [])
+
     const populateQuestion = (questionIndex: number) => {
         const answers = colorQuestions[questionIndex].answers;
 
@@ -97,13 +104,12 @@ export default function ColorPalette() {
 
     return (
         <>
-        <div>Color Palette</div>
         <main className="grid grid-cols-3 h-full">
             <div className="col-span-2">Pics of Suggestions</div>
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
-                    <h2 className="font-heading font-extrabold text-2xl p-10">{recommendedSeasonDetails.season}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl pt-5">{recommendedSeasonDetails.season}</h2>
                 )}
                 <div className="grid grid-cols-7 h-120 w-68 mx-auto">
                     {/* result.bestColors.map(color => {
@@ -121,7 +127,7 @@ export default function ColorPalette() {
                     <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[6]}` || 'white'}}></div>
                 </div>
                 <div>
-                    <p className="font-heading text-left p-10">{recommendedSeasonDetails?.description}</p>
+                    <p className="font-heading text-left p-5">{recommendedSeasonDetails?.description}</p>
                 </div>
             <button
                 className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
@@ -162,9 +168,11 @@ export default function ColorPalette() {
                         if (questionIndex >= colorQuestions.length - 1) {
                             
                             const apiResponse = await analyzeColors(answersArray) || null;
-                            setRecommendedSeasonDetails(apiResponse?.seasonDetails);
+                            setRecommendedSeasonDetails(apiResponse);
+
+                            localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
                             
-                            console.log("recommended season stuff", recommendedSeasonDetails);
+                            // console.log("recommended season stuff", recommendedSeasonDetails);
                             resetQuiz();
                         }
                         else {

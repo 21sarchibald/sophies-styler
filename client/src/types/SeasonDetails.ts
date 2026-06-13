@@ -1,7 +1,4 @@
 export interface SeasonDetails {
-    seasonDetails: {
-
-    
     season: string;
     seasonFamily: string;
     temperature: string;
@@ -15,5 +12,4 @@ export interface SeasonDetails {
     metals: string;
 
     avoidColors: string[];
-    }
 }

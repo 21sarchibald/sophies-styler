@@ -1,3 +1,4 @@
+import type { HairDetails } from "../types/HairDetails";
 
 type HairSubmission = {
     faceShape: string;
@@ -13,17 +14,18 @@ export default async function analyzeHair(hairSubmission: HairSubmission) {
             body: JSON.stringify(hairSubmission)
         });
         
-        const text = await results.text();
-        console.log(text);
+        const response = await results.json();
+        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
         }
 
-
+        return response as HairDetails;
     }
 
     catch (error) {
-        console.log(error)
+        console.log(error);
+        return null;
     }
 }
