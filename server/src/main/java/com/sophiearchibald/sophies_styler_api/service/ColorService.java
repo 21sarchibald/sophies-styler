@@ -79,4 +79,8 @@ public SeasonDetails calculateSeason(ColorSubmission traits) {
         };
     }
 
+    public SeasonDetails getSeason(String seasonName) {
+        return SeasonInformation.seasons.get(seasonName);
+    }
+
 }

@@ -28,4 +28,9 @@ public class ColorController {
 
         return colorService.calculateSeason(traits);
     }
+
+    @PostMapping("/getPalette")
+    public SeasonDetails getSeason(@RequestBody String seasonName) {
+        return colorService.getSeason(seasonName);
+    }
 }
