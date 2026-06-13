@@ -11,7 +11,7 @@ export interface Traits {
     lowContrast: number;
 }
 
-export default async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
+export async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
 
     try {
         const results = await fetch('http://localhost:8080/api/colors/analyze', {
@@ -34,6 +34,31 @@ export default async function analyzeColors(traits: Traits): Promise<SeasonDetai
     
     catch (error) {
         console.log(error)
+        return null;
+    }
+}
+
+export async function getColorPalette(paletteName: string): Promise<SeasonDetails | null> {
+    try {
+        const results = await fetch('http://localhost:8080/api/colors/getPalette', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: paletteName,
+        });
+
+        const response = await results.json();
+        console.log(response);
+
+        if (!results.ok) {
+            throw new Error(`Error: ${results.status}`)
+        }
+
+        return response as SeasonDetails;
+    }
+    catch (error) {
+        console.log(error);
         return null;
     }
 }

@@ -5,6 +5,13 @@ import ovalHead from "../assets/images/oval-head.png";
 import roundHead from "../assets/images/round-head.png";
 import squareHead from "../assets/images/square-head.png";
 
+import whiteSilverHair from "../assets/images/white-silver-hair.png"
+import blondeHair from "../assets/images/blonde-hair.png"
+import lightBrownHair from "../assets/images/light-brown-hair.png"
+import redAuburnHair from "../assets/images/red-auburn-hair.png"
+import darkBrownHair from "../assets/images/dark-brown-hair.png"
+import blackHair from "../assets/images/black-hair.png"
+
 import straightHair from "../assets/images/type-1-hair.png"
 import wavyHair from "../assets/images/type-2-hair.png"
 import curlyHair from "../assets/images/type-3-hair.png"
@@ -76,7 +83,7 @@ export const hairQuestions = [
         {
           id: "white-silver",
           text: "White / Silver",
-          image: [diamondHead],
+          image: [whiteSilverHair],
           weights: {
             warm: 3
           }
@@ -84,7 +91,7 @@ export const hairQuestions = [
         {
           id: "blonde",
           text: "Blonde",
-          image: [diamondHead],
+          image: [blondeHair],
           weights: {
             warm: 3
           }
@@ -92,7 +99,7 @@ export const hairQuestions = [
         {
           id: "light-brown",
           text: "Light Brown",
-          image: [diamondHead],
+          image: [lightBrownHair],
           weights: {
             warm: 3
           }
@@ -100,7 +107,7 @@ export const hairQuestions = [
         {
           id: "red-auburn",
           text: "Red / Auburn",
-          image: [diamondHead],
+          image: [redAuburnHair],
           weights: {
             warm: 3
           }
@@ -108,7 +115,7 @@ export const hairQuestions = [
         {
           id: "dark-brown",
           text: "Dark Brown",
-          image: [diamondHead],
+          image: [darkBrownHair],
           weights: {
             warm: 3
           }
@@ -116,7 +123,7 @@ export const hairQuestions = [
         {
           id: "black",
           text: "Black",
-          image: [diamondHead],
+          image: [blackHair],
           weights: {
             warm: 3
           }

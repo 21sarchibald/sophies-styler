@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
+import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 import type { SeasonDetails } from "../types/SeasonDetails";
 
-import analyzeColors from "../services/colorService";
+import { analyzeColors, getColorPalette } from "../services/colorService";
 
 export default function ColorPalette() {
 
@@ -24,6 +25,7 @@ export default function ColorPalette() {
           };
     }
 
+    const [selectionMenuOpen, setSelectionMenuOpen] = useState(false);
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
     const [questionAnswers, setQuestionAnswers] = useState({
@@ -56,6 +58,12 @@ export default function ColorPalette() {
                 lowContrast: 0
             }
         )
+    }
+
+    const selectPalette = async (paletteName: string) => {
+        const results = await getColorPalette(paletteName);
+        setRecommendedSeasonDetails(results);
+        localStorage.setItem("colorPalette", JSON.stringify(results));
     }
 
     useEffect(() => {
@@ -111,11 +119,11 @@ export default function ColorPalette() {
                 {recommendedSeasonDetails && (
                     <h2 className="font-heading font-extrabold text-2xl pt-5">{recommendedSeasonDetails.season}</h2>
                 )}
-                <div className="grid grid-cols-7 h-120 w-68 mx-auto">
-                    {/* result.bestColors.map(color => {
+                <div className="grid grid-cols-7 h-80 w-68 mx-auto">
+                    {/* recommendedSeasonDetails.bestColors.map(color => {
                         <div
                             key={color}
-                            style={{ backgroundColor: color}}
+                            style={{ backgroundColor: color || 'white}}
                         ></div>
                     }) */}
                     <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[0]}` || 'white'}}></div>
@@ -131,11 +139,28 @@ export default function ColorPalette() {
                 </div>
             <button
                 className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
-                onClick={() => setQuizModalOpen(true)}
+                onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
+                // onClick={() => setQuizModalOpen(true)}
             >Select Color Palette <DownArrow className="inline"/>
             </button>
+            {selectionMenuOpen && (
+                <div className="h-48 overflow-y-auto">
+                    <button 
+                    onClick={() => {
+                        setQuizModalOpen(true);
+                        setSelectionMenuOpen(false);
+                    }}
+                    className="w-full hover:bg-gray-200 hover:cursor-pointer p-2 border-solid border-2 border-black"
+                    >
+                        Take Quiz
+                    </button>
+                    <ColorSelection onClick={selectPalette} />
+                </div>
+            )}
             </div>
         </main>
+
+        
 
         {quizModalOpen && (
             <div className="fixed inset-0 flex font-heading">

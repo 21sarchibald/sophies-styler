@@ -60,7 +60,7 @@ export default function Hair() {
                             }}
                         >
                             {answer.image && <img className="pb-5 mx-auto w-36"src={answer.image[0]} alt="Answer visual aid"/>}
-                            {answer.text && <div className="w-32">{answer.text}</div>}
+                            {answer.text}
                         </QuizAnswerButton>
                 ))
                 }
