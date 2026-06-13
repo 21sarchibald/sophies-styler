@@ -10,6 +10,8 @@ public class HairService {
     public HairResult calculateHair(HairSubmission hairSubmission) {
         HairResult result = new HairResult();
         result.faceShape = hairSubmission.faceShape;
+        result.hairColor = hairSubmission.hairColor;
+        result.hairTexture = hairSubmission.hairTexture;
         return result;
     }
 

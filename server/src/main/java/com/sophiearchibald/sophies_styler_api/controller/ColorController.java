@@ -2,6 +2,7 @@ package com.sophiearchibald.sophies_styler_api.controller;
 
 import com.sophiearchibald.sophies_styler_api.dto.ColorSubmission;
 import com.sophiearchibald.sophies_styler_api.model.ColorResult;
+import com.sophiearchibald.sophies_styler_api.model.SeasonDetails;
 import com.sophiearchibald.sophies_styler_api.service.ColorService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class ColorController {
     }
 
     @PostMapping("/analyze")
-    public ColorResult analyzeColors(@RequestBody ColorSubmission traits) {
+    public SeasonDetails analyzeColors(@RequestBody ColorSubmission traits) {
         System.out.print(traits);
         System.out.println("it worked");
 

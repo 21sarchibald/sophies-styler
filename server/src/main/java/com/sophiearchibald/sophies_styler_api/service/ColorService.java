@@ -1,8 +1,10 @@
 package com.sophiearchibald.sophies_styler_api.service;
 
+import com.sophiearchibald.sophies_styler_api.data.SeasonInformation;
 import com.sophiearchibald.sophies_styler_api.data.SeasonProfiles;
 import com.sophiearchibald.sophies_styler_api.dto.ColorSubmission;
 import com.sophiearchibald.sophies_styler_api.model.ColorResult;
+import com.sophiearchibald.sophies_styler_api.model.SeasonDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,7 +13,7 @@ import java.util.Map;
 @Service
 public class ColorService {
 
-public ColorResult calculateSeason(ColorSubmission traits) {
+public SeasonDetails calculateSeason(ColorSubmission traits) {
 
     Map<String, Double> scores = new HashMap<>();
 
@@ -46,10 +48,11 @@ public ColorResult calculateSeason(ColorSubmission traits) {
     }
 
     ColorResult result = new ColorResult();
-    result.season = bestSeason;
 
-    return result;
+    result.seasonDetails = SeasonInformation.seasons.get(bestSeason);
+//    result.season = bestSeason;
 
+    return SeasonInformation.seasons.get(bestSeason);
 
 }
 
