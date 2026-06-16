@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
-import type { SeasonDetails } from "../types/SeasonDetails";
 
 import { analyzeColors, getColorPalette } from "../services/colorService";
 
@@ -40,7 +39,10 @@ export default function ColorPalette() {
     });
     const [selectedAnswer, setSelectedAnswer] = useState<ColorQuizAnswer | null>(null);
     const [selectedWeights, setSelectedWeights] = useState<{ key: keyof typeof questionAnswers; value: number }[]>([]);
-    const [recommendedSeasonDetails, setRecommendedSeasonDetails] = useState<SeasonDetails | null>(null);
+    const [recommendedSeasonDetails, setRecommendedSeasonDetails] = useState(() => {
+        const colorPalette = localStorage.getItem("colorPalette");
+        return colorPalette ? JSON.parse(colorPalette) : null;
+    }); 
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -66,18 +68,6 @@ export default function ColorPalette() {
         localStorage.setItem("colorPalette", JSON.stringify(results));
     }
 
-    useEffect(() => {
-        console.log("inside use effect", recommendedSeasonDetails)
-        console.log("inside use effect", recommendedSeasonDetails?.season)
-    }, [recommendedSeasonDetails])
-
-    useEffect(() => {
-        const palette = localStorage.getItem("colorPalette")
-        if (palette) {
-            setRecommendedSeasonDetails(JSON.parse(palette));
-        }
-    }, [])
-
     const populateQuestion = (questionIndex: number) => {
         const answers = colorQuestions[questionIndex].answers;
 
@@ -98,7 +88,6 @@ export default function ColorPalette() {
                                     answerWeights.push( {key: key as keyof typeof questionAnswers, value} );
                                 })
                                 setSelectedWeights(answerWeights);
-                                // console.log(selectedWeights);
                             }}
                         >
                             {answer.image && <img className="pb-5 mx-auto w-80 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
@@ -117,7 +106,7 @@ export default function ColorPalette() {
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
-                    <h2 className="font-heading font-extrabold text-2xl pt-5">{recommendedSeasonDetails.season}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl p-5">{recommendedSeasonDetails.season}</h2>
                 )}
                 <div className="grid grid-cols-7 h-80 w-68 mx-auto">
                     {/* recommendedSeasonDetails.bestColors.map(color => {
@@ -140,17 +129,17 @@ export default function ColorPalette() {
             <button
                 className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
-                // onClick={() => setQuizModalOpen(true)}
-            >Select Color Palette <DownArrow className="inline"/>
+            >
+                Select Color Palette <DownArrow className="inline"/>
             </button>
             {selectionMenuOpen && (
-                <div className="h-48 overflow-y-auto">
+                <div className="h-48 overflow-y-auto rounded-bl-xl rounded-br-xl shadow-2xl">
                     <button 
                     onClick={() => {
                         setQuizModalOpen(true);
                         setSelectionMenuOpen(false);
                     }}
-                    className="w-full hover:bg-gray-200 hover:cursor-pointer p-2 border-solid border-2 border-black"
+                    className="w-full hover:bg-gray-200 hover:cursor-pointer p-2"
                     >
                         Take Quiz
                     </button>
@@ -197,7 +186,6 @@ export default function ColorPalette() {
 
                             localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
                             
-                            // console.log("recommended season stuff", recommendedSeasonDetails);
                             resetQuiz();
                         }
                         else {

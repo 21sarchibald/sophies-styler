@@ -1,21 +1,21 @@
-import diamondHead from "../assets/images/diamond-head.png";
-import heartHead from "../assets/images/heart-head.png";
-import longHead from '../assets/images/long-head.png';
-import ovalHead from "../assets/images/oval-head.png";
-import roundHead from "../assets/images/round-head.png";
-import squareHead from "../assets/images/square-head.png";
+import diamondHead from "../assets/images/hair/diamond-head.png";
+import heartHead from "../assets/images/hair/heart-head.png";
+import longHead from '../assets/images/hair/long-head.png';
+import ovalHead from "../assets/images/hair/oval-head.png";
+import roundHead from "../assets/images/hair/round-head.png";
+import squareHead from "../assets/images/hair/square-head.png";
 
-import whiteSilverHair from "../assets/images/white-silver-hair.png"
-import blondeHair from "../assets/images/blonde-hair.png"
-import lightBrownHair from "../assets/images/light-brown-hair.png"
-import redAuburnHair from "../assets/images/red-auburn-hair.png"
-import darkBrownHair from "../assets/images/dark-brown-hair.png"
-import blackHair from "../assets/images/black-hair.png"
+import whiteSilverHair from "../assets/images/hair/white-silver-hair.png"
+import blondeHair from "../assets/images/hair/blonde-hair.png"
+import lightBrownHair from "../assets/images/hair/light-brown-hair.png"
+import redAuburnHair from "../assets/images/hair/red-auburn-hair.png"
+import darkBrownHair from "../assets/images/hair/dark-brown-hair.png"
+import blackHair from "../assets/images/hair/black-hair.png"
 
-import straightHair from "../assets/images/type-1-hair.png"
-import wavyHair from "../assets/images/type-2-hair.png"
-import curlyHair from "../assets/images/type-3-hair.png"
-import coilyHair from "../assets/images/type-4-hair.png"
+import straightHair from "../assets/images/hair/type-1-hair.png"
+import wavyHair from "../assets/images/hair/type-2-hair.png"
+import curlyHair from "../assets/images/hair/type-3-hair.png"
+import coilyHair from "../assets/images/hair/type-4-hair.png"
 
 export const hairQuestions = [
     {

@@ -4,13 +4,12 @@ import { silhouetteQuestions } from "../data/silhouetteQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import analyzeSilhouette from "../services/silhouetteService";
-import type { SilhouetteDetails } from "../types/SilhouetteDetails";
 
-import appleSilhouette from "../assets/images/apple-silhouette.png";
-import hourglassSilhouette from "../assets/images/hourglass-silhouette.png";
-import invertedTriangleSilhouette from '../assets/images/inverted-triangle-silhouette.png';
-import pearSilhouette from "../assets/images/pear-silhouette.png";
-import rectangleSilhouette from "../assets/images/rectangle-silhouette.png";
+import appleSilhouette from "../assets/images/silhouette/apple-silhouette.png";
+import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouette.png";
+import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-triangle-silhouette.png';
+import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
+import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
 
 export default function Silhouette() {
 
@@ -42,7 +41,11 @@ export default function Silhouette() {
         proportions: "",
     });
 
-    const [silhouetteDetails, setSilhouetteDetails] = useState<SilhouetteDetails | null>(null);
+    const [silhouetteDetails, setSilhouetteDetails] = useState(() => {
+        const silhouette = localStorage.getItem("silhouette");
+
+        return silhouette ? JSON.parse(silhouette) : null;
+    });
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -92,7 +95,25 @@ export default function Silhouette() {
                     {silhouetteDetails && (
                         <>
                         <img src={silhouetteImages[silhouetteDetails.silhouette]} className="w-36 mx-auto"/>
-                        <p className="font-heading text-left p-5">{silhouetteDetails.proportions}</p>
+                        <ul>
+                            {silhouetteDetails.silhouetteSuggestions.map((suggestion: string) => (
+                                <li
+                                key={suggestion}
+                                >
+                                {suggestion}
+                                </li>
+                            ))}
+                        </ul>
+                        <h2 className="font-heading text-left p-5">{silhouetteDetails.proportions}</h2>
+                        <ul>
+                            {silhouetteDetails.proportionsSuggestions.map((suggestion: string) => (
+                                <li
+                                key={suggestion}
+                                >
+                                {suggestion}
+                                </li>
+                            ))}
+                        </ul>
                         </>
                     )}
                 </div>
@@ -101,7 +122,7 @@ export default function Silhouette() {
             <button
                 className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setQuizModalOpen(true)}
-            >Select Silhouette <DownArrow className="inline"/>
+            >Take Quiz
             </button>
             </div>
         </main>

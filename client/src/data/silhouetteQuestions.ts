@@ -1,10 +1,10 @@
-import appleSilhouette from "../assets/images/apple-silhouette.png";
-import hourglassSilhouette from "../assets/images/hourglass-silhouette.png";
-import invertedTriangleSilhouette from '../assets/images/inverted-triangle-silhouette.png';
-import pearSilhouette from "../assets/images/pear-silhouette.png";
-import rectangleSilhouette from "../assets/images/rectangle-silhouette.png";
+import appleSilhouette from "../assets/images/silhouette/apple-silhouette.png";
+import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouette.png";
+import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-triangle-silhouette.png';
+import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
+import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
 
-import proportionPlaceholder from "../assets/images/placeholder-proportions.png";
+import proportionPlaceholder from "../assets/images/silhouette/placeholder-proportions.png";
 
 
 export const silhouetteQuestions = [
@@ -80,7 +80,7 @@ export const silhouetteQuestions = [
         },
         {
           id: "long-torso-short-legs",
-          text: "Long Torso / Long Legs",
+          text: "Long Torso / Short Legs",
           image: [proportionPlaceholder],
           weights: {
             warm: 1,

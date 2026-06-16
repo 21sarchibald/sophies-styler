@@ -27,7 +27,7 @@ export default function ColorSelection({
             <button 
             key={palette}
             onClick={() => onClick(palette)}
-            className="block text-center w-full hover:bg-gray-200 hover:cursor-pointer p-2 border-solid border-2 border-black"
+            className="block text-center w-full hover:bg-gray-200 hover:cursor-pointer p-2 border-t border-gray-400"
             >
             {palette}
             </button>

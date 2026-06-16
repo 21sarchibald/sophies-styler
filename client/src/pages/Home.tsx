@@ -1,6 +1,6 @@
-import paintSwatchImage from '../assets/images/paint-swatches.png'
-import silhouetteImage from '../assets/images/silhouette-photo.png'
-import hairFlipImage from '../assets/images/hair-flip.png'
+import paintSwatchImage from '../assets/images/home/paint-swatches.png'
+import silhouetteImage from '../assets/images/home/silhouette-photo.png'
+import hairFlipImage from '../assets/images/home/hair-flip.png'
 import { Link } from 'react-router-dom';
 
 export default function Home() {

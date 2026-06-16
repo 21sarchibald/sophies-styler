@@ -1,28 +1,28 @@
-import goldColor from "../assets/images/gold-color.png";
-import silverColor from "../assets/images/silver-color.png";
-import goldSilverColors from '../assets/images/gold-silver-colors.png';
+import goldColor from "../assets/images/colorPalette/gold-color.png";
+import silverColor from "../assets/images/colorPalette/silver-color.png";
+import goldSilverColors from '../assets/images/colorPalette/gold-silver-colors.png';
 
-import whiteFabric from '../assets/images/white-fabric.png';
-import creamFabric from '../assets/images/cream-fabric.png';
-import whiteCreamFabric from '../assets/images/white-cream-fabric.png';
+import whiteFabric from '../assets/images/colorPalette/white-fabric.png';
+import creamFabric from '../assets/images/colorPalette/cream-fabric.png';
+import whiteCreamFabric from '../assets/images/colorPalette/white-cream-fabric.png';
 
-import tanColor from '../assets/images/tan-color.png';
-import burntColor from '../assets/images/burnt-color.png';
-import tanBurntColor from '../assets/images/tan-burnt-color.png';
+import tanColor from '../assets/images/colorPalette/tan-color.png';
+import burntColor from '../assets/images/colorPalette/burnt-color.png';
+import tanBurntColor from '../assets/images/colorPalette/tan-burnt-color.png';
 
-import brightVivid from '../assets/images/bright-vivid.png';
-import softDusty from '../assets/images/soft-dusty.png';
-import deepRich from '../assets/images/deep-rich.png';
-import lightAiry from '../assets/images/light-airy.png';
+import brightVivid from '../assets/images/colorPalette/bright-vivid.png';
+import softDusty from '../assets/images/colorPalette/soft-dusty.png';
+import deepRich from '../assets/images/colorPalette/deep-rich.png';
+import lightAiry from '../assets/images/colorPalette/light-airy.png';
 
-import lowContrast from '../assets/images/low-contrast.png';
-import mediumContrast from '../assets/images/medium-contrast.png';
-import highContrast from '../assets/images/high-contrast.png';
+import lowContrast from '../assets/images/colorPalette/low-contrast.png';
+import mediumContrast from '../assets/images/colorPalette/medium-contrast.png';
+import highContrast from '../assets/images/colorPalette/high-contrast.png';
 
-import pinkBerry from '../assets/images/pink-berry.png';
-import peachCoral from '../assets/images/peach-coral.png';
-import nudeSoft from '../assets/images/nude-soft.png';
-import boldDramatic from '../assets/images/bold-dramatic.png';
+import pinkBerry from '../assets/images/colorPalette/pink-berry.png';
+import peachCoral from '../assets/images/colorPalette/peach-coral.png';
+import nudeSoft from '../assets/images/colorPalette/nude-soft.png';
+import boldDramatic from '../assets/images/colorPalette/bold-dramatic.png';
 
 export const colorQuestions = [
     {
