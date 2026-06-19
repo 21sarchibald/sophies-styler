@@ -1,7 +1,6 @@
 package com.sophiearchibald.sophies_styler_api.data;
 
 import com.sophiearchibald.sophies_styler_api.model.HairDetails;
-import com.sophiearchibald.sophies_styler_api.model.SilhouetteDetails;
 
 import java.util.List;
 import java.util.Map;
@@ -12,54 +11,55 @@ public class HairInformation {
             Map.entry("Diamond",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Textured Lobs",
+                                    "Long Layers",
+                                    "Curtain/Side-Swept Bangs"
                             )
                     )
             ),
             Map.entry("Heart",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Long Layers",
+                                    "Curtain/Side-Swept Bangs",
+                                    "Long Bob"
+
                             )
                     )
             ),
             Map.entry("Long",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Volume at Side of Face",
+                                    "Bangs",
+                                    "Avoid Flat/Sleek Styles"
                             )
                     )
             ),
             Map.entry("Oval",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Most Styles Work",
+                                    "Add Texture/Volume",
+                                    "Avoid Hiding the Face"
                             )
                     )
             ),
             Map.entry("Round",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Volume at Crown",
+                                    "Long Bob",
+                                    "Long Layers"
                             )
                     )
             ),
             Map.entry("Square",
                     createFaceShape(
                             List.of(
-                                    "Suggestion 1",
-                                    "Suggestion 2",
-                                    "Suggestion 3"
+                                    "Layered Cut",
+                                    "Height on Top/Narrow Sides",
+                                    "Chin-Length Bob"
                             )
                     )
             )
