@@ -5,6 +5,9 @@ import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
 
 import proportionPlaceholder from "../assets/images/silhouette/placeholder-proportions.png";
+import shortTorsoLongLegs from "../assets/images/silhouette/short-torso-long-legs.png";
+import balancedTorsoLegs from "../assets/images/silhouette/balanced-torso-legs.png";
+import longTorsoShortLegs from "../assets/images/silhouette/long-torso-short-legs.png";
 
 
 export const silhouetteQuestions = [
@@ -64,7 +67,7 @@ export const silhouetteQuestions = [
         {
           id: "short-torso-long-legs",
           text: "Short Torso / Long Legs",
-          image: [proportionPlaceholder],
+          image: [shortTorsoLongLegs],
           weights: {
             warm: 3
           }
@@ -72,7 +75,7 @@ export const silhouetteQuestions = [
         {
           id: "balanced-torso-balanced-legs",
           text: "Balanced Torso / Legs",
-          image: [proportionPlaceholder],
+          image: [balancedTorsoLegs],
           weights: {
             warm: 1,
             cool: 1
@@ -81,7 +84,7 @@ export const silhouetteQuestions = [
         {
           id: "long-torso-short-legs",
           text: "Long Torso / Short Legs",
-          image: [proportionPlaceholder],
+          image: [longTorsoShortLegs],
           weights: {
             warm: 1,
             cool: 1

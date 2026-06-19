@@ -10,7 +10,7 @@ export default function NavBar() {
 
   const { user } = useAuth();
 
-  console.log("navbaruser: ", user);
+  // console.log("navbaruser: ", user);
 
     return (
         // Add media queries for mobile-first design. Let's make everything mobile-friendly from the start

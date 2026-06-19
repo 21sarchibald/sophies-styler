@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
 import type { User } from "../types/User";
 import { AuthContext } from "./AuthContext";
+import { initializeUser } from "../services/userService";
 
 export function AuthProvider({ children }: {children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
@@ -11,6 +12,10 @@ export function AuthProvider({ children }: {children: React.ReactNode }) {
             const { data } = await supabase.auth.getUser();
             const supabaseUser = data.user as User | null;
             setUser(supabaseUser);
+
+            if (supabaseUser) {
+                await initializeUser(supabaseUser.id);
+            }
         };
         loadUser();
 
@@ -20,6 +25,10 @@ export function AuthProvider({ children }: {children: React.ReactNode }) {
                     const { data } = await supabase.auth.getUser();
                     const supabaseUser = data.user as User | null;
                     setUser(supabaseUser);
+
+                    if (supabaseUser) {
+                        await initializeUser(supabaseUser.id);
+                    }
                 } else {
                     setUser(null);
                 }

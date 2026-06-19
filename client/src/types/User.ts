@@ -4,4 +4,7 @@ export interface User {
     firstName: string;
     lastName: string;
     createdAt: string;
+    // user_metadata: string;
+    // aud: string;
+    // created_at: string;
 }

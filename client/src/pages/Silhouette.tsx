@@ -1,17 +1,21 @@
-import { useState } from "react";
-import DownArrow from "../assets/icons/down-arrow.svg?react";
+import { useEffect, useState } from "react";
 import { silhouetteQuestions } from "../data/silhouetteQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import analyzeSilhouette from "../services/silhouetteService";
+import { saveSilhouetteResults } from "../services/silhouetteService";
+
 
 import appleSilhouette from "../assets/images/silhouette/apple-silhouette.png";
 import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouette.png";
 import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-triangle-silhouette.png';
 import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
+import { useAuth } from "../context/useAuth";
 
 export default function Silhouette() {
+
+    const { user } = useAuth();
 
     interface SilhouetteAnswer {
         id: string;
@@ -91,7 +95,7 @@ export default function Silhouette() {
                 {silhouetteDetails && (
                     <h2 className="font-heading font-extrabold text-2xl pt-5">{silhouetteDetails.silhouette}</h2>
                 )}
-                <div className=" h-120 w-68 mx-auto">
+                <div className="h-150 w-68 mx-auto">
                     {silhouetteDetails && (
                         <>
                         <img src={silhouetteImages[silhouetteDetails.silhouette]} className="w-36 mx-auto"/>
@@ -135,7 +139,7 @@ export default function Silhouette() {
 
                 <div className="relative mx-auto my-auto bg-white w-280 h-150 opacity-100 z-10 p-5">
 
-                    <h3 className="font-heading text-2xl text-center p-5">Which silhouette matches yours best?</h3>
+                    <h3 className="font-heading text-2xl text-center p-5">{silhouetteQuestions[questionIndex].heading}</h3>
                     <div>
                         {populateQuestion(questionIndex)}
                     </div>
@@ -160,6 +164,7 @@ export default function Silhouette() {
                                 }
 
                                 localStorage.setItem("silhouette", JSON.stringify(apiResponse));
+                                saveSilhouetteResults(apiResponse);
                                 resetQuiz();
                             }
 

@@ -1,5 +1,7 @@
 import type { SeasonDetails } from "../types/SeasonDetails";
 
+import { supabase } from "./supabase";
+
 export interface Traits {
     warm: number;
     cool: number;
@@ -10,6 +12,9 @@ export interface Traits {
     highContrast: number;
     lowContrast: number;
 }
+
+const { data: { user },
+    } = await supabase.auth.getUser();
 
 export async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
 
@@ -61,4 +66,22 @@ export async function getColorPalette(paletteName: string): Promise<SeasonDetail
         console.log(error);
         return null;
     }
+}
+
+export async function saveColorResults(result:SeasonDetails | null) {
+    console.log("save function running");
+
+    if (user) {
+        return await supabase.from("color_palette_assignments").upsert(
+            {
+                user_id: user?.id,
+                palette: result?.season,
+                color_details: result,
+            },
+            {
+                onConflict: "user_id"
+            }
+        )
+    }
+    else return;
 }

@@ -1,9 +1,8 @@
 import { useState } from "react";
-import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
-import analyzeHair from "../services/hairService";
+import analyzeHair, { saveHairResults } from "../services/hairService";
 import type { HairDetails } from "../types/HairDetails";
 
 import diamondHead from "../assets/images/hair/diamond-head.png";
@@ -134,7 +133,7 @@ export default function Hair() {
 
                 <div className="relative mx-auto my-auto bg-white w-350 h-160 opacity-100 z-10 p-5">
 
-                    <h3 className="font-heading text-2xl text-center p-5">Which face shape matches yours best?</h3>
+                    <h3 className="font-heading text-2xl text-center p-5">{hairQuestions[questionIndex].heading}</h3>
                     <div>
                         {populateQuestion(questionIndex)}
                     </div>
@@ -159,6 +158,7 @@ export default function Hair() {
                                 }
 
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
+                                saveHairResults(apiResponse);
                                 resetQuiz();
                             }
 

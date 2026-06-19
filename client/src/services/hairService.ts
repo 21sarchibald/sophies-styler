@@ -1,8 +1,12 @@
 import type { HairDetails } from "../types/HairDetails";
+import { supabase } from "./supabase";
 
 type HairSubmission = {
     faceShape: string;
 }
+
+const { data: { user },
+    } = await supabase.auth.getUser();
 
 export default async function analyzeHair(hairSubmission: HairSubmission) {
     try {
@@ -28,4 +32,24 @@ export default async function analyzeHair(hairSubmission: HairSubmission) {
         console.log(error);
         return null;
     }
+}
+
+export async function saveHairResults(result:HairDetails | null) {
+    console.log("save hair function running");
+
+    if (user) {
+        return await supabase.from("hair_assignments").upsert(
+            {
+                user_id: user?.id,
+                face_shape: result?.faceShape,
+                face_shape_suggestions: result?.faceShapeSuggestions,
+                hair_color: result?.hairColor,
+                hair_texture: result?.hairTexture,
+            },
+            {
+                onConflict: "user_id"
+            }
+        )
+    }
+    else return;
 }

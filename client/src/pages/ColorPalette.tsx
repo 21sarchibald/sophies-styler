@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
+import { supabase } from "../services/supabase";
 
-import { analyzeColors, getColorPalette } from "../services/colorService";
+
+import { analyzeColors, getColorPalette, saveColorResults } from "../services/colorService";
+import { useAuth } from "../context/useAuth";
 
 export default function ColorPalette() {
+
+    const { user } = useAuth();
 
     interface ColorQuizAnswer {
         id: string,
@@ -66,6 +71,9 @@ export default function ColorPalette() {
         const results = await getColorPalette(paletteName);
         setRecommendedSeasonDetails(results);
         localStorage.setItem("colorPalette", JSON.stringify(results));
+        // set it in supabase
+        saveColorResults(results);
+        setSelectionMenuOpen(false);
     }
 
     const populateQuestion = (questionIndex: number) => {
@@ -185,6 +193,11 @@ export default function ColorPalette() {
                             setRecommendedSeasonDetails(apiResponse);
 
                             localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
+
+                            // set it in supabase
+                            saveColorResults(apiResponse);
+                            
+
                             
                             resetQuiz();
                         }
