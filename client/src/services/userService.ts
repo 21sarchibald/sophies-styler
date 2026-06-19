@@ -1,8 +1,4 @@
 import { supabase } from "./supabase";
-import type { User } from "@supabase/supabase-js";
-
-// const { data: { user },
-//     } = await supabase.auth.getUser();
 
 export async function getUserColorPalette(userId: string) {
     const { data, error } = await supabase

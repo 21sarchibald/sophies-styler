@@ -20,6 +20,9 @@ export async function signInWithEmail(email: string, password: string) {
   }
 
 export async function signOut() {
+
+    localStorage.clear();
+    
     const { error } = await supabase.auth.signOut();
     return error;
 }

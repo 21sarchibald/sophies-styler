@@ -4,7 +4,6 @@ import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-tri
 import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
 
-import proportionPlaceholder from "../assets/images/silhouette/placeholder-proportions.png";
 import shortTorsoLongLegs from "../assets/images/silhouette/short-torso-long-legs.png";
 import balancedTorsoLegs from "../assets/images/silhouette/balanced-torso-legs.png";
 import longTorsoShortLegs from "../assets/images/silhouette/long-torso-short-legs.png";
