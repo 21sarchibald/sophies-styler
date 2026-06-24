@@ -26,52 +26,37 @@ export const hairQuestions = [
           id: "diamond",
           text: "Diamond",
           image: [diamondHead],
-          weights: {
-            warm: 3
-          }
+          code: "diamond"
         },
         {
           id: "heart",
           text: "Heart",
           image: [heartHead],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "heart"
         },
         {
           id: "long",
           text: "Long",
           image: [longHead],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "long"
         },
         {
           id: "oval",
           text: "Oval",
           image: [ovalHead],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "oval"
         },
         {
           id: "round",
           text: "Round",
           image: [roundHead],
-          weights: {
-            cool: 3
-          }
+          code: "round"
         },
         {
           id: "square",
           text: "Square",
           image: [squareHead],
-          weights: {
-            cool: 3
-          }
+          code: "square"
         }
   
       ]
@@ -84,49 +69,37 @@ export const hairQuestions = [
           id: "white-silver",
           text: "White / Silver",
           image: [whiteSilverHair],
-          weights: {
-            warm: 3
-          }
+          code: "silver"
         },
         {
           id: "blonde",
           text: "Blonde",
           image: [blondeHair],
-          weights: {
-            warm: 3
-          }
+          code: "blonde"
         },
         {
           id: "light-brown",
           text: "Light Brown",
           image: [lightBrownHair],
-          weights: {
-            warm: 3
-          }
+          code: "light_brown"
         },
         {
           id: "red-auburn",
           text: "Red / Auburn",
           image: [redAuburnHair],
-          weights: {
-            warm: 3
-          }
+          code: "red"
         },
         {
           id: "dark-brown",
           text: "Dark Brown",
           image: [darkBrownHair],
-          weights: {
-            warm: 3
-          }
+          code: "dark_brown"
         },
         {
           id: "black",
           text: "Black",
           image: [blackHair],
-          weights: {
-            warm: 3
-          }
+          code: "black"
         },
       ]
     },
@@ -138,33 +111,25 @@ export const hairQuestions = [
             id: "straight",
             text: "Straight",
             image: [straightHair],
-            weights: {
-              warm: 3
-            }
+            code: "straight"
           },
           {
             id: "wavy",
             text: "Wavy",
             image: [wavyHair],
-            weights: {
-              warm: 3
-            }
+            code: "wavy"
           },
           {
             id: "curly",
             text: "Curly",
             image: [curlyHair],
-            weights: {
-              warm: 3
-            }
+            code: "curly"
           },
           {
             id: "coily",
             text: "Coily",
             image: [coilyHair],
-            weights: {
-              warm: 3
-            }
+            code: "coily"
           },
         ]
       },

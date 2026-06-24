@@ -42,9 +42,12 @@ export async function saveHairResults(result:HairDetails | null) {
             {
                 user_id: user?.id,
                 face_shape: result?.faceShape,
+                face_shape_code: result?.faceShapeCode,
                 face_shape_suggestions: result?.faceShapeSuggestions,
                 hair_color: result?.hairColor,
+                hair_color_code: result?.hairColorCode,
                 hair_texture: result?.hairTexture,
+                hair_texture_code: result?.hairTextureCode,
             },
             {
                 onConflict: "user_id"
@@ -52,4 +55,17 @@ export async function saveHairResults(result:HairDetails | null) {
         )
     }
     else return;
+}
+
+export async function getHairRecommendations(hairDetails:HairDetails | null) {
+    console.log('get hair rec function running')
+
+        const { data, error } = await supabase.from("hair_images").select("*")
+        // const response = await supabase.from("hair_images").select("*")
+        .contains("tags", [hairDetails?.faceShapeCode, hairDetails?.hairColorCode, hairDetails?.hairTextureCode])
+
+        console.log(data);
+        if (!error) {
+            return data;
+        }
 }

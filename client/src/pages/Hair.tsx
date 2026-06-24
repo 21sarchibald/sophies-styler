@@ -2,7 +2,7 @@ import { useState } from "react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
-import analyzeHair, { saveHairResults } from "../services/hairService";
+import analyzeHair, { getHairRecommendations, saveHairResults } from "../services/hairService";
 import type { HairDetails } from "../types/HairDetails";
 
 import diamondHead from "../assets/images/hair/diamond-head.png";
@@ -18,13 +18,24 @@ export default function Hair() {
         id: string;
         text: string;
         image: string[];
+        code: string;
     }
 
     type HairSubmission = {
         faceShape: string;
+        faceShapeCode: string;
         hairColor: string;
+        hairColorCode: string;
         hairTexture: string;
+        hairTextureCode: string;
     }
+
+    type HairRecPhoto = {
+        id: number;
+        url: string;
+        tags: string[];
+        created_at: string;
+      };
 
     const hairImages = {
         Diamond: diamondHead,
@@ -41,8 +52,11 @@ export default function Hair() {
 
     const [questionAnswers, setQuestionAnswers] = useState<HairSubmission>({
         faceShape: "",
+        faceShapeCode: "",
         hairColor: "",
+        hairColorCode: "",
         hairTexture: "",
+        hairTextureCode: ""
     })
 
     const [hairDetails, setHairDetails] = useState(() => {
@@ -51,6 +65,8 @@ export default function Hair() {
         return hairstyle ? JSON.parse(hairstyle) : null;
     });
 
+    const [hairRecPhotos, setHairRecPhotos] = useState<HairRecPhoto[]>([]);
+
     const resetQuiz = () => {
         setQuizModalOpen(false);
         setQuestionIndex(0);
@@ -58,8 +74,11 @@ export default function Hair() {
         setQuestionAnswers(
             {
                 faceShape: "",
+                faceShapeCode: "",
                 hairColor: "",
+                hairColorCode: "",
                 hairTexture: "",
+                hairTextureCode: ""
             }
         )
     }
@@ -90,7 +109,16 @@ export default function Hair() {
     return (
         <>
         <main className="grid grid-cols-3 h-full">
-            <div className="col-span-2">Pics of Suggestions</div>
+            <div className="col-span-2">
+                <div>Pics of Suggestions</div>
+                <div>
+        {hairRecPhotos && (
+            hairRecPhotos.map((rec: HairRecPhoto) => (
+                <img src={rec.url} alt="Photo" />
+            ))
+        )}
+                </div>
+                </div>
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
                 <h2 className="font-heading text-2xl">Your Hairstyle</h2>
                 {hairDetails && (
@@ -145,8 +173,13 @@ export default function Hair() {
                         onClick={ async () => {
                             const answersArray = { ... questionAnswers };
                             const questionId = hairQuestions[questionIndex].id as keyof HairSubmission;
+                            // const questionCode = hairQuestions[questionIndex].answers.code as keyof HairSubmission;
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
+                            console.log('answersarray', answersArray);
+                            console.log('questionId', questionId);
+
+                            answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
 
                             setQuestionAnswers(answersArray);
 
@@ -159,6 +192,8 @@ export default function Hair() {
 
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 saveHairResults(apiResponse);
+                                const recommendationResponse = await getHairRecommendations(apiResponse);
+                                setHairRecPhotos(recommendationResponse);
                                 resetQuiz();
                             }
 
