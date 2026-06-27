@@ -14,6 +14,7 @@ public class SeasonInformation {
             Map.entry("True Winter",
                     createSeason(
                             "True Winter",
+                            "true_winter",
                             "Winter",
                             "Cool",
                             "Balanced",
@@ -28,6 +29,7 @@ public class SeasonInformation {
             Map.entry("Bright Winter",
                     createSeason(
                             "Bright Winter",
+                            "bright_winter",
                             "Winter",
                             "Cool",
                             "Bright",
@@ -42,6 +44,7 @@ public class SeasonInformation {
             Map.entry("Dark Winter",
                     createSeason(
                             "Dark Winter",
+                            "dark_winter",
                             "Winter",
                             "Cool",
                             "Deep",
@@ -58,6 +61,7 @@ public class SeasonInformation {
             Map.entry("True Spring",
                     createSeason(
                             "True Spring",
+                            "true_spring",
                             "Spring",
                             "Warm",
                             "Balanced",
@@ -72,6 +76,7 @@ public class SeasonInformation {
             Map.entry("Bright Spring",
                     createSeason(
                             "Bright Spring",
+                            "bright_spring",
                             "Spring",
                             "Warm",
                             "Bright",
@@ -86,6 +91,7 @@ public class SeasonInformation {
             Map.entry("Light Spring",
                     createSeason(
                             "Light Spring",
+                            "light_spring",
                             "Spring",
                             "Warm",
                             "Light",
@@ -102,6 +108,7 @@ public class SeasonInformation {
             Map.entry("True Summer",
                     createSeason(
                             "True Summer",
+                            "true_summer",
                             "Summer",
                             "Cool",
                             "Balanced",
@@ -116,6 +123,7 @@ public class SeasonInformation {
             Map.entry("Light Summer",
                     createSeason(
                             "Light Summer",
+                            "light_summer",
                             "Summer",
                             "Cool",
                             "Light",
@@ -130,6 +138,7 @@ public class SeasonInformation {
             Map.entry("Soft Summer",
                     createSeason(
                             "Soft Summer",
+                            "soft_summer",
                             "Summer",
                             "Cool",
                             "Soft",
@@ -146,6 +155,7 @@ public class SeasonInformation {
             Map.entry("True Autumn",
                     createSeason(
                             "True Autumn",
+                            "true_autumn",
                             "Autumn",
                             "Warm",
                             "Balanced",
@@ -160,6 +170,7 @@ public class SeasonInformation {
             Map.entry("Dark Autumn",
                     createSeason(
                             "Dark Autumn",
+                            "dark_autumn",
                             "Autumn",
                             "Warm",
                             "Deep",
@@ -174,6 +185,7 @@ public class SeasonInformation {
             Map.entry("Soft Autumn",
                     createSeason(
                             "Soft Autumn",
+                            "soft_autumn",
                             "Autumn",
                             "Warm",
                             "Soft",
@@ -188,6 +200,7 @@ public class SeasonInformation {
 
     private static SeasonDetails createSeason(
             String season,
+            String seasonCode,
             String seasonFamily,
             String temperature,
             String value,
@@ -200,6 +213,7 @@ public class SeasonInformation {
         SeasonDetails details = new SeasonDetails();
 
         details.season = season;
+        details.seasonCode = seasonCode;
         details.seasonFamily = seasonFamily;
         details.temperature = temperature;
         details.value = value;

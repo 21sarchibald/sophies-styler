@@ -19,9 +19,12 @@ public class HairService {
     public HairResult calculateHair(HairSubmission hairSubmission) {
         HairResult result = new HairResult();
         result.faceShape = hairSubmission.faceShape;
+        result.faceShapeCode = hairSubmission.faceShapeCode;
         result.faceShapeSuggestions = getFaceShapeSuggestions(hairSubmission.faceShape);
         result.hairColor = hairSubmission.hairColor;
+        result.hairColorCode = hairSubmission.hairColorCode;
         result.hairTexture = hairSubmission.hairTexture;
+        result.hairTextureCode = hairSubmission.hairTextureCode;
         return result;
     }
 

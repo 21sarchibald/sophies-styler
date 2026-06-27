@@ -5,6 +5,7 @@ import java.util.List;
 public class SeasonDetails {
 
         public String season;
+        public String seasonCode;
         public String seasonFamily;
         public String temperature;
         public String value;

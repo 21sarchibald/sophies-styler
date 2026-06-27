@@ -25,8 +25,10 @@ public class SilhouetteService {
     public SilhouetteResult calculateSilhouette(SilhouetteSubmission silhouetteSubmission) {
         SilhouetteResult result = new SilhouetteResult();
         result.silhouette = silhouetteSubmission.silhouette;
+        result.silhouetteCode = silhouetteSubmission.silhouetteCode;
         result.silhouetteSuggestions = getSilhouetteSuggestions(silhouetteSubmission.silhouette);
         result.proportions = silhouetteSubmission.proportions;
+        result.proportionsCode = silhouetteSubmission.proportionsCode;
         result.proportionsSuggestions = getProportionsSuggestions(silhouetteSubmission.proportions);
         return result;
     }
