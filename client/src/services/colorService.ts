@@ -85,3 +85,15 @@ export async function saveColorResults(result:SeasonDetails | null) {
     }
     else return;
 }
+
+export async function getColorRecommendations(seasonDetails:SeasonDetails | null) {
+    console.log('get color rec function running')
+
+        const { data, error } = await supabase.from("color_palette_images").select("*")
+        .contains("tags", [seasonDetails?.seasonCode])
+
+        console.log(data);
+        if (!error) {
+            return data;
+        }
+}

@@ -54,3 +54,16 @@ export async function saveSilhouetteResults(result:SilhouetteDetails | null) {
     }
     else return;
 }
+
+export async function getSilhouetteRecommendations(silhouetteDetails:SilhouetteDetails | null) {
+    console.log('get silhouette rec function running')
+
+        const { data, error } = await supabase.from("silhouette_images").select("*")
+        // maybe make it so that this could be an or thing instead of an and
+        .contains("tags", [silhouetteDetails?.silhouetteCode, silhouetteDetails?.proportionsCode])
+        console.log("silhouette", silhouetteDetails?.silhouetteCode)
+        console.log(data);
+        if (!error) {
+            return data;
+        }
+}

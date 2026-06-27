@@ -1,5 +1,6 @@
 export interface SeasonDetails {
     season: string;
+    seasonCode: string;
     seasonFamily: string;
     temperature: string;
     value: string;

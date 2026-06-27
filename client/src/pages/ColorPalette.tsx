@@ -196,8 +196,7 @@ export default function ColorPalette() {
 
                             // set it in supabase
                             saveColorResults(apiResponse);
-                            
-
+                        
                             
                             resetQuiz();
                         }

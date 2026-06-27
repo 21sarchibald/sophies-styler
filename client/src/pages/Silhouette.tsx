@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { silhouetteQuestions } from "../data/silhouetteQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
-import analyzeSilhouette from "../services/silhouetteService";
+import analyzeSilhouette, { getSilhouetteRecommendations } from "../services/silhouetteService";
 import { saveSilhouetteResults } from "../services/silhouetteService";
 
 
@@ -21,11 +21,21 @@ export default function Silhouette() {
         id: string;
         text: string;
         image: string[];
+        code: string;
     }
 
     type SilhouetteSubmission = {
         silhouette: string;
+        silhouetteCode: string;
         proportions: string;
+        proportionsCode: string;
+    }
+
+    type SilhouetteRecPhoto = {
+        id: number;
+        url: string;
+        tags: string[];
+        created_at: string;
     }
 
     const silhouetteImages = {
@@ -42,7 +52,9 @@ export default function Silhouette() {
 
     const [questionAnswers, setQuestionAnswers] = useState<SilhouetteSubmission>({
         silhouette: "",
+        silhouetteCode: "",
         proportions: "",
+        proportionsCode: ""
     });
 
     const [silhouetteDetails, setSilhouetteDetails] = useState(() => {
@@ -51,6 +63,8 @@ export default function Silhouette() {
         return silhouette ? JSON.parse(silhouette) : null;
     });
 
+    const [silhouetteRecPhotos, setSilhouetteRecPhotos] = useState<SilhouetteRecPhoto[]>([]);
+
     const resetQuiz = () => {
         setQuizModalOpen(false);
         setQuestionIndex(0);
@@ -58,7 +72,9 @@ export default function Silhouette() {
         setQuestionAnswers(
             {
                 silhouette: "",
+                silhouetteCode: "",
                 proportions: "",
+                proportionsCode: ""
             }
         )
     }
@@ -89,7 +105,16 @@ export default function Silhouette() {
     return (
         <>
         <main className="grid grid-cols-3 h-full">
-            <div className="col-span-2">Pics of Suggestions</div>
+            <div className="col-span-2">
+                <div>Pics of Suggestions</div>
+                <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
+                {silhouetteRecPhotos && (
+                    silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
+                        <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                ))
+        )}
+                </div>
+                </div>
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
                 <h2 className="font-heading text-2xl">Your Silhouette</h2>
                 {silhouetteDetails && (
@@ -154,6 +179,8 @@ export default function Silhouette() {
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
 
+                            answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof SilhouetteSubmission;
+
                             setQuestionAnswers(answersArray);
 
                             if (questionIndex >= silhouetteQuestions.length - 1) {
@@ -165,6 +192,8 @@ export default function Silhouette() {
 
                                 localStorage.setItem("silhouette", JSON.stringify(apiResponse));
                                 saveSilhouetteResults(apiResponse);
+                                const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
+                                setSilhouetteRecPhotos(recommendationResponse);
                                 resetQuiz();
                             }
 

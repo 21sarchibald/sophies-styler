@@ -18,44 +18,31 @@ export const silhouetteQuestions = [
           id: "apple",
           text: "Apple",
           image: [appleSilhouette],
-          weights: {
-            warm: 3
-          }
+          code: "apple"
         },
         {
           id: "hourglass",
           text: "Hourglass",
           image: [hourglassSilhouette],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "hourglass"
         },
         {
           id: "inverted-triangle",
           text: "Inverted Triangle",
           image: [invertedTriangleSilhouette],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "inverted_triangle"
         },
         {
           id: "pear",
           text: "Pear",
           image: [pearSilhouette],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "pear"
         },
         {
           id: "rectangle",
           text: "Rectangle",
           image: [rectangleSilhouette],
-          weights: {
-            cool: 3
-          }
+          code: "rectangle"
         }
       ]
     },
@@ -67,27 +54,19 @@ export const silhouetteQuestions = [
           id: "short-torso-long-legs",
           text: "Short Torso / Long Legs",
           image: [shortTorsoLongLegs],
-          weights: {
-            warm: 3
-          }
+          code: "short_torso"
         },
         {
           id: "balanced-torso-balanced-legs",
           text: "Balanced Torso / Legs",
           image: [balancedTorsoLegs],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "balanced_torso"
         },
         {
           id: "long-torso-short-legs",
           text: "Long Torso / Short Legs",
           image: [longTorsoShortLegs],
-          weights: {
-            warm: 1,
-            cool: 1
-          }
+          code: "long_torso"
         },
   ]},
   

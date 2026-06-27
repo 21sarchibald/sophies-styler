@@ -111,12 +111,12 @@ export default function Hair() {
         <main className="grid grid-cols-3 h-full">
             <div className="col-span-2">
                 <div>Pics of Suggestions</div>
-                <div>
-        {hairRecPhotos && (
-            hairRecPhotos.map((rec: HairRecPhoto) => (
-                <img src={rec.url} alt="Photo" />
-            ))
-        )}
+                <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
+                    {hairRecPhotos && (
+                        hairRecPhotos.map((rec: HairRecPhoto) => (
+                            <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                        ))
+                    )}
                 </div>
                 </div>
             <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
@@ -176,8 +176,6 @@ export default function Hair() {
                             // const questionCode = hairQuestions[questionIndex].answers.code as keyof HairSubmission;
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
-                            console.log('answersarray', answersArray);
-                            console.log('questionId', questionId);
 
                             answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
 
