@@ -63,7 +63,10 @@ export default function Silhouette() {
         return silhouette ? JSON.parse(silhouette) : null;
     });
 
-    const [silhouetteRecPhotos, setSilhouetteRecPhotos] = useState<SilhouetteRecPhoto[]>([]);
+    const [silhouetteRecPhotos, setSilhouetteRecPhotos] = useState<SilhouetteRecPhoto[]>(() => {
+        const photos = localStorage.getItem("silhouetteRecPhotos");
+        return photos ? JSON.parse(photos) : [];
+    });
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -108,14 +111,14 @@ export default function Silhouette() {
             <div className="col-span-2">
                 <div>Pics of Suggestions</div>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
-                {silhouetteRecPhotos && (
-                    silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
-                        <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
-                ))
-        )}
+                    {silhouetteRecPhotos && (
+                        silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
+                            <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                        ))
+                    )}
                 </div>
                 </div>
-            <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
+            <div className="col-span-1 text-center flex flex-col h-screen sticky top-0 p-5">
                 <h2 className="font-heading text-2xl">Your Silhouette</h2>
                 {silhouetteDetails && (
                     <h2 className="font-heading font-extrabold text-2xl pt-5">{silhouetteDetails.silhouette}</h2>
@@ -146,8 +149,7 @@ export default function Silhouette() {
                         </>
                     )}
                 </div>
-                <div>
-                </div>
+                
             <button
                 className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setQuizModalOpen(true)}
@@ -194,6 +196,7 @@ export default function Silhouette() {
                                 saveSilhouetteResults(apiResponse);
                                 const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
                                 setSilhouetteRecPhotos(recommendationResponse);
+                                localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));
                                 resetQuiz();
                             }
 

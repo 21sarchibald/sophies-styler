@@ -72,7 +72,7 @@ export async function saveColorResults(result:SeasonDetails | null) {
     console.log("save function running");
 
     if (user) {
-        return await supabase.from("color_palette_assignments").upsert(
+        const {data, error} = await supabase.from("color_palette_assignments").upsert(
             {
                 user_id: user?.id,
                 palette: result?.season,
@@ -82,8 +82,13 @@ export async function saveColorResults(result:SeasonDetails | null) {
                 onConflict: "user_id"
             }
         )
+
+        if (error) {
+            console.error("Failed to save color results", error);
+            return;
+        }
+        return data;
     }
-    else return;
 }
 
 export async function getColorRecommendations(seasonDetails:SeasonDetails | null) {

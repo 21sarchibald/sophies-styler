@@ -65,7 +65,10 @@ export default function Hair() {
         return hairstyle ? JSON.parse(hairstyle) : null;
     });
 
-    const [hairRecPhotos, setHairRecPhotos] = useState<HairRecPhoto[]>([]);
+    const [hairRecPhotos, setHairRecPhotos] = useState<HairRecPhoto[]>(() => {
+        const photos = localStorage.getItem("hairRecPhotos");
+        return photos ? JSON.parse(photos) : [];
+    });
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -119,7 +122,7 @@ export default function Hair() {
                     )}
                 </div>
                 </div>
-            <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
+            <div className="col-span-1 text-center flex flex-col h-screen sticky top-0 p-5">
                 <h2 className="font-heading text-2xl">Your Hairstyle</h2>
                 {hairDetails && (
                     <>
@@ -192,6 +195,7 @@ export default function Hair() {
                                 saveHairResults(apiResponse);
                                 const recommendationResponse = await getHairRecommendations(apiResponse);
                                 setHairRecPhotos(recommendationResponse);
+                                localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));
                                 resetQuiz();
                             }
 

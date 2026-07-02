@@ -6,7 +6,7 @@ import QuizAnswerButton from "../components/QuizAnswerButton";
 import { supabase } from "../services/supabase";
 
 
-import { analyzeColors, getColorPalette, saveColorResults } from "../services/colorService";
+import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
 import { useAuth } from "../context/useAuth";
 
 export default function ColorPalette() {
@@ -29,6 +29,13 @@ export default function ColorPalette() {
           };
     }
 
+    type ColorRecPhoto = {
+        id: number;
+        url: string;
+        tags: string[];
+        created_at: string;
+    }
+
     const [selectionMenuOpen, setSelectionMenuOpen] = useState(false);
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -48,6 +55,11 @@ export default function ColorPalette() {
         const colorPalette = localStorage.getItem("colorPalette");
         return colorPalette ? JSON.parse(colorPalette) : null;
     }); 
+
+    const [colorRecPhotos, setColorRecPhotos] = useState<ColorRecPhoto[]>(() => {
+        const photos = localStorage.getItem("colorRecPhotos");
+        return photos ? JSON.parse(photos) : [];
+    });
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -72,7 +84,11 @@ export default function ColorPalette() {
         setRecommendedSeasonDetails(results);
         localStorage.setItem("colorPalette", JSON.stringify(results));
         // set it in supabase
-        saveColorResults(results);
+        await saveColorResults(results);
+        console.log("saved results");
+        const recommendationResponse = await getColorRecommendations(results);
+        setColorRecPhotos(recommendationResponse);
+        localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
         setSelectionMenuOpen(false);
     }
 
@@ -110,27 +126,31 @@ export default function ColorPalette() {
     return (
         <>
         <main className="grid grid-cols-3 h-full">
-            <div className="col-span-2">Pics of Suggestions</div>
-            <div className="col-span-1 text-center flex flex-col justify-evenly h-full">
+            <div className="col-span-2">
+                <div>Pics of Suggestions</div>
+                <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
+                    {colorRecPhotos && (
+                        colorRecPhotos.map((rec: ColorRecPhoto) => (
+                            <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                        ))
+                    )}
+                </div>
+            </div>
+            <div className="col-span-1 text-center flex flex-col h-screen sticky top-0 p-5">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
                     <h2 className="font-heading font-extrabold text-2xl p-5">{recommendedSeasonDetails.season}</h2>
                 )}
                 <div className="grid grid-cols-7 h-80 w-68 mx-auto">
-                    {/* recommendedSeasonDetails.bestColors.map(color => {
+                    {recommendedSeasonDetails && recommendedSeasonDetails.bestColors.map((color: string) => {
+                    return (
                         <div
                             key={color}
-                            style={{ backgroundColor: color || 'white}}
+                            style={{ backgroundColor: color || 'white'}}
                         ></div>
-                    }) */}
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[0]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[1]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[2]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[3]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[4]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[5]}` || 'white'}}></div>
-                    <div style={{ backgroundColor: `${recommendedSeasonDetails?.bestColors[6]}` || 'white'}}></div>
-                </div>
+                    )
+                    })}
+            </div>
                 <div>
                     <p className="font-heading text-left p-5">{recommendedSeasonDetails?.description}</p>
                 </div>
@@ -195,8 +215,10 @@ export default function ColorPalette() {
                             localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
 
                             // set it in supabase
-                            saveColorResults(apiResponse);
-                        
+                            await saveColorResults(apiResponse);
+                            const recommendationResponse = await getColorRecommendations(apiResponse);
+                            setColorRecPhotos(recommendationResponse);
+                            localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
                             
                             resetQuiz();
                         }

@@ -1,3 +1,5 @@
+import { getHairRecommendations } from "./hairService";
+import { getSilhouetteRecommendations } from "./silhouetteService";
 import { supabase } from "./supabase";
 
 export async function getUserColorPalette(userId: string) {
@@ -37,9 +39,16 @@ export async function getUserSilhouette(userId: string) {
             proportionsSuggestions: data.proportions_suggestions,
         }
 
+        // const recommendations = await getSilhouetteRecommendations(data);
+
 
         console.log("data", data);
         localStorage.setItem("silhouette", JSON.stringify(details));
+
+        // console.log(recommendations);
+
+        // localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendations));
+
     }
 }
 
@@ -64,7 +73,13 @@ export async function getUserHair(userId: string) {
         }
 
         console.log("data", data);
+
+        // const recommendations = await getHairRecommendations(data);
+
         localStorage.setItem("hairstyle", JSON.stringify(details));
+
+        // localStorage.setItem("hairRecPhotos", JSON.stringify(recommendations));
+
     }
 }
 
