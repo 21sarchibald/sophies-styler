@@ -5,10 +5,9 @@ type HairSubmission = {
     faceShape: string;
 }
 
-const { data: { user },
-    } = await supabase.auth.getUser();
 
 export default async function analyzeHair(hairSubmission: HairSubmission) {
+       
     try {
         const results = await fetch('http://localhost:8080/api/hair/analyze', {
             method: 'POST',
@@ -35,6 +34,12 @@ export default async function analyzeHair(hairSubmission: HairSubmission) {
 }
 
 export async function saveHairResults(result:HairDetails | null) {
+    const { data: { user },
+        } = await supabase.auth.getUser();
+
+    if (!user) {
+        throw new Error("No authenticated user.");
+    } 
     console.log("save hair function running");
 
     if (user) {
@@ -61,11 +66,12 @@ export async function getHairRecommendations(hairDetails:HairDetails | null) {
     console.log('get hair rec function running')
 
         const { data, error } = await supabase.from("hair_images").select("*")
-        // const response = await supabase.from("hair_images").select("*")
         .contains("tags", [hairDetails?.faceShapeCode, hairDetails?.hairColorCode, hairDetails?.hairTextureCode])
 
         console.log(data);
         if (!error) {
+
+            localStorage.setItem("hairRecPhotos", JSON.stringify(data));
             return data;
         }
 }

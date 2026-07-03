@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { registerNewUser } from '../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegistrationForm() {
 
@@ -7,11 +8,17 @@ export default function RegistrationForm() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        const result = await registerNewUser(firstName, lastName, email, password);
-        console.log("worked?", result);
+        const { data, error } = await registerNewUser(firstName, lastName, email, password);
+        if (error) {
+            console.error("Error registering user. ", error);
+            return;
+        }
+        console.log("registered? ", data)
+        navigate("/users/dashboard");
     }
 
     return (

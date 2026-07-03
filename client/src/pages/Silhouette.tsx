@@ -68,6 +68,14 @@ export default function Silhouette() {
         return photos ? JSON.parse(photos) : [];
     });
 
+    useEffect(() => {
+        const photos = localStorage.getItem("silhouetteRecPhotos");
+    
+        if (photos) {
+            setSilhouetteRecPhotos(JSON.parse(photos));
+        }
+    }, [user]);
+
     const resetQuiz = () => {
         setQuizModalOpen(false);
         setQuestionIndex(0);
@@ -193,7 +201,8 @@ export default function Silhouette() {
                                 }
 
                                 localStorage.setItem("silhouette", JSON.stringify(apiResponse));
-                                saveSilhouetteResults(apiResponse);
+                                await saveSilhouetteResults(apiResponse);
+                                console.log("api response in silhouette component: ", apiResponse);
                                 const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
                                 setSilhouetteRecPhotos(recommendationResponse);
                                 localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));

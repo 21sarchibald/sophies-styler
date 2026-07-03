@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
@@ -11,8 +11,11 @@ import longHead from "../assets/images/hair/long-head.png";
 import ovalHead from "../assets/images/hair/oval-head.png";
 import roundHead from "../assets/images/hair/round-head.png";
 import squareHead from "../assets/images/hair/square-head.png";
+import { useAuth } from "../context/useAuth";
 
 export default function Hair() {
+
+    const { user } = useAuth();
 
     interface HairAnswer {
         id: string;
@@ -69,6 +72,14 @@ export default function Hair() {
         const photos = localStorage.getItem("hairRecPhotos");
         return photos ? JSON.parse(photos) : [];
     });
+
+    useEffect(() => {
+        const photos = localStorage.getItem("hairRecPhotos");
+    
+        if (photos) {
+            setHairRecPhotos(JSON.parse(photos));
+        }
+    }, [user]);
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -186,11 +197,12 @@ export default function Hair() {
 
                             if (questionIndex >= hairQuestions.length - 1) {
                                 const apiResponse = await analyzeHair(answersArray) || null;
+                                // console.log("apiResponse hair: ", apiResponse);
 
                                 if (apiResponse) {
                                     setHairDetails(apiResponse);
                                 }
-
+                                // console.log("apiResponse hair: ", apiResponse);
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 saveHairResults(apiResponse);
                                 const recommendationResponse = await getHairRecommendations(apiResponse);

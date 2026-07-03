@@ -6,9 +6,6 @@ type SilhouetteSubmission = {
     proportions: string;
 }
 
-const { data: { user },
-    } = await supabase.auth.getUser();
-
 export default async function analyzeSilhouette(silhouetteSubmission: SilhouetteSubmission) {
     try {
         const results = await fetch('http://localhost:8080/api/silhouette/analyze', {
@@ -36,15 +33,19 @@ export default async function analyzeSilhouette(silhouetteSubmission: Silhouette
 }
 
 export async function saveSilhouetteResults(result:SilhouetteDetails | null) {
-    console.log("save silhouette function running");
+
+    const { data: { user },
+    } = await supabase.auth.getUser();
 
     if (user) {
         return await supabase.from("silhouette_assignments").upsert(
             {
                 user_id: user?.id,
                 silhouette: result?.silhouette,
+                silhouette_code: result?.silhouetteCode,
                 silhouette_suggestions: result?.silhouetteSuggestions,
                 proportions: result?.proportions,
+                proportions_code: result?.proportionsCode,
                 proportions_suggestions: result?.proportionsSuggestions,
             },
             {
@@ -56,14 +57,12 @@ export async function saveSilhouetteResults(result:SilhouetteDetails | null) {
 }
 
 export async function getSilhouetteRecommendations(silhouetteDetails:SilhouetteDetails | null) {
-    console.log('get silhouette rec function running')
 
         const { data, error } = await supabase.from("silhouette_images").select("*")
-        // maybe make it so that this could be an or thing instead of an and
         .contains("tags", [silhouetteDetails?.silhouetteCode, silhouetteDetails?.proportionsCode])
-        console.log("silhouette", silhouetteDetails?.silhouetteCode)
-        console.log(data);
         if (!error) {
+
+            localStorage.setItem("silhouetteRecPhotos", JSON.stringify(data));
             return data;
         }
 }

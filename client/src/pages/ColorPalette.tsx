@@ -61,6 +61,15 @@ export default function ColorPalette() {
         return photos ? JSON.parse(photos) : [];
     });
 
+    useEffect(() => {
+        const photos = localStorage.getItem("colorRecPhotos");
+    
+        if (photos) {
+            setColorRecPhotos(JSON.parse(photos));
+        }
+    }, [user]);
+
+
     const resetQuiz = () => {
         setQuizModalOpen(false);
         setQuestionIndex(0);

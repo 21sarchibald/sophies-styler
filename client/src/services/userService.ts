@@ -1,5 +1,6 @@
-import { getHairRecommendations } from "./hairService";
+import { getColorRecommendations } from "./colorService";
 import { getSilhouetteRecommendations } from "./silhouetteService";
+import { getHairRecommendations } from "./hairService";
 import { supabase } from "./supabase";
 
 export async function getUserColorPalette(userId: string) {
@@ -7,7 +8,7 @@ export async function getUserColorPalette(userId: string) {
         .from("color_palette_assignments")
         .select("*")
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw error
@@ -15,7 +16,28 @@ export async function getUserColorPalette(userId: string) {
 
     if (data) {
         console.log("data", data);
-        localStorage.setItem("colorPalette", JSON.stringify(data.color_details));
+
+        const details = data.color_details;
+
+        // const details = {
+        //     season: responseDetails.season,
+        //     seasonCode: responseDetails.seasonCode,
+        //     seasonFamily: responseDetails.seasonFamily,
+        //     temperature: string;
+        //     value: string;
+
+        //     description: string;
+
+        //     bestColors: string[];
+        //     bestNeutrals: string[];
+
+        //     metals: string;
+
+        //     avoidColors: string[];
+        // }
+
+        localStorage.setItem("colorPalette", JSON.stringify(details));
+        return details;
     }
 }
 
@@ -24,7 +46,7 @@ export async function getUserSilhouette(userId: string) {
         .from("silhouette_assignments")
         .select("*")
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw error
@@ -34,20 +56,16 @@ export async function getUserSilhouette(userId: string) {
         
         const details = {
             silhouette: data.silhouette,
+            silhouetteCode: data.silhouette_code,
             silhouetteSuggestions: data.silhouette_suggestions,
             proportions: data.proportions,
+            proportionsCode: data.proportions_code,
             proportionsSuggestions: data.proportions_suggestions,
         }
 
-        // const recommendations = await getSilhouetteRecommendations(data);
-
-
-        console.log("data", data);
         localStorage.setItem("silhouette", JSON.stringify(details));
 
-        // console.log(recommendations);
-
-        // localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendations));
+        return details;
 
     }
 }
@@ -57,7 +75,7 @@ export async function getUserHair(userId: string) {
         .from("hair_assignments")
         .select("*")
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
     if (error) {
         throw error
@@ -67,24 +85,33 @@ export async function getUserHair(userId: string) {
 
         const details = {
             faceShape: data.face_shape,
+            faceShapeCode: data.face_shape_code,
             faceShapeSuggestions: data.face_shape_suggestions,
             hairColor: data.hair_color,
+            hairColorCode: data.hair_color_code,
             hairTexture: data.hair_texture,
+            hairTextureCode: data.hair_texture_code
         }
-
-        console.log("data", data);
-
-        // const recommendations = await getHairRecommendations(data);
 
         localStorage.setItem("hairstyle", JSON.stringify(details));
 
-        // localStorage.setItem("hairRecPhotos", JSON.stringify(recommendations));
+        return details;
 
     }
 }
 
 export async function initializeUser(userId: string) {
-    getUserColorPalette(userId);
-    getUserSilhouette(userId);
-    getUserHair(userId);
+    const colorPalette = await getUserColorPalette(userId);
+    if (colorPalette) {
+        await getColorRecommendations(colorPalette);
+    }
+    const silhouette = await getUserSilhouette(userId);
+    if (silhouette) {
+        await getSilhouetteRecommendations(silhouette);
+    }
+    const hair = await getUserHair(userId);
+    console.log("hair response", hair);
+    if (hair) {
+        await getHairRecommendations(hair);
+    }
 }

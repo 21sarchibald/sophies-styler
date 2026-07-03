@@ -13,9 +13,6 @@ export interface Traits {
     lowContrast: number;
 }
 
-const { data: { user },
-    } = await supabase.auth.getUser();
-
 export async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
 
     try {
@@ -69,6 +66,10 @@ export async function getColorPalette(paletteName: string): Promise<SeasonDetail
 }
 
 export async function saveColorResults(result:SeasonDetails | null) {
+
+    const { data: { user },
+    } = await supabase.auth.getUser();
+
     console.log("save function running");
 
     if (user) {
@@ -94,11 +95,15 @@ export async function saveColorResults(result:SeasonDetails | null) {
 export async function getColorRecommendations(seasonDetails:SeasonDetails | null) {
     console.log('get color rec function running')
 
+    console.log('season code', seasonDetails?.seasonCode);
+
         const { data, error } = await supabase.from("color_palette_images").select("*")
         .contains("tags", [seasonDetails?.seasonCode])
 
         console.log(data);
         if (!error) {
+
+            localStorage.setItem("colorRecPhotos", JSON.stringify(data));
             return data;
         }
 }
