@@ -3,8 +3,6 @@ import DownArrow from "../assets/icons/down-arrow.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
-import { supabase } from "../services/supabase";
-
 
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
 import { useAuth } from "../context/useAuth";
@@ -134,8 +132,8 @@ export default function ColorPalette() {
 
     return (
         <>
-        <main className="grid grid-cols-3 h-full">
-            <div className="col-span-2">
+        <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+            <div className="flex-1">
                 <div>Pics of Suggestions</div>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
@@ -145,7 +143,7 @@ export default function ColorPalette() {
                     )}
                 </div>
             </div>
-            <div className="col-span-1 text-center flex flex-col h-screen sticky top-0 p-5">
+            <div className="w-full lg:w-80 xl:w-96 text-center">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
                     <h2 className="font-heading font-extrabold text-2xl p-5">{recommendedSeasonDetails.season}</h2>

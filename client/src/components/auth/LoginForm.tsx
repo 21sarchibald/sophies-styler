@@ -21,7 +21,7 @@ export default function LoginForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mx-auto flex flex-col p-10 w-xl text-left font-sans">
+        <form onSubmit={handleSubmit} className="mx-auto flex flex-col p-10 w-full max-w-xl text-left font-sans">
             <label htmlFor="email">Email:</label>
             <input
                 type="text"

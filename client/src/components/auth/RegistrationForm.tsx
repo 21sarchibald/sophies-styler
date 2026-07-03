@@ -22,7 +22,7 @@ export default function RegistrationForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="mx-auto flex flex-col p-10 w-xl text-left font-sans">
+        <form onSubmit={handleSubmit} className="mx-auto flex flex-col p-10 w-full max-w-xl text-left font-sans">
             <label htmlFor="firstName">First Name:</label>
             <input
                 type="text"
@@ -43,7 +43,7 @@ export default function RegistrationForm() {
             ></input>
             <label htmlFor="email">Email:</label>
             <input
-                type="text"
+                type="email"
                 className="h-10 mb-5 border border-gray-500 focus:border-pink-600 focus:border-2 focus:outline-none p-2 rounded-sm"
                 id="email"
                 name="email"
@@ -51,7 +51,7 @@ export default function RegistrationForm() {
                 onChange={(e) => setEmail(e.target.value)}
             ></input><label htmlFor="password">Password:</label>
             <input
-                type="text"
+                type="password"
                 className="h-10 mb-5 border border-gray-500 focus:border-pink-600 focus:border-2 focus:outline-none p-2 rounded-sm"
                 id="password"
                 name="password"
