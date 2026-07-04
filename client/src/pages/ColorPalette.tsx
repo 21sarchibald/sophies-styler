@@ -103,7 +103,7 @@ export default function ColorPalette() {
         const answers = colorQuestions[questionIndex].answers;
 
         return (
-            <div className="flex justify-evenly">
+            <div className="flex flex-col gap-1 md:flex-row md:flex-wrap md:justify-evenly">
                 {answers.map((answer) => (
                         <QuizAnswerButton
                             
@@ -121,7 +121,7 @@ export default function ColorPalette() {
                                 setSelectedWeights(answerWeights);
                             }}
                         >
-                            {answer.image && <img className="pb-5 mx-auto w-80 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
+                            {answer.image && <img className="pb-5 mx-auto w-24 sm:w-24 md:w-28 lg:w-38 object-cover"src={answer.image[0]} alt="Answer visual aid"/>}
                             {answer.text}
                         </QuizAnswerButton>
                 ))
@@ -134,21 +134,24 @@ export default function ColorPalette() {
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
-                <div>Pics of Suggestions</div>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
                         colorRecPhotos.map((rec: ColorRecPhoto) => (
-                            <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                            <img 
+                                src={rec.url}
+                                key={rec.url}
+                                alt="Photo" 
+                                className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 hover:scale-[1.02]" />
                         ))
                     )}
                 </div>
             </div>
-            <div className="w-full lg:w-80 xl:w-96 text-center">
+            <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
                 {recommendedSeasonDetails && (
                     <h2 className="font-heading font-extrabold text-2xl p-5">{recommendedSeasonDetails.season}</h2>
                 )}
-                <div className="grid grid-cols-7 h-80 w-68 mx-auto">
+                <div className="mx-auto grid aspect-square w-full max-w-[270px] grid-cols-7 overflow-hidden rounded-lg">
                     {recommendedSeasonDetails && recommendedSeasonDetails.bestColors.map((color: string) => {
                     return (
                         <div
@@ -187,12 +190,12 @@ export default function ColorPalette() {
         
 
         {quizModalOpen && (
-            <div className="fixed inset-0 flex font-heading">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative mx-auto my-auto bg-white w-180 h-120 opacity-100 z-10 p-5">
+                <div className="relative z-10 max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
                     <h3 className="font-heading text-2xl text-center p-5">{colorQuestions[questionIndex].heading}</h3>
                     <div>

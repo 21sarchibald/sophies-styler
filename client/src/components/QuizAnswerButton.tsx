@@ -18,7 +18,7 @@ export default function QuizAnswerButton({
                 onClick();
             }}
 
-            className={`rounded-2xl p-10 hover:bg-blue-50 hover:cursor-pointer ${isSelected ? 'bg-blue-50' : 'bg-white'}`}
+            className={`rounded-2xl p-5 hover:bg-blue-50 hover:cursor-pointer ${isSelected ? 'bg-blue-50' : 'bg-white'}`}
         >{children}</button>
     )
 }

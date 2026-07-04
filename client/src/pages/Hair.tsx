@@ -101,7 +101,7 @@ export default function Hair() {
         const answers = hairQuestions[questionIndex].answers;
 
         return (
-            <div className="flex flex-wrap justify-evenly">
+            <div className="flex flex-col items-center gap-4 md:flex-row md:flex-wrap md:justify-evenly">
                 {answers.map((answer) => (
                         <QuizAnswerButton
                             key={answer.id}
@@ -111,7 +111,7 @@ export default function Hair() {
                                 setSelectedAnswer(answer);
                             }}
                         >
-                            {answer.image && <img className="pb-5 mx-auto w-36"src={answer.image[0]} alt="Answer visual aid"/>}
+                            {answer.image && <img className="pb-5 mx-auto w-24 sm:w-24 md:w-28 lg:w-28"src={answer.image[0]} alt="Answer visual aid"/>}
                             {answer.text}
                         </QuizAnswerButton>
                 ))
@@ -122,29 +122,28 @@ export default function Hair() {
 
     return (
         <>
-        <main className="grid grid-cols-3 h-full">
-            <div className="col-span-2">
-                <div>Pics of Suggestions</div>
+        <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+            <div className="flex-1">
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {hairRecPhotos && (
                         hairRecPhotos.map((rec: HairRecPhoto) => (
-                            <img src={rec.url} alt="Photo" className="w-full mb-4 rounded-lg break-inside-avoid hover:scale-[1.02] transition" />
+                            <img src={rec.url} key={rec.url} alt="Photo" className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 hover:scale-[1.02]" />
                         ))
                     )}
                 </div>
                 </div>
-            <div className="col-span-1 text-center flex flex-col h-screen sticky top-0 p-5">
+            <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
                 <h2 className="font-heading text-2xl">Your Hairstyle</h2>
                 {hairDetails && (
                     <>
                     <h2 className="font-heading font-extrabold text-2xl pt-5">{hairDetails.faceShape}</h2>
                     </>
                 )}
-                <div className="h-120 w-68 mx-auto">
+                <div className="mx-auto w-full max-w-xs">
                 {hairDetails && (
                     <>
                     <img src={hairImages[hairDetails.faceShape]} alt="" className="w-36 mx-auto"/>
-                    <ul>
+                    <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
                             {hairDetails.faceShapeSuggestions.map((suggestion: string) => (
                                 <li
                                 key={suggestion}
@@ -153,9 +152,9 @@ export default function Hair() {
                                 </li>
                             ))}
                         </ul>
-                    <h2 className="font-heading font-extrabold text-2xl pt-5">{hairDetails.hairColor}</h2>
+                    <h2 className="mt-8 mb-3 text-left font-heading text-xl">{hairDetails.hairColor}</h2>
                     <img></img>
-                    <h2 className="font-heading font-extrabold text-2xl pt-5">{hairDetails.hairTexture}</h2>
+                    <h2 className="mt-8 mb-3 text-left font-heading text-xl">{hairDetails.hairTexture}</h2>
                     </>
                 )}
                 </div>
@@ -168,12 +167,12 @@ export default function Hair() {
         </main>
 
         {quizModalOpen && (
-            <div className="fixed inset-0 flex font-heading">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative mx-auto my-auto bg-white w-350 h-160 opacity-100 z-10 p-5">
+                <div className="relative z-10 max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
                     <h3 className="font-heading text-2xl text-center p-5">{hairQuestions[questionIndex].heading}</h3>
                     <div>
