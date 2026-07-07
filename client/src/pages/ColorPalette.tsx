@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
+import SaveIcon from "../assets/icons/save-icon.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
@@ -137,11 +138,13 @@ export default function ColorPalette() {
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
                         colorRecPhotos.map((rec: ColorRecPhoto) => (
+                            <div key={rec.url} className="relative group">
+                                <button className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"><SaveIcon className="w-7 h-7 fill-black"/></button>
                             <img 
                                 src={rec.url}
-                                key={rec.url}
                                 alt="Photo" 
-                                className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 hover:scale-[1.02]" />
+                                className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
+                            </div>
                         ))
                     )}
                 </div>

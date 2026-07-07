@@ -19,23 +19,6 @@ export async function getUserColorPalette(userId: string) {
 
         const details = data.color_details;
 
-        // const details = {
-        //     season: responseDetails.season,
-        //     seasonCode: responseDetails.seasonCode,
-        //     seasonFamily: responseDetails.seasonFamily,
-        //     temperature: string;
-        //     value: string;
-
-        //     description: string;
-
-        //     bestColors: string[];
-        //     bestNeutrals: string[];
-
-        //     metals: string;
-
-        //     avoidColors: string[];
-        // }
-
         localStorage.setItem("colorPalette", JSON.stringify(details));
         return details;
     }
