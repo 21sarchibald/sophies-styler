@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
+import SaveIcon from "../assets/icons/save-icon.svg?react";
 
+import { saveImage } from "../services/imageService";
 import analyzeHair, { getHairRecommendations, saveHairResults } from "../services/hairService";
 import type { HairDetails } from "../types/HairDetails";
 
@@ -127,7 +129,18 @@ export default function Hair() {
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {hairRecPhotos && (
                         hairRecPhotos.map((rec: HairRecPhoto) => (
-                            <img src={rec.url} key={rec.url} alt="Photo" className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 hover:scale-[1.02]" />
+                            <div key={rec.url} className="relative group">
+                                <button
+                                onClick={() => saveImage(rec.url, "hair")}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                >
+                                    <SaveIcon className="w-7 h-7 fill-black"/>
+                                </button>
+                            <img 
+                                src={rec.url}
+                                alt="Photo" 
+                                className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
+                            </div>     
                         ))
                     )}
                 </div>

@@ -5,6 +5,7 @@ import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
+import { saveImage } from "../services/imageService";
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
 import { useAuth } from "../context/useAuth";
 
@@ -139,7 +140,12 @@ export default function ColorPalette() {
                     {colorRecPhotos && (
                         colorRecPhotos.map((rec: ColorRecPhoto) => (
                             <div key={rec.url} className="relative group">
-                                <button className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"><SaveIcon className="w-7 h-7 fill-black"/></button>
+                                <button 
+                                onClick={() => saveImage(rec.url, "color_palette")}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                >
+                                    <SaveIcon className="w-7 h-7 fill-black"/>
+                                </button>
                             <img 
                                 src={rec.url}
                                 alt="Photo" 
