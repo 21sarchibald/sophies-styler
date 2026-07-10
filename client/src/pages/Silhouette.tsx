@@ -200,7 +200,7 @@ export default function Silhouette() {
                 <div className="mx-auto w-full max-w-xs">
                     {silhouetteDetails && (
                         <>
-                        <img src={silhouetteImages[silhouetteDetails.silhouette]} className="w-36 mx-auto"/>
+                        <img src={silhouetteImages[silhouetteDetails.silhouette as keyof typeof silhouetteImages]} className="w-36 mx-auto"/>
                         <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
                             {silhouetteDetails.silhouetteSuggestions.map((suggestion: string) => (
                                 <li

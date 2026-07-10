@@ -131,7 +131,7 @@ export default function ColorPalette() {
         await saveColorResults(results);
         console.log("saved results");
         const recommendationResponse = await getColorRecommendations(results);
-        setColorRecPhotos(recommendationResponse);
+        setColorRecPhotos(recommendationResponse ?? []);
         localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
         setSelectionMenuOpen(false);
     }
@@ -291,7 +291,7 @@ export default function ColorPalette() {
                             // set it in supabase
                             await saveColorResults(apiResponse);
                             const recommendationResponse = await getColorRecommendations(apiResponse);
-                            setColorRecPhotos(recommendationResponse);
+                            setColorRecPhotos(recommendationResponse ?? []);
                             localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
                             
                             resetQuiz();

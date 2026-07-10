@@ -6,7 +6,6 @@ import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
 
 import { getSavedImages, saveImage, unsaveImage } from "../services/imageService";
 import analyzeHair, { getHairRecommendations, saveHairResults } from "../services/hairService";
-import type { HairDetails } from "../types/HairDetails";
 
 import diamondHead from "../assets/images/hair/diamond-head.png";
 import heartHead from "../assets/images/hair/heart-head.png";
@@ -198,7 +197,7 @@ export default function Hair() {
                 <div className="mx-auto w-full max-w-xs">
                 {hairDetails && (
                     <>
-                    <img src={hairImages[hairDetails.faceShape]} alt="" className="w-36 mx-auto"/>
+                    <img src={hairImages[hairDetails.faceShape as keyof typeof hairImages]} alt="" className="w-36 mx-auto"/>
                     <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
                             {hairDetails.faceShapeSuggestions.map((suggestion: string) => (
                                 <li
@@ -242,9 +241,10 @@ export default function Hair() {
                         onClick={ async () => {
                             const answersArray = { ... questionAnswers };
                             const questionId = hairQuestions[questionIndex].id as keyof HairSubmission;
-                            // const questionCode = hairQuestions[questionIndex].answers.code as keyof HairSubmission;
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
+
+                            console.log('questionId: ', questionId);
 
                             answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
 
