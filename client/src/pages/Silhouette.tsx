@@ -27,6 +27,8 @@ export default function Silhouette() {
         code: string;
     }
 
+    type silhouetteQuestionId = | "silhouette" | "proportions";
+
     type SilhouetteSubmission = {
         silhouette: string;
         silhouetteCode: string;
@@ -251,7 +253,7 @@ export default function Silhouette() {
 
                         onClick={ async () => {
                             const answersArray = { ... questionAnswers };
-                            const questionId = silhouetteQuestions[questionIndex].id as keyof SilhouetteSubmission;
+                            const questionId = silhouetteQuestions[questionIndex].id as silhouetteQuestionId;
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
 
@@ -270,7 +272,7 @@ export default function Silhouette() {
                                 await saveSilhouetteResults(apiResponse);
                                 console.log("api response in silhouette component: ", apiResponse);
                                 const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
-                                setSilhouetteRecPhotos(recommendationResponse);
+                                setSilhouetteRecPhotos(recommendationResponse ?? []);
                                 localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));
                                 resetQuiz();
                             }

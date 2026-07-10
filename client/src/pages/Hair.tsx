@@ -26,6 +26,8 @@ export default function Hair() {
         code: string;
     }
 
+    type HairQuestionId = | "faceShape" | "hairColor" | "hairTexture";
+
     type HairSubmission = {
         faceShape: string;
         faceShapeCode: string;
@@ -240,7 +242,7 @@ export default function Hair() {
 
                         onClick={ async () => {
                             const answersArray = { ... questionAnswers };
-                            const questionId = hairQuestions[questionIndex].id as keyof HairSubmission;
+                            const questionId = hairQuestions[questionIndex].id as HairQuestionId;
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
 
@@ -261,7 +263,7 @@ export default function Hair() {
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 saveHairResults(apiResponse);
                                 const recommendationResponse = await getHairRecommendations(apiResponse);
-                                setHairRecPhotos(recommendationResponse);
+                                setHairRecPhotos(recommendationResponse ?? []);
                                 localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));
                                 resetQuiz();
                             }
