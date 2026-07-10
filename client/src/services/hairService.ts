@@ -9,7 +9,7 @@ type HairSubmission = {
 export default async function analyzeHair(hairSubmission: HairSubmission) {
        
     try {
-        const results = await fetch('http://localhost:8080/api/hair/analyze', {
+        const results = await fetch(`${import.meta.env.VITE_API_URL}/api/hair/analyze`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

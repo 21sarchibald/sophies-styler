@@ -16,7 +16,7 @@ export interface Traits {
 export async function analyzeColors(traits: Traits): Promise<SeasonDetails | null> {
 
     try {
-        const results = await fetch('http://localhost:8080/api/colors/analyze', {
+        const results = await fetch(`${import.meta.env.VITE_API_URL}/api/colors/analyze`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function analyzeColors(traits: Traits): Promise<SeasonDetails | nul
 
 export async function getColorPalette(paletteName: string): Promise<SeasonDetails | null> {
     try {
-        const results = await fetch('http://localhost:8080/api/colors/getPalette', {
+        const results = await fetch(`${import.meta.env.VITE_API_URL}/api/colors/getPalette`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ type SilhouetteSubmission = {
 
 export default async function analyzeSilhouette(silhouetteSubmission: SilhouetteSubmission) {
     try {
-        const results = await fetch('http://localhost:8080/api/silhouette/analyze', {
+        const results = await fetch(`${import.meta.env.VITE_API_URL}/api/silhouette/analyze`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
