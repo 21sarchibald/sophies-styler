@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { hairQuestions } from "../data/hairQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
+import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
 
-import { saveImage } from "../services/imageService";
+import { getSavedImages, saveImage, unsaveImage } from "../services/imageService";
 import analyzeHair, { getHairRecommendations, saveHairResults } from "../services/hairService";
 import type { HairDetails } from "../types/HairDetails";
 
@@ -83,6 +84,38 @@ export default function Hair() {
         }
     }, [user]);
 
+    const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        async function loadSavedPhotos() {
+            const data = await getSavedImages("hair");
+
+            setSavedPhotos(new Set(data.map(img => img.image_url)))
+        }
+
+        loadSavedPhotos();
+    }, []);
+
+    const handleSave = async (url: string) => {
+        await saveImage(url, "silhouette");
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.add(url);
+            return next;
+        })
+    }
+
+    const handleUnsave = async (url: string) => {
+        await unsaveImage(url);
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.delete(url);
+            return next;
+        })
+    }
+
     const resetQuiz = () => {
         setQuizModalOpen(false);
         setQuestionIndex(0);
@@ -130,12 +163,22 @@ export default function Hair() {
                     {hairRecPhotos && (
                         hairRecPhotos.map((rec: HairRecPhoto) => (
                             <div key={rec.url} className="relative group">
+                                {savedPhotos.has(rec.url) ? (
                                 <button
-                                onClick={() => saveImage(rec.url, "hair")}
+                                onClick={() => handleUnsave(rec.url)}
                                 className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
                                 >
-                                    <SaveIcon className="w-7 h-7 fill-black"/>
+                                    <UnsaveIcon className="w-7 h-7"/>
                                 </button>
+                                ) : (
+                                <button
+                                onClick={() => handleSave(rec.url)}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                >
+                                    <SaveIcon className="w-7 h-7"/>
+                                </button>
+                                )
+                                }
                             <img 
                                 src={rec.url}
                                 alt="Photo" 

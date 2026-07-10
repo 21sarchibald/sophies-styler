@@ -67,18 +67,6 @@ export default function Silhouette() {
         return silhouette ? JSON.parse(silhouette) : null;
     });
 
-    const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
-
-    useEffect(() => {
-        async function loadSavedPhotos() {
-            const data = await getSavedImages("silhouette");
-
-            setSavedPhotos(new Set(data.map(img => img.image_url)))
-        }
-
-        loadSavedPhotos();
-    }, []);
-
     const [silhouetteRecPhotos, setSilhouetteRecPhotos] = useState<SilhouetteRecPhoto[]>(() => {
         const photos = localStorage.getItem("silhouetteRecPhotos");
         return photos ? JSON.parse(photos) : [];
@@ -91,6 +79,38 @@ export default function Silhouette() {
         setSilhouetteRecPhotos(JSON.parse(photos));
     }
 }, [user]);
+
+    const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        async function loadSavedPhotos() {
+            const data = await getSavedImages("silhouette");
+
+            setSavedPhotos(new Set(data.map(img => img.image_url)))
+        }
+
+        loadSavedPhotos();
+    }, []);
+
+    const handleSave = async (url: string) => {
+        await saveImage(url, "silhouette");
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.add(url);
+            return next;
+        })
+    }
+
+    const handleUnsave = async (url: string) => {
+        await unsaveImage(url);
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.delete(url);
+            return next;
+        })
+    }
 
     const resetQuiz = () => {
         setQuizModalOpen(false);
@@ -139,14 +159,14 @@ export default function Silhouette() {
                             <div key={rec.url} className="relative group">
                                 {savedPhotos.has(rec.url) ? (
                                 <button
-                                onClick={() => unsaveImage(rec.url)}
+                                onClick={() => handleUnsave(rec.url)}
                                 className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
                                 >
                                     <UnsaveIcon className="w-7 h-7"/>
                                 </button>
                                 ) : (
                                 <button
-                                onClick={() => saveImage(rec.url, "silhouette")}
+                                onClick={() => handleSave(rec.url)}
                                 className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
                                 >
                                     <SaveIcon className="w-7 h-7"/>

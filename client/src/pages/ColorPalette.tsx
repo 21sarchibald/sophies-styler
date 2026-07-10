@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
+import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
 import ExternalLinkIcon from "../assets/icons/external-link-icon.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
-import { saveImage } from "../services/imageService";
+import { getSavedImages, saveImage, unsaveImage } from "../services/imageService";
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
 import { useAuth } from "../context/useAuth";
 
@@ -70,6 +71,38 @@ export default function ColorPalette() {
             setColorRecPhotos(JSON.parse(photos));
         }
     }, [user]);
+
+    const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        async function loadSavedPhotos() {
+            const data = await getSavedImages("color_palette");
+
+            setSavedPhotos(new Set(data.map(img => img.image_url)))
+        }
+
+        loadSavedPhotos();
+    }, []);
+
+    const handleSave = async (url: string) => {
+        await saveImage(url, "silhouette");
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.add(url);
+            return next;
+        })
+    }
+
+    const handleUnsave = async (url: string) => {
+        await unsaveImage(url);
+
+        setSavedPhotos(prev => {
+            const next = new Set(prev);
+            next.delete(url);
+            return next;
+        })
+    }
 
 
     const resetQuiz = () => {
@@ -142,12 +175,22 @@ export default function ColorPalette() {
                     {colorRecPhotos && (
                         colorRecPhotos.map((rec: ColorRecPhoto) => { console.log("yas", rec.external_link); return (
                             <div key={rec.url} className="relative group">
-                                <button 
-                                onClick={() => saveImage(rec.url, "color_palette")}
+                                {savedPhotos.has(rec.url) ? (
+                                <button
+                                onClick={() => handleUnsave(rec.url)}
                                 className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
                                 >
-                                    <SaveIcon className="w-7 h-7 fill-black"/>
+                                    <UnsaveIcon className="w-7 h-7"/>
                                 </button>
+                                ) : (
+                                <button
+                                onClick={() => handleSave(rec.url)}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                >
+                                    <SaveIcon className="w-7 h-7"/>
+                                </button>
+                                )
+                                }
                                 {rec.external_link && (
                                     <a 
                                     href={rec.external_link}
