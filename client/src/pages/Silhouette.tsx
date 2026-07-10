@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { silhouetteQuestions } from "../data/silhouetteQuestions";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
+import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
+import ExternalLinkIcon from "../assets/icons/external-link-icon.svg?react";
 
-import { saveImage } from "../services/imageService";
+import { saveImage, unsaveImage, getSavedImages } from "../services/imageService";
 import analyzeSilhouette, { getSilhouetteRecommendations } from "../services/silhouetteService";
 import { saveSilhouetteResults } from "../services/silhouetteService";
-
 
 import appleSilhouette from "../assets/images/silhouette/apple-silhouette.png";
 import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouette.png";
@@ -37,6 +38,7 @@ export default function Silhouette() {
         id: number;
         url: string;
         tags: string[];
+        external_link: string;
         created_at: string;
     }
 
@@ -64,6 +66,18 @@ export default function Silhouette() {
 
         return silhouette ? JSON.parse(silhouette) : null;
     });
+
+    const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        async function loadSavedPhotos() {
+            const data = await getSavedImages("silhouette");
+
+            setSavedPhotos(new Set(data.map(img => img.image_url)))
+        }
+
+        loadSavedPhotos();
+    }, []);
 
     const [silhouetteRecPhotos, setSilhouetteRecPhotos] = useState<SilhouetteRecPhoto[]>(() => {
         const photos = localStorage.getItem("silhouetteRecPhotos");
@@ -123,12 +137,32 @@ export default function Silhouette() {
                     {silhouetteRecPhotos && (
                         silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
                             <div key={rec.url} className="relative group">
+                                {savedPhotos.has(rec.url) ? (
+                                <button
+                                onClick={() => unsaveImage(rec.url)}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                >
+                                    <UnsaveIcon className="w-7 h-7"/>
+                                </button>
+                                ) : (
                                 <button
                                 onClick={() => saveImage(rec.url, "silhouette")}
                                 className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
                                 >
-                                    <SaveIcon className="w-7 h-7 fill-black"/>
+                                    <SaveIcon className="w-7 h-7"/>
                                 </button>
+                                )
+                                }
+                                {rec.external_link && (
+                                    <a 
+                                    href={rec.external_link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute left-1 bottom-1 rounded-sm"
+                                    >
+                                        <ExternalLinkIcon className="w-7 h-7"/>
+                                    </a>
+                                )}
                             <img 
                                 src={rec.url}
                                 alt="Photo" 

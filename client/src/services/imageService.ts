@@ -34,7 +34,7 @@ export async function unsaveImage(imageUrl: string) {
 
 }
 
-export async function getSavedImages() {
+export async function getSavedImages(imageType: string) {
 
     const { data: { user } } = await supabase.auth.getUser();
 
@@ -43,6 +43,7 @@ export async function getSavedImages() {
             .from("saved_images")
             .select("*")
             .eq("user_id", user.id)
+            .eq("image_type", imageType)
 
         if (error) throw error;
 

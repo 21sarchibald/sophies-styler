@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
+import ExternalLinkIcon from "../assets/icons/external-link-icon.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
@@ -33,6 +34,7 @@ export default function ColorPalette() {
         id: number;
         url: string;
         tags: string[];
+        external_link: string;
         created_at: string;
     }
 
@@ -138,7 +140,7 @@ export default function ColorPalette() {
             <div className="flex-1">
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
-                        colorRecPhotos.map((rec: ColorRecPhoto) => (
+                        colorRecPhotos.map((rec: ColorRecPhoto) => { console.log("yas", rec.external_link); return (
                             <div key={rec.url} className="relative group">
                                 <button 
                                 onClick={() => saveImage(rec.url, "color_palette")}
@@ -146,12 +148,22 @@ export default function ColorPalette() {
                                 >
                                     <SaveIcon className="w-7 h-7 fill-black"/>
                                 </button>
+                                {rec.external_link && (
+                                    <a 
+                                    href={rec.external_link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute left-1 bottom-1 rounded-sm"
+                                    >
+                                        <ExternalLinkIcon className="w-7 h-7"/>
+                                    </a>
+                                )}
                             <img 
                                 src={rec.url}
                                 alt="Photo" 
                                 className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
                             </div>
-                        ))
+                        )})
                     )}
                 </div>
             </div>
