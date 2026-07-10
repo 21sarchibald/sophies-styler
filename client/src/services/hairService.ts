@@ -37,9 +37,6 @@ export async function saveHairResults(result:HairDetails | null) {
     const { data: { user },
         } = await supabase.auth.getUser();
 
-    if (!user) {
-        throw new Error("No authenticated user.");
-    } 
     console.log("save hair function running");
 
     if (user) {
