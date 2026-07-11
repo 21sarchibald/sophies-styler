@@ -5,7 +5,7 @@ import SaveIcon from "../assets/icons/save-icon.svg?react";
 import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
 import ExternalLinkIcon from "../assets/icons/external-link-icon.svg?react";
 
-import { saveImage, unsaveImage, getSavedImages } from "../services/imageService";
+import { saveImage, unsaveImage, getSavedImages, getOptimizedImage } from "../services/imageService";
 import analyzeSilhouette, { getSilhouetteRecommendations } from "../services/silhouetteService";
 import { saveSilhouetteResults } from "../services/silhouetteService";
 
@@ -186,7 +186,7 @@ export default function Silhouette() {
                                     </a>
                                 )}
                             <img 
-                                src={rec.url}
+                                src={getOptimizedImage(rec.url)}
                                 alt="Photo" 
                                 className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
                             </div>     

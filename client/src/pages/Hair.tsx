@@ -4,7 +4,7 @@ import QuizAnswerButton from "../components/QuizAnswerButton";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
 import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
 
-import { getSavedImages, saveImage, unsaveImage } from "../services/imageService";
+import { getSavedImages, saveImage, unsaveImage, getOptimizedImage } from "../services/imageService";
 import analyzeHair, { getHairRecommendations, saveHairResults } from "../services/hairService";
 
 import diamondHead from "../assets/images/hair/diamond-head.png";
@@ -181,7 +181,7 @@ export default function Hair() {
                                 )
                                 }
                             <img 
-                                src={rec.url}
+                                src={getOptimizedImage(rec.url)}
                                 alt="Photo" 
                                 className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
                             </div>     

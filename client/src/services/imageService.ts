@@ -55,3 +55,10 @@ export async function getSavedImages(imageType: string) {
     }
 
 }
+
+export function getOptimizedImage(url: string) {
+    return url.replace(
+        "/storage/v1/object/public/",
+        "/storage/v1/render/image/public/"
+    ) + "?width=500&height=700&resize=contain&quality=75";
+}

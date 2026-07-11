@@ -7,11 +7,21 @@ import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
 
-import { getSavedImages, saveImage, unsaveImage } from "../services/imageService";
+import { getSavedImages, saveImage, unsaveImage, getOptimizedImage } from "../services/imageService";
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
 import { useAuth } from "../context/useAuth";
 
 export default function ColorPalette() {
+
+    console.log("Color RENDER");
+
+    useEffect(() => {
+        console.log("COLOR PALETTE MOUNT");
+        
+        return () => {
+            console.log("COLOR PALETTE UNMOUNT");
+        };
+    }, []);
 
     const { user } = useAuth();
 
@@ -64,13 +74,13 @@ export default function ColorPalette() {
         return photos ? JSON.parse(photos) : [];
     });
 
-    useEffect(() => {
-        const photos = localStorage.getItem("colorRecPhotos");
+    // useEffect(() => {
+    //     const photos = localStorage.getItem("colorRecPhotos");
     
-        if (photos) {
-            setColorRecPhotos(JSON.parse(photos));
-        }
-    }, [user]);
+    //     if (photos) {
+    //         setColorRecPhotos(JSON.parse(photos));
+    //     }
+    // }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 
@@ -173,7 +183,7 @@ export default function ColorPalette() {
             <div className="flex-1">
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
-                        colorRecPhotos.map((rec: ColorRecPhoto) => { console.log("yas", rec.external_link); return (
+                        colorRecPhotos.map((rec: ColorRecPhoto) => { return (
                             <div key={rec.url} className="relative group">
                                 {savedPhotos.has(rec.url) ? (
                                 <button
@@ -202,7 +212,7 @@ export default function ColorPalette() {
                                     </a>
                                 )}
                             <img 
-                                src={rec.url}
+                                src={getOptimizedImage(rec.url)}
                                 alt="Photo" 
                                 className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
                             </div>
