@@ -13,11 +13,11 @@ import longHead from "../assets/images/hair/long-head.png";
 import ovalHead from "../assets/images/hair/oval-head.png";
 import roundHead from "../assets/images/hair/round-head.png";
 import squareHead from "../assets/images/hair/square-head.png";
-import { useAuth } from "../context/useAuth";
+// import { useAuth } from "../context/useAuth";
 
 export default function Hair() {
 
-    const { user } = useAuth();
+    // const { user } = useAuth();
 
     interface HairAnswer {
         id: string;
@@ -77,13 +77,13 @@ export default function Hair() {
         return photos ? JSON.parse(photos) : [];
     });
 
-    useEffect(() => {
-        const photos = localStorage.getItem("hairRecPhotos");
+    // useEffect(() => {
+    //     const photos = localStorage.getItem("hairRecPhotos");
     
-        if (photos) {
-            setHairRecPhotos(JSON.parse(photos));
-        }
-    }, [user]);
+    //     if (photos) {
+    //         setHairRecPhotos(JSON.parse(photos));
+    //     }
+    // }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 

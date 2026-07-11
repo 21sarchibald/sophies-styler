@@ -14,11 +14,11 @@ import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouett
 import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-triangle-silhouette.png';
 import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
-import { useAuth } from "../context/useAuth";
+// import { useAuth } from "../context/useAuth";
 
 export default function Silhouette() {
 
-    const { user } = useAuth();
+    // const { user } = useAuth();
 
     interface SilhouetteAnswer {
         id: string;
@@ -74,13 +74,13 @@ export default function Silhouette() {
         return photos ? JSON.parse(photos) : [];
     });
 
-    useEffect(() => {
-    const photos = localStorage.getItem("silhouetteRecPhotos");
+//     useEffect(() => {
+//     const photos = localStorage.getItem("silhouetteRecPhotos");
 
-    if (photos) {
-        setSilhouetteRecPhotos(JSON.parse(photos));
-    }
-}, [user]);
+//     if (photos) {
+//         setSilhouetteRecPhotos(JSON.parse(photos));
+//     }
+// }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 

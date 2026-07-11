@@ -9,7 +9,7 @@ import QuizAnswerButton from "../components/QuizAnswerButton";
 
 import { getSavedImages, saveImage, unsaveImage, getOptimizedImage } from "../services/imageService";
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
-import { useAuth } from "../context/useAuth";
+// import { useAuth } from "../context/useAuth";
 
 export default function ColorPalette() {
 
@@ -23,7 +23,7 @@ export default function ColorPalette() {
         };
     }, []);
 
-    const { user } = useAuth();
+    // const { user } = useAuth();
 
     interface ColorQuizAnswer {
         id: string,
