@@ -1,6 +1,7 @@
 import { useAuth } from "../../context/useAuth";
 import { signOut } from "../../services/authService"
 import { useNavigate } from "react-router-dom";
+import { getUserColorPalette } from "../../services/userService";
 
 export default function Dashboard() {
 
@@ -10,14 +11,12 @@ export default function Dashboard() {
         const error = await signOut();
 
         if (error) {
-            console.log("error logging out");
+            console.log("Error logging out");
             return;
         } else {
             navigate("/users/login");
         }
     }
-
-    console.log("user", user);
 
     return (
         <div>
@@ -31,6 +30,10 @@ export default function Dashboard() {
                 <p className="mb-4">
                     {user?.email}
                 </p>
+                {/* <h3 className="font-heading text-l font-bold">Color Palette:</h3>
+                <p className="mb-4">
+                    {getUserColorPalette(user?.id ?? "")}
+                </p> */}
             </div>
             <button onClick={handleSignOut} className="p-6 bg-gray-300 rounded-xl hover:cursor-pointer hover:bg-gray-200">
                 Log Out

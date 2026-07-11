@@ -17,7 +17,6 @@ export default async function analyzeSilhouette(silhouetteSubmission: Silhouette
         });
         
         const response = await results.json();
-        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
@@ -38,7 +37,7 @@ export async function saveSilhouetteResults(result:SilhouetteDetails | null) {
     } = await supabase.auth.getUser();
 
     if (user) {
-        return await supabase.from("silhouette_assignments").upsert(
+        const { data, error } = await supabase.from("silhouette_assignments").upsert(
             {
                 user_id: user?.id,
                 silhouette: result?.silhouette,
@@ -52,8 +51,13 @@ export async function saveSilhouetteResults(result:SilhouetteDetails | null) {
                 onConflict: "user_id"
             }
         )
+
+        if (error) {
+            console.error("Failed to save silhouette results", error);
+            return;
+        }
+        return data;
     }
-    else return;
 }
 
 export async function getSilhouetteRecommendations(silhouetteDetails:SilhouetteDetails | null) {

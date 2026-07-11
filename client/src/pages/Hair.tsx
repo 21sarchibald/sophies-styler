@@ -246,22 +246,20 @@ export default function Hair() {
 
                             answersArray[questionId] = selectedAnswer?.text ?? "";
 
-                            console.log('questionId: ', questionId);
-
                             answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
 
                             setQuestionAnswers(answersArray);
 
                             if (questionIndex >= hairQuestions.length - 1) {
                                 const apiResponse = await analyzeHair(answersArray) || null;
-                                // console.log("apiResponse hair: ", apiResponse);
 
                                 if (apiResponse) {
                                     setHairDetails(apiResponse);
                                 }
-                                // console.log("apiResponse hair: ", apiResponse);
+
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 saveHairResults(apiResponse);
+                                
                                 const recommendationResponse = await getHairRecommendations(apiResponse);
                                 setHairRecPhotos(recommendationResponse ?? []);
                                 localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));

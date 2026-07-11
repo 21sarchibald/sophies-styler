@@ -5,7 +5,6 @@ interface ColorSelectionProps {
 export default function ColorSelection({ 
     onClick, 
 }: ColorSelectionProps) {
-    console.log("rendering color selection");
     const colorPalettes = [
         "Light Spring",
         "True Spring",

@@ -270,7 +270,7 @@ export default function Silhouette() {
 
                                 localStorage.setItem("silhouette", JSON.stringify(apiResponse));
                                 await saveSilhouetteResults(apiResponse);
-                                console.log("api response in silhouette component: ", apiResponse);
+                                
                                 const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
                                 setSilhouetteRecPhotos(recommendationResponse ?? []);
                                 localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));

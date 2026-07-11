@@ -10,13 +10,12 @@ export default function LoginForm() {
 
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        const { data, error} = await signInWithEmail(email, password);
+        const { error} = await signInWithEmail(email, password);
 
         if (error) {
             console.log(error);
             return;
         }
-        console.log("logged in:", data);
         navigate("/users/dashboard");
     }
 

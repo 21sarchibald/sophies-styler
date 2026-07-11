@@ -18,7 +18,6 @@ export default async function analyzeHair(hairSubmission: HairSubmission) {
         });
         
         const response = await results.json();
-        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
@@ -37,10 +36,8 @@ export async function saveHairResults(result:HairDetails | null) {
     const { data: { user },
         } = await supabase.auth.getUser();
 
-    console.log("save hair function running");
-
     if (user) {
-        return await supabase.from("hair_assignments").upsert(
+        const { data, error }= await supabase.from("hair_assignments").upsert(
             {
                 user_id: user?.id,
                 face_shape: result?.faceShape,
@@ -55,17 +52,20 @@ export async function saveHairResults(result:HairDetails | null) {
                 onConflict: "user_id"
             }
         )
+
+        if (error) {
+            console.error("Failed to save color results", error);
+            return;
+        }
+        return data;
     }
-    else return;
 }
 
 export async function getHairRecommendations(hairDetails:HairDetails | null) {
-    console.log('get hair rec function running')
 
         const { data, error } = await supabase.from("hair_images").select("*")
         .contains("tags", [hairDetails?.faceShapeCode, hairDetails?.hairColorCode, hairDetails?.hairTextureCode])
 
-        console.log(data);
         if (!error) {
 
             localStorage.setItem("hairRecPhotos", JSON.stringify(data));

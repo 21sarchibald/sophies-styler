@@ -25,7 +25,6 @@ export async function analyzeColors(traits: Traits): Promise<SeasonDetails | nul
         });
         
         const response = await results.json();
-        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
@@ -51,7 +50,6 @@ export async function getColorPalette(paletteName: string): Promise<SeasonDetail
         });
 
         const response = await results.json();
-        console.log(response);
 
         if (!results.ok) {
             throw new Error(`Error: ${results.status}`)
@@ -69,8 +67,6 @@ export async function saveColorResults(result:SeasonDetails | null) {
 
     const { data: { user },
     } = await supabase.auth.getUser();
-
-    console.log("save function running");
 
     if (user) {
         const {data, error} = await supabase.from("color_palette_assignments").upsert(
@@ -93,14 +89,10 @@ export async function saveColorResults(result:SeasonDetails | null) {
 }
 
 export async function getColorRecommendations(seasonDetails:SeasonDetails | null) {
-    console.log('get color rec function running')
-
-    console.log('season code', seasonDetails?.seasonCode);
 
         const { data, error } = await supabase.from("color_palette_images").select("*")
         .contains("tags", [seasonDetails?.seasonCode])
 
-        console.log(data);
         if (!error) {
 
             localStorage.setItem("colorRecPhotos", JSON.stringify(data));

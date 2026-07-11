@@ -13,16 +13,6 @@ import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResul
 
 export default function ColorPalette() {
 
-    console.log("Color RENDER");
-
-    useEffect(() => {
-        console.log("COLOR PALETTE MOUNT");
-        
-        return () => {
-            console.log("COLOR PALETTE UNMOUNT");
-        };
-    }, []);
-
     // const { user } = useAuth();
 
     interface ColorQuizAnswer {
@@ -137,9 +127,10 @@ export default function ColorPalette() {
         const results = await getColorPalette(paletteName);
         setRecommendedSeasonDetails(results);
         localStorage.setItem("colorPalette", JSON.stringify(results));
+        
         // set it in supabase
         await saveColorResults(results);
-        console.log("saved results");
+
         const recommendationResponse = await getColorRecommendations(results);
         setColorRecPhotos(recommendationResponse ?? []);
         localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));

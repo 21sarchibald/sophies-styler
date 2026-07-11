@@ -15,8 +15,6 @@ export async function getUserColorPalette(userId: string) {
     }
 
     if (data) {
-        console.log("data", data);
-
         const details = data.color_details;
 
         localStorage.setItem("colorPalette", JSON.stringify(details));
@@ -93,7 +91,6 @@ export async function initializeUser(userId: string) {
         await getSilhouetteRecommendations(silhouette);
     }
     const hair = await getUserHair(userId);
-    console.log("hair response", hair);
     if (hair) {
         await getHairRecommendations(hair);
     }

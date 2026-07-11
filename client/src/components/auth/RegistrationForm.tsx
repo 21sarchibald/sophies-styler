@@ -12,12 +12,11 @@ export default function RegistrationForm() {
 
     async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
         e.preventDefault();
-        const { data, error } = await registerNewUser(firstName, lastName, email, password);
+        const { error } = await registerNewUser(firstName, lastName, email, password);
         if (error) {
             console.error("Error registering user. ", error);
             return;
         }
-        console.log("registered? ", data)
         navigate("/users/dashboard");
     }
 
