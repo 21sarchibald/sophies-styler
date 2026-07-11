@@ -26,17 +26,19 @@ export default function Dashboard() {
     const [userHair, setUserHair] = useState("");
 
     useEffect(() => {
-        if (!user?.id) return;
+        const userId = user?.id || "";
+        if (!userId) return;
+
     
         async function loadDashboard() {
             const [colorPalette, silhouette, hair, savedImages] = await Promise.all([
-                getUserColorPalette(user.id),
-                getUserSilhouette(user.id),
-                getUserHair(user.id),
-                getSavedImages(), // check parameters on this function and see what to send in
+                getUserColorPalette(userId),
+                getUserSilhouette(userId),
+                getUserHair(userId),
+                getSavedImages(),
             ]);
     
-            setUserColorPalette(colorPalette?.colorPalette ?? "");
+            setUserColorPalette(colorPalette?.season ?? "");
             setUserSilhouette(silhouette?.silhouette ?? "");
             setUserHair(hair?.faceShape ?? "");
             setAllSavedPhotos(savedImages);
@@ -66,36 +68,39 @@ export default function Dashboard() {
 
     return (
         <>
-        <div>
-            <h2 className="font-heading text-2xl font-bold">Your Profile</h2>
-            <div className="p-5">
-                <h3 className="font-heading text-l font-bold">Name:</h3>
-                <p className="mb-4">
-                    {user?.user_metadata.first_name} {user?.user_metadata.last_name}
-                </p>
-                <h3 className="font-heading text-l font-bold">Email:</h3>
-                <p className="mb-4">
-                    {user?.email}
-                </p>
-                <h3 className="font-heading text-l font-bold">Color Palette:</h3>
-                <p className="mb-4">
-                    {userColorPalette}
-                </p>
-                <h3 className="font-heading text-l font-bold">Silhouette:</h3>
-                <p className="mb-4">
-                    {userSilhouette}
-                </p>
-                <h3 className="font-heading text-l font-bold">Face Shape:</h3>
-                <p className="mb-4">
-                    {userHair}
-                </p>
+        <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+            <div className="flex-1">
+                <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
+                    <h2 className="font-heading text-2xl font-bold">Your Profile</h2>
+                    <div className="p-5">
+                        <h3 className="font-heading text-l font-bold">Name:</h3>
+                        <p className="mb-4">
+                            {user?.user_metadata.first_name} {user?.user_metadata.last_name}
+                        </p>
+                        <h3 className="font-heading text-l font-bold">Email:</h3>
+                        <p className="mb-4">
+                            {user?.email}
+                        </p>
+                        <h3 className="font-heading text-l font-bold">Color Palette:</h3>
+                        <p className="mb-4">
+                            {userColorPalette}
+                        </p>
+                        <h3 className="font-heading text-l font-bold">Silhouette:</h3>
+                        <p className="mb-4">
+                            {userSilhouette}
+                        </p>
+                        <h3 className="font-heading text-l font-bold">Face Shape:</h3>
+                        <p className="mb-4">
+                            {userHair}
+                        </p>
+                    </div>
+                    <button onClick={handleSignOut} className="p-6 bg-gray-300 rounded-xl hover:cursor-pointer hover:bg-gray-200">
+                        Log Out
+                    </button>
+                </div>
             </div>
-            <button onClick={handleSignOut} className="p-6 bg-gray-300 rounded-xl hover:cursor-pointer hover:bg-gray-200">
-                Log Out
-            </button>
-        </div>
         <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
-        {allSavedPhotos.map((rec: SavedPhoto) => { return (
+            {allSavedPhotos.map((rec: SavedPhoto) => { return (
                 <div key={rec.image_url} className="relative group">
                     <button
                     onClick={() => handleUnsave(rec.image_url)}
@@ -121,6 +126,7 @@ export default function Dashboard() {
             )})
         }
     </div>
-    </> 
+    </main> 
+    </>
     )
 }
