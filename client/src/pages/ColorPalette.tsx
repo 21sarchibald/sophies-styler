@@ -85,7 +85,7 @@ export default function ColorPalette() {
     }, []);
 
     const handleSave = async (url: string) => {
-        await saveImage(url, "silhouette");
+        await saveImage(url, "color_palette");
 
         setSavedPhotos(prev => {
             const next = new Set(prev);
@@ -127,7 +127,7 @@ export default function ColorPalette() {
         const results = await getColorPalette(paletteName);
         setRecommendedSeasonDetails(results);
         localStorage.setItem("colorPalette", JSON.stringify(results));
-        
+
         // set it in supabase
         await saveColorResults(results);
 

@@ -98,7 +98,7 @@ export default function Hair() {
     }, []);
 
     const handleSave = async (url: string) => {
-        await saveImage(url, "silhouette");
+        await saveImage(url, "hair");
 
         setSavedPhotos(prev => {
             const next = new Set(prev);
@@ -259,7 +259,7 @@ export default function Hair() {
 
                                 localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
                                 saveHairResults(apiResponse);
-                                
+
                                 const recommendationResponse = await getHairRecommendations(apiResponse);
                                 setHairRecPhotos(recommendationResponse ?? []);
                                 localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));
