@@ -39,6 +39,8 @@ export default function ColorPalette() {
         created_at: string;
     }
 
+    // const [loading, setLoading] = useState(true);
+
     const [selectionMenuOpen, setSelectionMenuOpen] = useState(false);
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -63,14 +65,6 @@ export default function ColorPalette() {
         const photos = localStorage.getItem("colorRecPhotos");
         return photos ? JSON.parse(photos) : [];
     });
-
-    // useEffect(() => {
-    //     const photos = localStorage.getItem("colorRecPhotos");
-    
-    //     if (photos) {
-    //         setColorRecPhotos(JSON.parse(photos));
-    //     }
-    // }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 
@@ -167,6 +161,18 @@ export default function ColorPalette() {
             </div>
         )
     }
+
+    // if (loading) {
+    //     return (
+    //         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+    //             <div className="flex-1">
+    //                 <GallerySkeleton />
+    //             </div>
+    
+    //             <SidebarSkeleton />
+    //         </main>
+    //     );
+    // }
 
     return (
         <>

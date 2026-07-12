@@ -6,6 +6,7 @@ import { initializeUser } from "../services/userService";
 
 export function AuthProvider({ children }: {children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function loadUser() {
@@ -16,6 +17,8 @@ export function AuthProvider({ children }: {children: React.ReactNode }) {
             if (supabaseUser) {
                 await initializeUser(supabaseUser.id);
             }
+
+            setLoading(false);
         };
         loadUser();
 
@@ -39,7 +42,7 @@ export function AuthProvider({ children }: {children: React.ReactNode }) {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user }}>
+        <AuthContext.Provider value={{ user, loading }}>
             {children}
         </AuthContext.Provider>
     )

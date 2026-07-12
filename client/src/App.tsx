@@ -11,8 +11,13 @@ import Register from './pages/users/Register'
 import Login from './pages/users/Login'
 import Dashboard from './pages/users/Dashboard'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import { useEffect } from 'react'
 
 export default function App() {
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/health`).catch(() => {});
+  }, []);
 
   return (
     <>

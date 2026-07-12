@@ -53,6 +53,8 @@ export default function Hair() {
         Square: squareHead,
     }
 
+     // const [loading, setLoading] = useState(true);
+
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<HairAnswer | null>(null);
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -76,14 +78,6 @@ export default function Hair() {
         const photos = localStorage.getItem("hairRecPhotos");
         return photos ? JSON.parse(photos) : [];
     });
-
-    // useEffect(() => {
-    //     const photos = localStorage.getItem("hairRecPhotos");
-    
-    //     if (photos) {
-    //         setHairRecPhotos(JSON.parse(photos));
-    //     }
-    // }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 
@@ -156,6 +150,18 @@ export default function Hair() {
         )
     }
 
+    // if (loading) {
+    //     return (
+    //         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+    //             <div className="flex-1">
+    //                 <GallerySkeleton />
+    //             </div>
+    
+    //             <SidebarSkeleton />
+    //         </main>
+    //     );
+    // }
+
     return (
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
@@ -193,7 +199,7 @@ export default function Hair() {
                 <h2 className="font-heading text-2xl">Your Hairstyle</h2>
                 {hairDetails && (
                     <>
-                    <h2 className="font-heading font-extrabold text-2xl pt-5">{hairDetails.faceShape}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl pt-5 pb-5">{hairDetails.faceShape}</h2>
                     </>
                 )}
                 <div className="mx-auto w-full max-w-xs">
@@ -211,12 +217,12 @@ export default function Hair() {
                         </ul>
                     <h2 className="mt-8 mb-3 text-left font-heading text-xl">{hairDetails.hairColor}</h2>
                     <img></img>
-                    <h2 className="mt-8 mb-3 text-left font-heading text-xl">{hairDetails.hairTexture}</h2>
+                    <h2 className="mt-0 mb-3 text-left font-heading text-xl">{hairDetails.hairTexture}</h2>
                     </>
                 )}
                 </div>
             <button
-                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
+                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 mt-5 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setQuizModalOpen(true)}
             >Take Quiz
             </button>

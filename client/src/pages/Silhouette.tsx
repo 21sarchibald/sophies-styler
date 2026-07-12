@@ -52,6 +52,8 @@ export default function Silhouette() {
         Rectangle: rectangleSilhouette,
     }
 
+    // const [loading, setLoading] = useState(true);
+
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<SilhouetteAnswer | null>(null);
     const [questionIndex, setQuestionIndex] = useState(0);
@@ -73,14 +75,6 @@ export default function Silhouette() {
         const photos = localStorage.getItem("silhouetteRecPhotos");
         return photos ? JSON.parse(photos) : [];
     });
-
-//     useEffect(() => {
-//     const photos = localStorage.getItem("silhouetteRecPhotos");
-
-//     if (photos) {
-//         setSilhouetteRecPhotos(JSON.parse(photos));
-//     }
-// }, [user]);
 
     const [savedPhotos, setSavedPhotos] = useState<Set<string>>(new Set());
 
@@ -151,6 +145,18 @@ export default function Silhouette() {
         )
     }
 
+    // if (loading) {
+    //     return (
+    //         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+    //             <div className="flex-1">
+    //                 <GallerySkeleton />
+    //             </div>
+    
+    //             <SidebarSkeleton />
+    //         </main>
+    //     );
+    // }
+
     return (
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
@@ -197,7 +203,7 @@ export default function Silhouette() {
             <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
                 <h2 className="font-heading text-2xl">Your Silhouette</h2>
                 {silhouetteDetails && (
-                    <h2 className="font-heading font-extrabold text-2xl pt-5">{silhouetteDetails.silhouette}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl pt-5 pb-5">{silhouetteDetails.silhouette}</h2>
                 )}
                 <div className="mx-auto w-full max-w-xs">
                     {silhouetteDetails && (
@@ -227,7 +233,7 @@ export default function Silhouette() {
                 </div>
                 
             <button
-                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
+                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 mt-5 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
                 onClick={() => setQuizModalOpen(true)}
             >Take Quiz
             </button>

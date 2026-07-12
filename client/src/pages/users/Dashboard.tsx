@@ -6,6 +6,8 @@ import { getSavedImages, getOptimizedImage, unsaveImage } from "../../services/i
 import { useEffect, useState } from "react";
 import ExternalLinkIcon from "../../assets/icons/external-link-icon.svg?react"
 import UnsaveIcon from "../../assets/icons/unsave-icon.svg?react"
+import GallerySkeleton from "../../components/skeletons/GallerySkeleton";
+import DashboardSkeleton from "../../components/skeletons/DashboardSkeleton";
 
 export default function Dashboard() {
 
@@ -20,6 +22,8 @@ export default function Dashboard() {
         created_at: string;
     }
 
+    const [loading, setLoading] = useState(true);
+
     const [allSavedPhotos, setAllSavedPhotos] = useState<SavedPhoto[]>([]);
     const [userColorPalette, setUserColorPalette] = useState("");
     const [userSilhouette, setUserSilhouette] = useState("");
@@ -31,7 +35,8 @@ export default function Dashboard() {
 
     
         async function loadDashboard() {
-            const [colorPalette, silhouette, hair, savedImages] = await Promise.all([
+            try {
+                const [colorPalette, silhouette, hair, savedImages] = await Promise.all([
                 getUserColorPalette(userId),
                 getUserSilhouette(userId),
                 getUserHair(userId),
@@ -42,6 +47,10 @@ export default function Dashboard() {
             setUserSilhouette(silhouette?.silhouette ?? "");
             setUserHair(hair?.faceShape ?? "");
             setAllSavedPhotos(savedImages);
+            }
+            finally {
+                setLoading(false);
+            }
         }
             loadDashboard();
     }, [user?.id]);
@@ -66,11 +75,25 @@ export default function Dashboard() {
         }
     }
 
+    if (loading) {
+        return (
+            <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+    
+                <div className="flex-1">
+                    <GallerySkeleton />
+                </div>
+    
+                <DashboardSkeleton />
+    
+            </main>
+        );
+    }
+
     return (
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
-                <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
+                <div className="w-full rounded-xl bg-white p-5 shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
                     <h2 className="font-heading text-2xl font-bold">Your Profile</h2>
                     <div className="p-5">
                         <h3 className="font-heading text-l font-bold">Name:</h3>
@@ -94,7 +117,7 @@ export default function Dashboard() {
                             {userHair}
                         </p>
                     </div>
-                    <button onClick={handleSignOut} className="p-6 bg-gray-300 rounded-xl hover:cursor-pointer hover:bg-gray-200">
+                    <button onClick={handleSignOut} className="p-6 bg-gray-300 mx-auto rounded-xl hover:cursor-pointer hover:bg-gray-200">
                         Log Out
                     </button>
                 </div>
