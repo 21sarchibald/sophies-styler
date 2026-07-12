@@ -167,14 +167,14 @@ export default function Hair() {
                                 {savedPhotos.has(rec.url) ? (
                                 <button
                                 onClick={() => handleUnsave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                 >
                                     <UnsaveIcon className="w-7 h-7"/>
                                 </button>
                                 ) : (
                                 <button
                                 onClick={() => handleSave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                 >
                                     <SaveIcon className="w-7 h-7"/>
                                 </button>

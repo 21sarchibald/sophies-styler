@@ -94,8 +94,8 @@ export default function Silhouette() {
         loadSavedPhotos();
     }, []);
 
-    const handleSave = async (url: string) => {
-        await saveImage(url, "silhouette");
+    const handleSave = async (url: string, externalLink: string) => {
+        await saveImage(url, "silhouette", externalLink);
 
         setSavedPhotos(prev => {
             const next = new Set(prev);
@@ -162,14 +162,14 @@ export default function Silhouette() {
                                 {savedPhotos.has(rec.url) ? (
                                 <button
                                 onClick={() => handleUnsave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                 >
                                     <UnsaveIcon className="w-7 h-7"/>
                                 </button>
                                 ) : (
                                 <button
-                                onClick={() => handleSave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                                onClick={() => handleSave(rec.url, rec.external_link)}
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                 >
                                     <SaveIcon className="w-7 h-7"/>
                                 </button>
@@ -180,7 +180,7 @@ export default function Silhouette() {
                                     href={rec.external_link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute left-1 bottom-1 rounded-sm"
+                                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
                                     >
                                         <ExternalLinkIcon className="w-7 h-7"/>
                                     </a>

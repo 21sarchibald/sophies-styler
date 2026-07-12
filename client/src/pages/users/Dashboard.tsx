@@ -104,7 +104,7 @@ export default function Dashboard() {
                 <div key={rec.image_url} className="relative group">
                     <button
                     onClick={() => handleUnsave(rec.image_url)}
-                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute right-1 top-1 rounded-sm"
+                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                     >
                         <UnsaveIcon className="w-7 h-7"/>
                     </button>
@@ -113,7 +113,7 @@ export default function Dashboard() {
                         href={rec.external_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-100 absolute left-1 bottom-1 rounded-sm"
+                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
                         >
                             <ExternalLinkIcon className="w-7 h-7"/>
                         </a>

@@ -1,6 +1,6 @@
 import { supabase } from "./supabase";
 
-export async function saveImage(imageUrl: string, imageType: string) {
+export async function saveImage(imageUrl: string, imageType: string, externalLink?: string) {
 
     console.log('save function running');
 
@@ -12,7 +12,8 @@ export async function saveImage(imageUrl: string, imageType: string) {
             {
                 user_id: user.id,
                 image_url: imageUrl,
-                image_type: imageType
+                image_type: imageType,
+                external_link: externalLink ?? null,
             },
             {
                 onConflict: "user_id,image_url"
