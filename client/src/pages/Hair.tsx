@@ -13,11 +13,11 @@ import longHead from "../assets/images/hair/long-head.png";
 import ovalHead from "../assets/images/hair/oval-head.png";
 import roundHead from "../assets/images/hair/round-head.png";
 import squareHead from "../assets/images/hair/square-head.png";
-// import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/useAuth";
 
 export default function Hair() {
 
-    // const { user } = useAuth();
+    const { user } = useAuth();
 
     interface HairAnswer {
         id: string;
@@ -170,22 +170,26 @@ export default function Hair() {
                     {hairRecPhotos && (
                         hairRecPhotos.map((rec: HairRecPhoto) => (
                             <div key={rec.url} className="relative group">
-                                {savedPhotos.has(rec.url) ? (
-                                <button
-                                onClick={() => handleUnsave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
-                                >
-                                    <UnsaveIcon className="w-7 h-7"/>
-                                </button>
-                                ) : (
-                                <button
-                                onClick={() => handleSave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
-                                >
-                                    <SaveIcon className="w-7 h-7"/>
-                                </button>
-                                )
-                                }
+                                {user && (
+                                    <>
+                                        {savedPhotos.has(rec.url) ? (
+                                        <button
+                                        onClick={() => handleUnsave(rec.url)}
+                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        >
+                                            <UnsaveIcon className="w-7 h-7"/>
+                                        </button>
+                                        ) : (
+                                        <button
+                                        onClick={() => handleSave(rec.url)}
+                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        >
+                                            <SaveIcon className="w-7 h-7"/>
+                                        </button>
+                                        )
+                                        }
+                                    </>
+                                )}
                             <img 
                                 src={getOptimizedImage(rec.url)}
                                 alt="Photo" 

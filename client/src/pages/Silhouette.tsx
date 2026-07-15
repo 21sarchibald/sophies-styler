@@ -14,11 +14,11 @@ import hourglassSilhouette from "../assets/images/silhouette/hourglass-silhouett
 import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-triangle-silhouette.png';
 import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
-// import { useAuth } from "../context/useAuth";
+import { useAuth } from "../context/useAuth";
 
 export default function Silhouette() {
 
-    // const { user } = useAuth();
+    const { user } = useAuth();
 
     interface SilhouetteAnswer {
         id: string;
@@ -165,22 +165,25 @@ export default function Silhouette() {
                     {silhouetteRecPhotos && (
                         silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
                             <div key={rec.url} className="relative group">
-                                {savedPhotos.has(rec.url) ? (
-                                <button
-                                onClick={() => handleUnsave(rec.url)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
-                                >
-                                    <UnsaveIcon className="w-7 h-7"/>
-                                </button>
-                                ) : (
-                                <button
-                                onClick={() => handleSave(rec.url, rec.external_link)}
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
-                                >
-                                    <SaveIcon className="w-7 h-7"/>
-                                </button>
-                                )
-                                }
+                                {user && (
+                                    <>
+                                        {savedPhotos.has(rec.url) ? (
+                                        <button
+                                        onClick={() => handleUnsave(rec.url)}
+                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        >
+                                            <UnsaveIcon className="w-7 h-7"/>
+                                        </button>
+                                        ) : (
+                                        <button
+                                        onClick={() => handleSave(rec.url, rec.external_link)}
+                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        >
+                                            <SaveIcon className="w-7 h-7"/>
+                                        </button>
+                                        )}
+                                    </>
+                                )}
                                 {rec.external_link && (
                                     <a 
                                     href={rec.external_link}

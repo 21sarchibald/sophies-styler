@@ -124,34 +124,37 @@ export default function Dashboard() {
                     </button>
                 </div>
             </div>
-        <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
-            {allSavedPhotos.map((rec: SavedPhoto) => { return (
-                <div key={rec.image_url} className="relative group">
-                    <button
-                    onClick={() => handleUnsave(rec.image_url)}
-                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
-                    >
-                        <UnsaveIcon className="w-7 h-7"/>
-                    </button>
-                    {rec.external_link && (
-                        <a 
-                        href={rec.external_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
-                        >
-                            <ExternalLinkIcon className="w-7 h-7"/>
-                        </a>
-                    )}
-                <img 
-                    src={getOptimizedImage(rec.image_url)}
-                    alt="Photo" 
-                    className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
+            <div>
+                <h2 className="font-heading mb-2">Your Saved Inspiration</h2>
+                <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
+                    {allSavedPhotos.map((rec: SavedPhoto) => { return (
+                        <div key={rec.image_url} className="relative group">
+                            <button
+                            onClick={() => handleUnsave(rec.image_url)}
+                            className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                            >
+                                <UnsaveIcon className="w-7 h-7"/>
+                            </button>
+                            {rec.external_link && (
+                                <a 
+                                href={rec.external_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
+                                >
+                                    <ExternalLinkIcon className="w-7 h-7"/>
+                                </a>
+                            )}
+                            <img 
+                                src={getOptimizedImage(rec.image_url)}
+                                alt="Photo" 
+                                className="mb-4 w-full break-inside-avoid rounded-lg object-cover transition-transform duration-200 group-hover:scale-[1.02]" />
+                        </div>
+                        )})
+                    }
                 </div>
-            )})
-        }
-    </div>
-    </main> 
+            </div>
+        </main> 
     </>
     )
 }
