@@ -23,6 +23,7 @@ export default function Dashboard() {
     }
 
     const [loading, setLoading] = useState(true);
+    const [signingOut, setSigningOut] = useState(false);
 
     const [allSavedPhotos, setAllSavedPhotos] = useState<SavedPhoto[]>([]);
     const [userColorPalette, setUserColorPalette] = useState("");
@@ -65,10 +66,12 @@ export default function Dashboard() {
 
 
     async function handleSignOut() {
+        setSigningOut(true);
         const error = await signOut();
 
         if (error) {
             console.log("Error logging out");
+            setSigningOut(false);
             return;
         } else {
             navigate("/users/login");
@@ -91,10 +94,10 @@ export default function Dashboard() {
 
     return (
         <>
-        <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
+        <main className="mx-auto flex max-w-7xl flex-col gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
-                <div className="w-full rounded-xl bg-white p-5 shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
-                    <h2 className="font-heading text-2xl font-bold">Your Profile</h2>
+                <div className="w-full rounded-xl bg-white p-5 shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96 flex-col items-center justify-center">
+                    <h2 className="font-heading text-2xl font-bold text-center">Your Profile</h2>
                     <div className="p-5">
                         <h3 className="font-heading text-l font-bold">Name:</h3>
                         <p className="mb-4">
@@ -117,8 +120,7 @@ export default function Dashboard() {
                             {userHair}
                         </p>
                     </div>
-                    <button onClick={handleSignOut} className="p-6 bg-gray-300 mx-auto rounded-xl hover:cursor-pointer hover:bg-gray-200">
-                        Log Out
+                    <button disabled={signingOut} onClick={handleSignOut} className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(signingOut) ? "Signing Out..." : "Sign Out"}
                     </button>
                 </div>
             </div>

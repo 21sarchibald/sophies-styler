@@ -146,9 +146,14 @@ export default function ColorPalette() {
 
                                 setSelectedAnswer(answer);
 
-                                const answerWeights: { key: keyof typeof questionAnswers; value:  number }[] = [];
+                                const answerWeights: { key: keyof typeof questionAnswers; value: number }[] = [];
                                 Object.entries(answer.weights).forEach(([key, value]) => {
-                                    answerWeights.push( {key: key as keyof typeof questionAnswers, value} );
+                                    if (typeof value === "number") answerWeights.push( 
+                                        {
+                                            key: key as keyof typeof questionAnswers, 
+                                            value
+                                        } 
+                                    );
                                 })
                                 setSelectedWeights(answerWeights);
                             }}
@@ -236,10 +241,10 @@ export default function ColorPalette() {
                     <p className="font-heading text-left p-5">{recommendedSeasonDetails?.description}</p>
                 </div>
             <button
-                className="bg-gray-300 pt-3 pb-3 pl-3 pr-3 text-center text-l font-heading rounded-xl hover:cursor-pointer hover:bg-gray-200"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
                 onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
             >
-                Select Color Palette <DownArrow className="inline"/>
+                Select Color Palette <DownArrow className={`inline fill-white ml-2 mb-0.5 transition ${selectionMenuOpen ? "rotate-180" : ""}`}/>
             </button>
             {selectionMenuOpen && (
                 <div className="h-48 overflow-y-auto rounded-bl-xl rounded-br-xl shadow-2xl">
