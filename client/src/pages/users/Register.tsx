@@ -5,7 +5,7 @@ export default function Register() {
     return (
         <AuthLayout title="Create an Account">
             <RegistrationForm />
-            <div>Already have an account? <a href="./Login" className="text-pink-600">Login Here</a></div>
+            <div>Already have an account? <a href="./login" className="text-pink-600">Login Here</a></div>
         </AuthLayout>
     )
 }

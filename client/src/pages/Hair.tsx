@@ -208,7 +208,7 @@ export default function Hair() {
                     </>
                 )}
                 <div className="mx-auto w-full max-w-xs mb-5">
-                {hairDetails && (
+                {hairDetails ? (
                     <>
                     <img src={hairImages[hairDetails.faceShape as keyof typeof hairImages]} alt="Face shape image" className="w-36 mx-auto"/>
                     <h4 className="font-heading text-xl text-left mt-5">Recommendations: </h4>
@@ -227,10 +227,10 @@ export default function Hair() {
                     <h4 className="mt-3 mb-3 text-left font-heading text-xl">Texture: </h4>
                     <p className="text-left">{hairDetails.hairTexture}</p>
                     </>
-                )}
+                ): <p className="mt-5">Click the button below to discover your hairstyle and see recommendations!</p>}
                 </div>
             <button
-                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl"
                 onClick={() => setQuizModalOpen(true)}
             >Take Quiz
             </button>
@@ -240,10 +240,10 @@ export default function Hair() {
         {quizModalOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
-                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
+                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative z-10 max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
+                <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
                     <h3 className="font-heading text-2xl text-center p-5">{hairQuestions[questionIndex].heading}</h3>
                     <div>

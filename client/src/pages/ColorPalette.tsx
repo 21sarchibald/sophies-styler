@@ -118,6 +118,7 @@ export default function ColorPalette() {
     }
 
     const selectPalette = async (paletteName: string) => {
+        setSelectionMenuOpen(false);
         const results = await getColorPalette(paletteName);
         setRecommendedSeasonDetails(results);
         localStorage.setItem("colorPalette", JSON.stringify(results));
@@ -128,7 +129,6 @@ export default function ColorPalette() {
         const recommendationResponse = await getColorRecommendations(results);
         setColorRecPhotos(recommendationResponse ?? []);
         localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
-        setSelectionMenuOpen(false);
     }
 
     const populateQuestion = (questionIndex: number) => {
@@ -228,42 +228,46 @@ export default function ColorPalette() {
             </div>
             <div className="w-full rounded-xl bg-white p-5 text-center shadow-sm lg:sticky lg:top-0 lg:h-screen lg:w-80 xl:w-96">
                 <h2 className="font-heading text-2xl">Your Color Palette</h2>
-                {recommendedSeasonDetails && (
+                {recommendedSeasonDetails ? (
+                    <>
                     <h2 className="font-heading font-extrabold text-2xl p-5">{recommendedSeasonDetails.season}</h2>
-                )}
-                <div className="mx-auto grid aspect-square w-full max-w-[270px] grid-cols-7 overflow-hidden rounded-lg">
+                    <div className="mx-auto grid aspect-square w-full max-w-[270px] grid-cols-7 overflow-hidden rounded-lg">
                     {recommendedSeasonDetails && recommendedSeasonDetails.bestColors.map((color: string) => {
-                    return (
-                        <div
+                        return (
+                            <div
                             key={color}
                             style={{ backgroundColor: color || 'white'}}
-                        ></div>
-                    )
+                            ></div>
+                        )
                     })}
-            </div>
-                <div>
-                    <p className="text-left p-5">{recommendedSeasonDetails?.description}</p>
-                </div>
+                    </div>
+                    <div>
+                        <p className="text-left p-5">{recommendedSeasonDetails?.description}</p>
+                    </div>
+                    </>
+                ) : <p className="mt-5 mb-5">Click the button below to discover your color palette and see recommendations!</p>}
             <button
-                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl"
                 onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
             >
-                Select Color Palette <DownArrow className={`inline fill-white ml-2 mb-0.5 transition ${selectionMenuOpen ? "rotate-180" : ""}`}/>
+                Select Color Palette <DownArrow className={`inline fill-white ml-2 mb-0.5 transition-transform duration-150 ease-in-out ${selectionMenuOpen ? "rotate-180" : ""}`}/>
             </button>
-            {selectionMenuOpen && (
-                <div className="h-48 overflow-y-auto rounded-bl-xl rounded-br-xl shadow-2xl">
-                    <button 
-                    onClick={() => {
-                        setQuizModalOpen(true);
-                        setSelectionMenuOpen(false);
-                    }}
-                    className="w-full hover:bg-gray-200 hover:cursor-pointer p-2"
-                    >
-                        Take Quiz
-                    </button>
-                    <ColorSelection onClick={selectPalette} />
+                <div className={`rounded-b-xl shadow-2xl overflow-hidden transition-all duration-200 ease-in-out ${
+                    selectionMenuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
+                }`}>
+                    <div className="h-48 overflow-y-auto">
+                        <button 
+                        onClick={() => {
+                            setQuizModalOpen(true);
+                            setSelectionMenuOpen(false);
+                        }}
+                        className="w-full hover:bg-gray-200 hover:cursor-pointer p-2"
+                        >
+                            Take Quiz
+                        </button>
+                        <ColorSelection onClick={selectPalette} />
+                    </div>
                 </div>
-            )}
             </div>
         </main>
 
@@ -272,10 +276,10 @@ export default function ColorPalette() {
         {quizModalOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
-                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 w-10 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
+                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative z-10 max-h-[90vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
+                <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
                     <h3 className="font-heading text-2xl text-center p-5">{colorQuestions[questionIndex].heading}</h3>
                     <div>
