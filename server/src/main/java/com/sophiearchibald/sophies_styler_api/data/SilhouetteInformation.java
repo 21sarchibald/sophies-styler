@@ -13,8 +13,8 @@ public class SilhouetteInformation {
             Map.entry("Apple",
                     createSilhouette(
                             List.of(
-                                    "Elongate frame and emphasize legs",
-                                    "A-line and empire dresses",
+                                    "Elongate frame & emphasize legs",
+                                    "A-line & empire dresses",
                                     "Choose flowy fabric"
                             )
                     )
@@ -22,8 +22,8 @@ public class SilhouetteInformation {
             Map.entry("Hourglass",
                     createSilhouette(
                             List.of(
-                                    "Highlight and emphasize waist",
-                                    "Wrap and fit-and-flare dresses",
+                                    "Highlight & emphasize waist",
+                                    "Wrap & fit-and-flare dresses",
                                     "Choose flowy, soft fabric"
                             )
                     )
@@ -40,8 +40,8 @@ public class SilhouetteInformation {
             Map.entry("Pear",
                     createSilhouette(
                             List.of(
-                                    "Draw eyes up and emphasize waist",
-                                    "A-line silhouettes and wrap dresses",
+                                    "Draw eyes up & emphasize waist",
+                                    "A-line silhouettes & wrap dresses",
                                     "Add volume to shoulders"
                             )
                     )
@@ -49,7 +49,7 @@ public class SilhouetteInformation {
             Map.entry("Rectangle",
                     createSilhouette(
                             List.of(
-                                    "Create curves and define waistline",
+                                    "Create curves & define waistline",
                                     "Fit-and-flare cuts with cinched layers",
                                     "Always tuck shirts, no boxy clothes"
                             )
@@ -77,14 +77,14 @@ public class SilhouetteInformation {
                             List.of(
                                     "Open necklines (V, square, scoop)",
                                     "Mid or low-rise pants",
-                                    "Drop waist dress and low-slung belts"
+                                    "Drop waist dress & low-slung belts"
                             )
                     )
             ),
             Map.entry("Balanced Torso / Legs",
                     createProportions(
                             List.of(
-                                    "Mid-rise pants and skirts",
+                                    "Mid-rise pants & skirts",
                                     "Layer items that fall around the hips",
                                     "Relaxed, half-tucked shirts"
                             )
