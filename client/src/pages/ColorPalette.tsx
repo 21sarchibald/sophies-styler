@@ -247,7 +247,7 @@ export default function ColorPalette() {
                     </>
                 ) : <p className="mt-5 mb-5">Click the button below to discover your color palette and see recommendations!</p>}
             <button
-                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
                 onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
             >
                 Select Color Palette <DownArrow className={`inline fill-white ml-2 mb-0.5 transition-transform duration-150 ease-in-out ${selectionMenuOpen ? "rotate-180" : ""}`}/>

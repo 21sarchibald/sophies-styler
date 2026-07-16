@@ -238,7 +238,7 @@ export default function Silhouette() {
                 </div>
                 
             <button
-                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
                 onClick={() => setQuizModalOpen(true)}
             >Take Quiz
             </button>

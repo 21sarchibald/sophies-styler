@@ -47,7 +47,7 @@ export default function LoginForm() {
                 required
                 onChange={(e) => setPassword(e.target.value)}
             ></input>
-                <button type="submit" disabled={loading} className="bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(loading) ? "Signing In..." : "Sign In"}</button>
+                <button type="submit" disabled={loading} className="bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(loading) ? "Signing In..." : "Sign In"}</button>
         </form>
     )
 }

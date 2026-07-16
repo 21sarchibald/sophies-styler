@@ -13,6 +13,7 @@ import Dashboard from './pages/users/Dashboard'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import PublicRoute from './components/auth/PublicRoute'
 import { useEffect } from 'react'
+import NotFound from './pages/NotFound'
 
 export default function App() {
 
@@ -49,6 +50,7 @@ export default function App() {
                   <Dashboard />
                 </ProtectedRoute>
                 } />
+                <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         </div>

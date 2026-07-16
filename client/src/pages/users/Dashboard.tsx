@@ -120,7 +120,7 @@ export default function Dashboard() {
                             {userHair}
                         </p>
                     </div>
-                    <button disabled={signingOut} onClick={handleSignOut} className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-900 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(signingOut) ? "Signing Out..." : "Sign Out"}
+                    <button disabled={signingOut} onClick={handleSignOut} className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(signingOut) ? "Signing Out..." : "Sign Out"}
                     </button>
                 </div>
             </div>
