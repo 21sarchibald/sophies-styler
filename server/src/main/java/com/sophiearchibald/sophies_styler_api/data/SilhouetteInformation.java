@@ -15,7 +15,6 @@ public class SilhouetteInformation {
                             List.of(
                                     "Elongate frame and emphasize legs",
                                     "A-line and empire dresses",
-                                    "High-waisted, wide-leg pants",
                                     "Choose flowy fabric"
                             )
                     )
@@ -25,7 +24,6 @@ public class SilhouetteInformation {
                             List.of(
                                     "Highlight and emphasize waist",
                                     "Wrap and fit-and-flare dresses",
-                                    "Wide-leg pants and pencil skirts",
                                     "Choose flowy, soft fabric"
                             )
                     )
@@ -35,7 +33,6 @@ public class SilhouetteInformation {
                             List.of(
                                     "Soften upper body, add curves",
                                     "Sleek tops, A-line silhouettes",
-                                    "Boot-cut, flare, and wide-leg pants",
                                     "Wear statement pieces on lower half"
                             )
                     )
@@ -45,7 +42,6 @@ public class SilhouetteInformation {
                             List.of(
                                     "Draw eyes up and emphasize waist",
                                     "A-line silhouettes and wrap dresses",
-                                    "Long wide-leg and boot-cut pants",
                                     "Add volume to shoulders"
                             )
                     )
@@ -55,7 +51,6 @@ public class SilhouetteInformation {
                             List.of(
                                     "Create curves and define waistline",
                                     "Fit-and-flare cuts with cinched layers",
-                                    "High-waisted flare pants",
                                     "Always tuck shirts, no boxy clothes"
                             )
                     )
