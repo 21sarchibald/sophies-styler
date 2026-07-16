@@ -10,7 +10,7 @@ export default function Home() {
                 to="/color-palette"
                 className="flex w-full max-w-sm flex-col rounded-xl bg-violet-200 p-6 transition-transform duration-200 hover:scale-105"
             >
-                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl">
+                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl p-5">
                     Discover your color palette
                 </h3>
 
@@ -25,7 +25,7 @@ export default function Home() {
                 to="/silhouette"
                 className="flex w-full max-w-sm flex-col rounded-xl bg-blue-200 p-6 transition-transform duration-200 hover:scale-105"
             >
-                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl">
+                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl p-5">
                     Discover your silhouette
                 </h3>
 
@@ -40,7 +40,7 @@ export default function Home() {
                 to="/hair"
                 className="flex w-full max-w-sm flex-col rounded-xl bg-pink-200 p-6 transition-transform duration-200 hover:scale-105"
             >
-                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl">
+                <h3 className="mb-8 text-center font-heading text-2xl font-bold md:text-3xl p-5">
                     Discover your hairstyle
                 </h3>
 

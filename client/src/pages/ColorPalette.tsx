@@ -183,6 +183,7 @@ export default function ColorPalette() {
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
+                <h3 className="font-heading text-xl mb-2">Color Palette Inspiration Photos</h3>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {colorRecPhotos && (
                         colorRecPhotos.map((rec: ColorRecPhoto) => { return (
@@ -241,7 +242,7 @@ export default function ColorPalette() {
                     })}
             </div>
                 <div>
-                    <p className="font-heading text-left p-5">{recommendedSeasonDetails?.description}</p>
+                    <p className="text-left p-5">{recommendedSeasonDetails?.description}</p>
                 </div>
             <button
                 className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"

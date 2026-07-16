@@ -125,7 +125,7 @@ export default function Dashboard() {
                 </div>
             </div>
             <div>
-                <h2 className="font-heading mb-2">Your Saved Inspiration</h2>
+                <h3 className="font-heading text-xl mb-2">Your Saved Inspiration</h3>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {allSavedPhotos.map((rec: SavedPhoto) => { return (
                         <div key={rec.image_url} className="relative group">

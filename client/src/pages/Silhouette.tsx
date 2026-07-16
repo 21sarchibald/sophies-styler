@@ -161,6 +161,7 @@ export default function Silhouette() {
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
+                <h3 className="font-heading text-xl mb-2">Silhouette Inspiration Photos</h3>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {silhouetteRecPhotos && (
                         silhouetteRecPhotos.map((rec: SilhouetteRecPhoto) => (
@@ -208,11 +209,12 @@ export default function Silhouette() {
                 {silhouetteDetails && (
                     <h2 className="font-heading font-extrabold text-2xl pt-5 pb-5">{silhouetteDetails.silhouette}</h2>
                 )}
-                <div className="mx-auto w-full max-w-xs">
+                <div className="mx-auto w-full max-w-xs mb-5">
                     {silhouetteDetails && (
                         <>
-                        <img src={silhouetteImages[silhouetteDetails.silhouette as keyof typeof silhouetteImages]} className="w-36 mx-auto"/>
-                        <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
+                        <img src={silhouetteImages[silhouetteDetails.silhouette as keyof typeof silhouetteImages]} className="w-28 mx-auto"/>
+                        <h4 className="font-heading text-xl text-left mt-5">Recommendations: </h4>
+                        <ul className="mt-3 list-disc space-y-2 pl-5 text-left">
                             {silhouetteDetails.silhouetteSuggestions.map((suggestion: string) => (
                                 <li
                                 key={suggestion}
@@ -221,7 +223,7 @@ export default function Silhouette() {
                                 </li>
                             ))}
                         </ul>
-                        <h2 className="mt-8 mb-3 text-left font-heading text-xl">{silhouetteDetails.proportions}</h2>
+                        <h2 className="mt-3 mb-3 text-left font-heading text-xl">{silhouetteDetails.proportions}</h2>
                         <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
                             {silhouetteDetails.proportionsSuggestions.map((suggestion: string) => (
                                 <li

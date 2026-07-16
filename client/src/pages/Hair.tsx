@@ -166,6 +166,7 @@ export default function Hair() {
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
             <div className="flex-1">
+                <h3 className="font-heading text-xl mb-2">Hairstyle Inspiration Photos</h3>
                 <div className="columns-2 sm:columns-3 lg:columns-4 gap-4">
                     {hairRecPhotos && (
                         hairRecPhotos.map((rec: HairRecPhoto) => (
@@ -203,13 +204,14 @@ export default function Hair() {
                 <h2 className="font-heading text-2xl">Your Hairstyle</h2>
                 {hairDetails && (
                     <>
-                    <h2 className="font-heading font-extrabold text-2xl pt-5 pb-5">{hairDetails.faceShape}</h2>
+                    <h2 className="font-heading font-extrabold text-2xl pt-5 pb-5">{hairDetails.faceShape} Face Shape</h2>
                     </>
                 )}
-                <div className="mx-auto w-full max-w-xs">
+                <div className="mx-auto w-full max-w-xs mb-5">
                 {hairDetails && (
                     <>
-                    <img src={hairImages[hairDetails.faceShape as keyof typeof hairImages]} alt="" className="w-36 mx-auto"/>
+                    <img src={hairImages[hairDetails.faceShape as keyof typeof hairImages]} alt="Face shape image" className="w-36 mx-auto"/>
+                    <h4 className="font-heading text-xl text-left mt-5">Recommendations: </h4>
                     <ul className="mt-4 list-disc space-y-2 pl-5 text-left">
                             {hairDetails.faceShapeSuggestions.map((suggestion: string) => (
                                 <li
@@ -219,9 +221,11 @@ export default function Hair() {
                                 </li>
                             ))}
                         </ul>
-                    <h2 className="mt-8 mb-3 text-left font-heading text-xl">{hairDetails.hairColor}</h2>
-                    <img></img>
-                    <h2 className="mt-0 mb-3 text-left font-heading text-xl">{hairDetails.hairTexture}</h2>
+                    <h4 className="mt-3 mb-3 text-left font-heading text-xl">Color: </h4>
+                    <p className="text-left">{hairDetails.hairColor}</p>
+                    
+                    <h4 className="mt-3 mb-3 text-left font-heading text-xl">Texture: </h4>
+                    <p className="text-left">{hairDetails.hairTexture}</p>
                     </>
                 )}
                 </div>
