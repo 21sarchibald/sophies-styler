@@ -11,6 +11,7 @@ import Register from './pages/users/Register'
 import Login from './pages/users/Login'
 import Dashboard from './pages/users/Dashboard'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import PublicRoute from './components/auth/PublicRoute'
 import { useEffect } from 'react'
 
 export default function App() {
@@ -29,12 +30,20 @@ export default function App() {
 
           <main className="pr-10 pl-10">
             <Routes>
-              <Route path="/" element={< Home />} />
-              <Route path="/color-palette" element={< ColorPalette />} />
-              <Route path="/silhouette" element={< Silhouette />} />
-              <Route path="/hair" element={< Hair />} />
-              <Route path="/users/register" element={<Register />} />
-              <Route path="/users/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/color-palette" element={<ColorPalette />} />
+              <Route path="/silhouette" element={<Silhouette />} />
+              <Route path="/hair" element={<Hair />} />
+              <Route path="/users/register" element={
+                <PublicRoute>
+                  <Register />
+                </PublicRoute>
+                } />
+              <Route path="/users/login" element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+                } />
               <Route path="/users/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />
