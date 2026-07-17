@@ -57,6 +57,8 @@ export default function Silhouette() {
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<SilhouetteAnswer | null>(null);
     const [questionIndex, setQuestionIndex] = useState(0);
+    const progress = ((questionIndex) / silhouetteQuestions.length) * 100;
+
 
     const [questionAnswers, setQuestionAnswers] = useState<SilhouetteSubmission>({
         silhouette: "",
@@ -295,7 +297,14 @@ export default function Silhouette() {
 
                         }
                         }>Next</button>
-                    {/* <div>Progress bar</div> */}
+                    <div>
+                        <p className="text-sm">Question {questionIndex + 1} of {silhouetteQuestions.length}</p>
+                        <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
+                            <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}}>
+                    
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
