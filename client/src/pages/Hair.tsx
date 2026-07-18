@@ -14,6 +14,7 @@ import ovalHead from "../assets/images/hair/oval-head.png";
 import roundHead from "../assets/images/hair/round-head.png";
 import squareHead from "../assets/images/hair/square-head.png";
 import { useAuth } from "../context/useAuth";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Hair() {
 
@@ -53,7 +54,7 @@ export default function Hair() {
         Square: squareHead,
     }
 
-     // const [loading, setLoading] = useState(true);
+    const [quizLoading, setQuizLoading] = useState(false);
 
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<HairAnswer | null>(null);
@@ -240,62 +241,73 @@ export default function Hair() {
         </main>
 
         {quizModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
                 <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
-                    <h3 className="font-heading text-2xl text-center p-5">{hairQuestions[questionIndex].heading}</h3>
-                    <div>
-                        {populateQuestion(questionIndex)}
-                    </div>
-                    <button 
-                        className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-20 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
-                        disabled={!selectedAnswer}
+                    {quizLoading ? (
+                        <LoadingSpinner text="Finding styles for your face shape..."/>
+                    ) : (
+                    <>
+                        <h3 className="font-heading text-2xl text-center p-5">{hairQuestions[questionIndex].heading}</h3>
+                        <div>
+                            {populateQuestion(questionIndex)}
+                        </div>
+                        <button 
+                            className="bg-black font-heading text-white px-6 py-4 rounded-xl mx-auto block mt-20 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={!selectedAnswer}
 
 
-                        onClick={ async () => {
-                            const answersArray = { ... questionAnswers };
-                            const questionId = hairQuestions[questionIndex].id as HairQuestionId;
+                            onClick={ async () => {
+                                const answersArray = { ... questionAnswers };
+                                const questionId = hairQuestions[questionIndex].id as HairQuestionId;
 
-                            answersArray[questionId] = selectedAnswer?.text ?? "";
+                                answersArray[questionId] = selectedAnswer?.text ?? "";
 
-                            answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
+                                answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof HairSubmission;
 
-                            setQuestionAnswers(answersArray);
+                                setQuestionAnswers(answersArray);
 
-                            if (questionIndex >= hairQuestions.length - 1) {
-                                const apiResponse = await analyzeHair(answersArray) || null;
+                                if (questionIndex >= hairQuestions.length - 1) {
+                                    setQuizLoading(true);
 
-                                if (apiResponse) {
-                                    setHairDetails(apiResponse);
+                                    try {
+                                        const apiResponse = await analyzeHair(answersArray) || null;
+                                    
+                                        if (apiResponse) {
+                                            setHairDetails(apiResponse);
+                                        }
+                                    
+                                        localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
+                                        saveHairResults(apiResponse);
+                                    
+                                        const recommendationResponse = await getHairRecommendations(apiResponse);
+                                        setHairRecPhotos(recommendationResponse ?? []);
+                                        localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));
+                                        resetQuiz();
+                                    } finally {
+                                        setQuizLoading(false);
+                                    }
                                 }
 
-                                localStorage.setItem("hairstyle", JSON.stringify(apiResponse));
-                                saveHairResults(apiResponse);
-
-                                const recommendationResponse = await getHairRecommendations(apiResponse);
-                                setHairRecPhotos(recommendationResponse ?? []);
-                                localStorage.setItem("hairRecPhotos", JSON.stringify(recommendationResponse));
-                                resetQuiz();
+                                else {
+                                    setQuestionIndex(questionIndex + 1);
+                                    setSelectedAnswer(null);
+                                }
                             }
-
-                            else {
-                                setQuestionIndex(questionIndex + 1);
-                                setSelectedAnswer(null);
-                            }
-                        }
-                        }>Next</button>
-                    <div>
-                        <p className="text-sm">Question {questionIndex + 1} of {hairQuestions.length}</p>
-                        <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
-                            <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}}>
-                    
+                            }>Next</button>
+                        <div>
+                            <p className="text-sm">Question {questionIndex + 1} of {hairQuestions.length}</p>
+                            <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
+                                <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}} />
                             </div>
                         </div>
-                    </div>
+                    </>
+
+                    )}
 
                 </div>
 

@@ -15,6 +15,7 @@ import invertedTriangleSilhouette from '../assets/images/silhouette/inverted-tri
 import pearSilhouette from "../assets/images/silhouette/pear-silhouette.png";
 import rectangleSilhouette from "../assets/images/silhouette/rectangle-silhouette.png";
 import { useAuth } from "../context/useAuth";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Silhouette() {
 
@@ -52,7 +53,7 @@ export default function Silhouette() {
         Rectangle: rectangleSilhouette,
     }
 
-    // const [loading, setLoading] = useState(true);
+    const [quizLoading, setQuizLoading] = useState(false);
 
     const [quizModalOpen, setQuizModalOpen] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<SilhouetteAnswer | null>(null);
@@ -248,63 +249,74 @@ export default function Silhouette() {
         </main>
 
         {quizModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
                 <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
-                    <h3 className="font-heading text-2xl text-center p-5">{silhouetteQuestions[questionIndex].heading}</h3>
-                    <div>
-                        {populateQuestion(questionIndex)}
-                    </div>
-                    <button 
-                        className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-20 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
-                        disabled={!selectedAnswer}
+                    {quizLoading ? (
+                        <LoadingSpinner text="Collecting recs for your curves..."/>
+                    ) : (
+                    <>
+                        <h3 className="font-heading text-2xl text-center p-5">{silhouetteQuestions[questionIndex].heading}</h3>
+                        <div>
+                            {populateQuestion(questionIndex)}
+                        </div>
+                        <button 
+                            className="bg-black font-heading text-white px-6 py-4 rounded-xl mx-auto block mt-20 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={!selectedAnswer}
 
 
-                        onClick={ async () => {
-                            const answersArray = { ... questionAnswers };
-                            const questionId = silhouetteQuestions[questionIndex].id as silhouetteQuestionId;
+                            onClick={ async () => {
+                                const answersArray = { ... questionAnswers };
+                                const questionId = silhouetteQuestions[questionIndex].id as silhouetteQuestionId;
 
-                            answersArray[questionId] = selectedAnswer?.text ?? "";
+                                answersArray[questionId] = selectedAnswer?.text ?? "";
 
-                            answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof SilhouetteSubmission;
+                                answersArray[`${questionId}Code`] = selectedAnswer?.code as keyof SilhouetteSubmission;
 
-                            setQuestionAnswers(answersArray);
+                                setQuestionAnswers(answersArray);
 
-                            if (questionIndex >= silhouetteQuestions.length - 1) {
-                                const apiResponse = await analyzeSilhouette(answersArray) || null;
+                                if (questionIndex >= silhouetteQuestions.length - 1) {
+                                    setQuizLoading(true);
 
-                                if (apiResponse) {
-                                    setSilhouetteDetails(apiResponse);
+                                    try {
+                                        const apiResponse = await analyzeSilhouette(answersArray) || null;
+                                    
+                                        if (apiResponse) {
+                                            setSilhouetteDetails(apiResponse);
+                                        }
+                                    
+                                        localStorage.setItem("silhouette", JSON.stringify(apiResponse));
+                                        await saveSilhouetteResults(apiResponse);
+
+                                        const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
+                                        setSilhouetteRecPhotos(recommendationResponse ?? []);
+                                        localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));
+                                        resetQuiz();
+                                    } finally {
+                                        setQuizLoading(false);
+                                    }
                                 }
 
-                                localStorage.setItem("silhouette", JSON.stringify(apiResponse));
-                                await saveSilhouetteResults(apiResponse);
-                                
-                                const recommendationResponse = await getSilhouetteRecommendations(apiResponse);
-                                setSilhouetteRecPhotos(recommendationResponse ?? []);
-                                localStorage.setItem("silhouetteRecPhotos", JSON.stringify(recommendationResponse));
-                                resetQuiz();
-                            }
+                                else {
+                                    setQuestionIndex(questionIndex + 1);
+                                    setSelectedAnswer(null);
+                                }
 
-                            else {
-                                setQuestionIndex(questionIndex + 1);
-                                setSelectedAnswer(null);
                             }
-
-                        }
-                        }>Next</button>
-                    <div>
-                        <p className="text-sm">Question {questionIndex + 1} of {silhouetteQuestions.length}</p>
-                        <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
-                            <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}}>
-                    
+                            }>Next</button>
+                        <div>
+                            <p className="text-sm">Question {questionIndex + 1} of {silhouetteQuestions.length}</p>
+                            <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
+                                <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}} />
                             </div>
                         </div>
-                    </div>
+                    </>
+                    )}
+
 
                 </div>
 

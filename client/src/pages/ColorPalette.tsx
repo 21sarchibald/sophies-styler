@@ -6,6 +6,7 @@ import ExternalLinkIcon from "../assets/icons/external-link-icon.svg?react";
 import { colorQuestions } from "../data/colorQuestions";
 import ColorSelection from "../components/ColorSelection";
 import QuizAnswerButton from "../components/QuizAnswerButton";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 import { getSavedImages, saveImage, unsaveImage, getOptimizedImage } from "../services/imageService";
 import { analyzeColors, getColorPalette, getColorRecommendations, saveColorResults } from "../services/colorService";
@@ -39,7 +40,8 @@ export default function ColorPalette() {
         created_at: string;
     }
 
-    // const [loading, setLoading] = useState(true);
+    const [quizLoading, setQuizLoading] = useState(false);
+    // const [selectLoading, setSelectLoading] = useState(true);
 
     const [selectionMenuOpen, setSelectionMenuOpen] = useState(false);
     const [quizModalOpen, setQuizModalOpen] = useState(false);
@@ -120,16 +122,22 @@ export default function ColorPalette() {
 
     const selectPalette = async (paletteName: string) => {
         setSelectionMenuOpen(false);
-        const results = await getColorPalette(paletteName);
-        setRecommendedSeasonDetails(results);
-        localStorage.setItem("colorPalette", JSON.stringify(results));
+        // setSelectLoading(true);
 
-        // set it in supabase
-        await saveColorResults(results);
-
-        const recommendationResponse = await getColorRecommendations(results);
-        setColorRecPhotos(recommendationResponse ?? []);
-        localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
+        try {
+            const results = await getColorPalette(paletteName);
+            setRecommendedSeasonDetails(results);
+            localStorage.setItem("colorPalette", JSON.stringify(results));
+    
+            // set it in supabase
+            await saveColorResults(results);
+    
+            const recommendationResponse = await getColorRecommendations(results);
+            setColorRecPhotos(recommendationResponse ?? []);
+            localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
+        } finally {
+            // setSelectLoading(false);
+        }
     }
 
     const populateQuestion = (questionIndex: number) => {
@@ -275,62 +283,75 @@ export default function ColorPalette() {
         
 
         {quizModalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 font-heading">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
                     <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
                 <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
-                    <h3 className="font-heading text-2xl text-center p-5">{colorQuestions[questionIndex].heading}</h3>
-                    <div>
-                        {populateQuestion(questionIndex)}
-                    </div>
-                    <button 
-                        className="bg-black text-white px-6 py-4 rounded-xl mx-auto block mt-5 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
-                        disabled={!selectedAnswer}
+                {quizLoading ? 
+                    (<>
+                        <LoadingSpinner text="Calculating your color palette results..." />
+                    </>
+                    ) : (
+                    <>
+                        <h3 className="font-heading text-2xl text-center p-5">{colorQuestions[questionIndex].heading}</h3>
+                        <div>
+                            {populateQuestion(questionIndex)}
+                        </div>
+                        <button 
+                            className="bg-black font-heading text-white px-6 py-4 rounded-xl mx-auto block mt-5 hover:cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={!selectedAnswer}
 
 
-                        onClick={async () => {
-                        
-                        const answersArray = { ... questionAnswers };
-
-                        selectedWeights.forEach(weight => {
-                            answersArray[weight.key] += weight.value;
-
-                        })
-
-                        setQuestionAnswers(answersArray);
-
-                        if (questionIndex >= colorQuestions.length - 1) {
+                            onClick={async () => {
                             
-                            const apiResponse = await analyzeColors(answersArray) || null;
-                            setRecommendedSeasonDetails(apiResponse);
+                            const answersArray = { ... questionAnswers };
 
-                            localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
+                            selectedWeights.forEach(weight => {
+                                answersArray[weight.key] += weight.value;
 
-                            // set it in supabase
-                            await saveColorResults(apiResponse);
-                            const recommendationResponse = await getColorRecommendations(apiResponse);
-                            setColorRecPhotos(recommendationResponse ?? []);
-                            localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
-                            
-                            resetQuiz();
-                        }
-                        else {
-                            setQuestionIndex(questionIndex + 1)
-                            setSelectedAnswer(null);
-                        }
-                        }
-                        }>Next</button>
-                    <div>
-                        <p className="text-sm">Question {questionIndex + 1} of {colorQuestions.length}</p>
-                        <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
-                            <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}}>
+                            })
 
+                            setQuestionAnswers(answersArray);
+
+                            if (questionIndex >= colorQuestions.length - 1) {
+
+                                setQuizLoading(true);
+
+                                try {
+                                    
+                                    const apiResponse = await analyzeColors(answersArray) || null;
+                                    setRecommendedSeasonDetails(apiResponse);
+    
+                                    localStorage.setItem("colorPalette", JSON.stringify(apiResponse))
+    
+                                    // set it in supabase
+                                    await saveColorResults(apiResponse);
+                                    const recommendationResponse = await getColorRecommendations(apiResponse);
+                                    setColorRecPhotos(recommendationResponse ?? []);
+                                    localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
+    
+                                    resetQuiz();
+                                } finally {
+                                    setQuizLoading(false);
+                                }
+                            }
+                            else {
+                                setQuestionIndex(questionIndex + 1)
+                                setSelectedAnswer(null);
+                            }
+                            }
+                            }>Next</button>
+                        <div>
+                            <p className="text-sm">Question {questionIndex + 1} of {colorQuestions.length}</p>
+                            <div className="h-1 w-full mt-2 overflow-hidden rounded-full bg-gray-300">
+                                <div className="h-full bg-pink-600 transition-all duration-500 ease-out" style={{ width: `${progress}%`}} />
                             </div>
                         </div>
-                    </div>
+                    </>
+                    )}
 
                 </div>
 
