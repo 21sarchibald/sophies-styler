@@ -21,3 +21,10 @@ export function getSignInError(error: AuthError): string {
     }
 
 }
+
+export function getSignOutError(error: AuthError): string {
+    switch (error.code) {
+        default: 
+            return "Something went wrong while signing you out. Please try again later."
+    }
+}

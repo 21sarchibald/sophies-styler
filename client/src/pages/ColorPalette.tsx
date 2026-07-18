@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import DownArrow from "../assets/icons/down-arrow.svg?react";
 import SaveIcon from "../assets/icons/save-icon.svg?react";
 import UnsaveIcon from "../assets/icons/unsave-icon.svg?react";
@@ -176,6 +176,14 @@ export default function ColorPalette() {
         )
     }
 
+    const quizModalRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        quizModalRef.current?.scrollTo({
+            top: 0
+        });
+    }, [questionIndex]);
+
     return (
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
@@ -190,14 +198,14 @@ export default function ColorPalette() {
                                         {savedPhotos.has(rec.url) ? (
                                         <button
                                         onClick={() => handleUnsave(rec.url)}
-                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        className="show-without-hover bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                         >
                                             <UnsaveIcon className="w-7 h-7"/>
                                         </button>
                                         ) : (
                                         <button
                                         onClick={() => handleSave(rec.url, rec.external_link)}
-                                        className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                                        className="show-without-hover bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                                         >
                                             <SaveIcon className="w-7 h-7"/>
                                         </button>
@@ -209,7 +217,7 @@ export default function ColorPalette() {
                                     href={rec.external_link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
+                                    className="show-without-hover bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
                                     >
                                         <ExternalLinkIcon className="w-7 h-7"/>
                                     </a>
@@ -279,10 +287,12 @@ export default function ColorPalette() {
         {quizModalOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div className="absolute inset-0 bg-gray-950 opacity-75">
-                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-5xl hover:text-gray-400 hover:cursor-pointer">X</button>
+                    <button onClick={() => setQuizModalOpen(false)} className="text-white absolute top-5 right-5 text-4xl hover:text-gray-400 hover:cursor-pointer">X</button>
                 </div>
 
-                <div className="relative z-10 max-h-[80vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
+                <div 
+                    ref={quizModalRef}
+                    className="relative z-10 max-h-[87vh] w-full max-w-6xl overflow-y-auto rounded-xl bg-white p-6">
 
                 {quizLoading ? 
                     (<>

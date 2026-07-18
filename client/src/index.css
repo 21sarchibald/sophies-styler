@@ -22,6 +22,9 @@
   font-family: "Open Sans", sans-serif;
 }
 
-/* * {
-  outline: 1px solid red;
-} */
+@media (hover: none) {
+  .show-without-hover {
+    opacity: 1;
+  }
+}
+

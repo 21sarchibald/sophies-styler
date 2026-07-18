@@ -8,6 +8,7 @@ import ExternalLinkIcon from "../../assets/icons/external-link-icon.svg?react"
 import UnsaveIcon from "../../assets/icons/unsave-icon.svg?react"
 import GallerySkeleton from "../../components/skeletons/GallerySkeleton";
 import DashboardSkeleton from "../../components/skeletons/DashboardSkeleton";
+import { getSignOutError } from "../../utils/authErrors";
 
 export default function Dashboard() {
 
@@ -24,6 +25,7 @@ export default function Dashboard() {
 
     const [loading, setLoading] = useState(true);
     const [signingOut, setSigningOut] = useState(false);
+    const [error, setError] = useState("");
 
     const [allSavedPhotos, setAllSavedPhotos] = useState<SavedPhoto[]>([]);
     const [userColorPalette, setUserColorPalette] = useState("");
@@ -70,7 +72,8 @@ export default function Dashboard() {
         const error = await signOut();
 
         if (error) {
-            console.log("Error logging out");
+            const errorMessage = getSignOutError(error);
+            setError(errorMessage);
             setSigningOut(false);
             return;
         } else {
@@ -120,6 +123,10 @@ export default function Dashboard() {
                             {userHair}
                         </p>
                     </div>
+                    {(error != "" && (
+                        <div className="text-center w-full bg-red-200 text-red-800 rounded-sm p-2 mb-5">{error}</div>
+                        )
+                    )}
                     <button disabled={signingOut} onClick={handleSignOut} className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed">{(signingOut) ? "Signing Out..." : "Sign Out"}
                     </button>
                 </div>
@@ -131,7 +138,7 @@ export default function Dashboard() {
                         <div key={rec.image_url} className="relative group">
                             <button
                             onClick={() => handleUnsave(rec.image_url)}
-                            className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
+                            className="show-without-hover bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute right-1 top-1 rounded-sm"
                             >
                                 <UnsaveIcon className="w-7 h-7"/>
                             </button>
@@ -140,7 +147,7 @@ export default function Dashboard() {
                                 href={rec.external_link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
+                                className="show-without-hover bg-white/90 opacity-0 transition-opacity duration-200 group-hover:opacity-100 hover:bg-white hover:cursor-pointer h-7 w-7 z-9 absolute left-1 bottom-1 rounded-sm"
                                 >
                                     <ExternalLinkIcon className="w-7 h-7"/>
                                 </a>
