@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { registerNewUser } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { saveLocalQuizResults } from '../../services/userService';
 
 export default function RegistrationForm() {
 
@@ -20,6 +21,9 @@ export default function RegistrationForm() {
                 console.error("Error registering user. ", error);
                 return;
             }
+
+            await saveLocalQuizResults();
+
             navigate("/users/dashboard");
 
         } finally {

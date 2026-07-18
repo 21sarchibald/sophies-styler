@@ -1,6 +1,6 @@
-import { getColorRecommendations } from "./colorService";
-import { getSilhouetteRecommendations } from "./silhouetteService";
-import { getHairRecommendations } from "./hairService";
+import { getColorRecommendations, saveColorResults } from "./colorService";
+import { getSilhouetteRecommendations, saveSilhouetteResults } from "./silhouetteService";
+import { getHairRecommendations, saveHairResults } from "./hairService";
 import { supabase } from "./supabase";
 
 export async function getUserColorPalette(userId: string) {
@@ -94,4 +94,16 @@ export async function initializeUser(userId: string) {
     if (hair) {
         await getHairRecommendations(hair);
     }
+}
+
+export async function saveLocalQuizResults() {
+    const colorPalette = localStorage.getItem("colorPalette");
+    if (colorPalette)
+        await saveColorResults(JSON.parse(colorPalette));
+    const silhouette = localStorage.getItem("silhouette");
+    if (silhouette)
+        await saveSilhouetteResults(JSON.parse(silhouette));
+    const hairstyle = localStorage.getItem("hairstyle");
+    if (hairstyle)
+        await saveHairResults(JSON.parse(hairstyle));
 }

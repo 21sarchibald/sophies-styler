@@ -43,6 +43,11 @@ export default function Dashboard() {
                 getUserHair(userId),
                 getSavedImages(),
             ]);
+
+            console.log("color", colorPalette);
+console.log("silhouette", silhouette);
+console.log("hair", hair);
+console.log("images", savedImages);
     
             setUserColorPalette(colorPalette?.season ?? "");
             setUserSilhouette(silhouette?.silhouette ?? "");
