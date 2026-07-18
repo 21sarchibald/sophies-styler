@@ -29,7 +29,7 @@ export default function App() {
         <div className="flex-1">
           <h1 className='sticky font-heading text-4xl font-extrabold mt-5 ml-10'>Sophie's Styler</h1>
 
-          <main className="pr-10 pl-10">
+          <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/color-palette" element={<ColorPalette />} />
