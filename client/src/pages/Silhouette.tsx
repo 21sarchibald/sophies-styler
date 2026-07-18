@@ -148,18 +148,6 @@ export default function Silhouette() {
         )
     }
 
-    // if (loading) {
-    //     return (
-    //         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
-    //             <div className="flex-1">
-    //                 <GallerySkeleton />
-    //             </div>
-    
-    //             <SidebarSkeleton />
-    //         </main>
-    //     );
-    // }
-
     return (
         <>
         <main className="mx-auto flex max-w-7xl flex-col-reverse gap-8 px-4 py-6 lg:flex-row">
