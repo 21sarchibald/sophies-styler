@@ -2,12 +2,10 @@ import { supabase } from "./supabase";
 
 export async function saveImage(imageUrl: string, imageType: string, externalLink?: string) {
 
-    console.log('save function running');
-
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-        console.log('user in saveimage')
+
         return await supabase.from("saved_images").upsert(
             {
                 user_id: user.id,

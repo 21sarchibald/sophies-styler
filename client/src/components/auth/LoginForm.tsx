@@ -21,7 +21,6 @@ export default function LoginForm() {
             if (error) {
                 const errorMessage = getSignInError(error);
                 setError(errorMessage);
-                console.log(error.code);
                 return;
             }
             navigate("/users/dashboard");
