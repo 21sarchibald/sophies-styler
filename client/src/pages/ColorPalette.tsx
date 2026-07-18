@@ -41,7 +41,7 @@ export default function ColorPalette() {
     }
 
     const [quizLoading, setQuizLoading] = useState(false);
-    // const [selectLoading, setSelectLoading] = useState(true);
+    const [selectLoading, setSelectLoading] = useState(false);
 
     const [selectionMenuOpen, setSelectionMenuOpen] = useState(false);
     const [quizModalOpen, setQuizModalOpen] = useState(false);
@@ -122,7 +122,7 @@ export default function ColorPalette() {
 
     const selectPalette = async (paletteName: string) => {
         setSelectionMenuOpen(false);
-        // setSelectLoading(true);
+        setSelectLoading(true);
 
         try {
             const results = await getColorPalette(paletteName);
@@ -136,7 +136,7 @@ export default function ColorPalette() {
             setColorRecPhotos(recommendationResponse ?? []);
             localStorage.setItem("colorRecPhotos", JSON.stringify(recommendationResponse));
         } finally {
-            // setSelectLoading(false);
+            setSelectLoading(false);
         }
     }
 
@@ -256,10 +256,16 @@ export default function ColorPalette() {
                     </>
                 ) : <p className="mt-5 mb-5">Click the button below to discover your color palette and see recommendations!</p>}
             <button
-                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl"
+                className="w-full bg-black text-white hover:cursor-pointer hover:bg-gray-800 p-3 rounded-4xl disabled:bg-gray-500 disabled:cursor-not-allowed"
                 onClick={() => setSelectionMenuOpen(!selectionMenuOpen)}
+                disabled={selectLoading}
             >
-                Select Color Palette <DownArrow className={`inline fill-white ml-2 mb-0.5 transition-transform duration-150 ease-in-out ${selectionMenuOpen ? "rotate-180" : ""}`}/>
+                {(selectLoading) ? "Getting palette details..." : (
+                    <>
+                        Select Color Palette 
+                        <DownArrow className={`inline fill-white ml-2 mb-0.5 transition-transform duration-150 ease-in-out ${selectionMenuOpen ? "rotate-180" : ""}`}/>
+                    </>
+                )}
             </button>
                 <div className={`rounded-b-xl shadow-2xl overflow-hidden transition-all duration-200 ease-in-out ${
                     selectionMenuOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
